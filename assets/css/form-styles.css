@@ -1,0 +1,171 @@
+/* Estilos para el formulario de registro */
+.tsgc-form {
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.tsgc-form .inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tsgc-form .field {
+  margin-bottom: 1rem;
+}
+
+.tsgc-form input[type="text"],
+.tsgc-form input[type="email"],
+.tsgc-form select {
+  width: 100%;
+  padding: 0.6125rem;
+  border-radius: 0.25rem;
+  color: #FFFFFF;
+  background-color: transparent;
+  border: solid 1px rgba(255,255,255,0.231);
+  font-size: 0.75em;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  height: 1.75rem;
+  line-height: calc(1.75rem - 2px);
+}
+
+.tsgc-form select {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='504' height='552' preserveAspectRatio='none' viewBox='0 0 504 552'%3E%3Cpath d='M483.9,210.9L252,442.9L20.1,210.9l67.9-67.9L252,307.1l164.1-164.1L483.9,210.9z' fill='rgba(255,255,255,0.231)' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.6125rem) center;
+  background-size: 1rem;
+  padding-right: 2.0625rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.tsgc-form input:focus,
+.tsgc-form select:focus {
+  border-color: #96D3FF;
+  box-shadow: 0 0 0 1px #96D3FF;
+  outline: none;
+}
+
+/* Botones */
+.button-validar, 
+.button-solicitar {
+  display: inline-block;
+  width: auto;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0 1.25rem;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 0.175rem;
+  padding-left: calc(0.175rem + 1.25rem);
+  font-size: 0.75em;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #BBE55A;
+  color: #202020;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  border: none;
+  cursor: pointer;
+}
+
+.button-validar:hover, 
+.button-solicitar:hover {
+  background-color: #a0cc30;
+}
+
+/* Mensajes de estado */
+#form-status {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875em;
+  margin-top: 1.5rem;
+  line-height: 1.5;
+}
+
+.status-error {
+  background-color: rgba(255, 85, 85, 0.1);
+  border-left: 3px solid #ff5555;
+}
+
+.status-success {
+  background-color: rgba(187, 229, 90, 0.1);
+  border-left: 3px solid #BBE55A;
+}
+
+.status-info {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #FFFFFF;
+}
+
+/* Modificador para campos sólo lectura */
+input[readonly] {
+  background-color: rgba(187, 229, 90, 0.1) !important;
+  border-color: #BBE55A !important;
+  color: #FFFFFF !important;
+  cursor: not-allowed;
+}
+
+/* Validation message */
+.validation-message {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875em;
+  line-height: 1.25;
+  font-weight: 400;
+  margin-bottom: 1.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 736px) {
+  .tsgc-form input[type="text"],
+  .tsgc-form input[type="email"],
+  .tsgc-form select {
+    font-size: 16px; /* Evita zoom en móviles */
+  }
+  
+  .button-validar, 
+  .button-solicitar {
+    width: 100%;
+  }
+}
+/* Estilos para la barra de progreso */
+.progress-container {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin: 15px 0;
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #BBE55A;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+.progress-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 0.8em;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+}

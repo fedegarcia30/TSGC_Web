@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FAQ — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── FAQ PAGE ── */
+
+.faq__tabs { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:36px; }
+.faq__tab { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--text-sec); border:1px solid var(--border); padding:9px 20px; border-radius:40px; cursor:pointer; background:transparent; transition:.3s; }
+.faq__tab:hover, .faq__tab.active { color:var(--primary); border-color:var(--primary); background:var(--highlight); }
+.faq__tab.active { font-weight:600; }
+
+.faq__group { display:none; max-width:780px; margin:0 auto; }
+.faq__group.active { display:block; }
+.faq__group-title { font-family:var(--sans); font-size:8.5px; font-weight:500; letter-spacing:.34em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+.faq__group-title::after { content:''; flex:1; height:1px; background:var(--accent-border); }
+
+.faq__item { border-bottom:1px solid var(--border); }
+.faq__q { display:flex; justify-content:space-between; align-items:center; padding:24px 0; cursor:pointer; gap:20px; user-select:none; font-family:var(--serif); font-size:clamp(16px,1.8vw,20px); font-weight:700; color:var(--text-main); transition:color .3s; }
+.faq__q:hover { color:var(--primary); }
+.faq__icon { width:24px; height:24px; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:.3s; }
+.faq__icon svg { width:10px; height:10px; stroke:var(--text-sec); fill:none; stroke-width:2; transition:transform .3s; }
+.faq__item.open .faq__icon { background:var(--accent); border-color:var(--accent); }
+.faq__item.open .faq__icon svg { stroke:#fff; transform:rotate(45deg); }
+.faq__a { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); line-height:1.8; color:var(--text-sec); max-height:0; overflow:hidden; transition:max-height .45s ease, padding .3s; }
+.faq__item.open .faq__a { max-height:500px; padding-bottom:26px; }
+.faq__a a { color:var(--primary); transition:color .3s; }
+.faq__a a:hover { color:var(--accent); }
+.faq__a strong { color:var(--text-main); font-weight:600; }
+
+.faq__search-wrap { max-width:560px; margin:0 auto 48px; position:relative; }
+.faq__search { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:50px; padding:16px 52px 16px 24px; font-family:var(--body); font-size:17px; color:var(--text-main); outline:none; transition:.3s; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.faq__search::placeholder { color:var(--text-muted); }
+.faq__search:focus { border-color:var(--primary); box-shadow:0 2px 12px rgba(47,82,51,.1); }
+.faq__search-icon { position:absolute; right:20px; top:50%; transform:translateY(-50%); }
+.faq__search-icon svg { width:18px; height:18px; stroke:var(--text-muted); fill:none; stroke-width:1.5; }
+
+.faq__contact { max-width:780px; margin:36px auto 0; background:var(--primary); border-radius:14px; padding:32px 36px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+.faq__contact-text h3 { font-family:var(--serif); font-size:clamp(20px,2.5vw,28px); font-weight:700; color:#fff; margin-bottom:10px; }
+.faq__contact-text p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; }
+.faq__contact-actions { display:flex; gap:12px; flex-shrink:0; flex-wrap:wrap; }
+
+@media (max-width:680px) {
+  .faq__contact { flex-direction:column; padding:32px 24px; }
+  .faq__contact-actions { width:100%; }
+  .faq__contact-actions a { flex:1; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Torneos</a>
+        <a href="#"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html" class="active">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <a href="index.html#stats" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="#" onclick="openApp();return false;">Iniciar Sesión</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero__label">Tenemos las respuestas</div>
+  <h1 class="page-hero__title">Preguntas frecuentes</h1>
+  <div class="page-hero__title-line"></div>
+  <p class="page-hero__sub">Todo lo que necesitas saber sobre The Secret Golf Club, sus funcionalidades y cómo empezar.</p>
+</div>
+
+<!-- FAQ -->
+<section style="background:var(--surface)">
+
+  <!-- Search -->
+  <div class="faq__search-wrap reveal">
+    <input type="text" class="faq__search" placeholder="Busca tu pregunta..." id="faqSearch" oninput="searchFaq(this.value)">
+    <span class="faq__search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+  </div>
+
+  <!-- Tabs -->
+  <div class="faq__tabs reveal" id="faqTabs">
+    <button class="faq__tab active" onclick="showCategory('all')">Todas</button>
+    <button class="faq__tab" onclick="showCategory('inicio')">Primeros pasos</button>
+    <button class="faq__tab" onclick="showCategory('ligas')">Ligas y torneos</button>
+    <button class="faq__tab" onclick="showCategory('handicap')">Handicap y puntos</button>
+    <button class="faq__tab" onclick="showCategory('stats')">Estadísticas</button>
+    <button class="faq__tab" onclick="showCategory('precios')">Planes y precios</button>
+    <button class="faq__tab" onclick="showCategory('app')">App y técnico</button>
+  </div>
+
+  <!-- ALL (default) -->
+  <div class="faq__group active" id="cat-all">
+
+    <div class="faq__group-title">Primeros pasos</div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Necesito licencia de la federación para unirme a una liga?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí. Para jugar en un campo de golf federado en España es <strong>obligatorio tener licencia federativa</strong> vigente. Para unirte a una liga en The Secret Golf Club necesitas introducir tu <strong>número de licencia en vigor</strong> al registrarte — sin él no podrás acceder. Además, para jugar en un campo federado en España la licencia también es requisito del propio campo. Al registrarte con tu licencia arrancas con tu <strong>handicap oficial RFEG</strong> y la app lo recalcula automáticamente tras cada partida.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Cuánto tiempo se tarda en crear una liga?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Menos de 10 minutos. El flujo es: registrarte → crear tu liga → configurar el formato → compartir el enlace de invitación. En cuanto tus amigos se unan ya podéis empezar a crear torneos.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Cómo se unen mis amigos a la liga?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">El administrador de la liga genera un enlace de invitación único. Los jugadores entran al enlace, se registran con su email y su <strong>número de licencia federativa en vigor</strong>, y quedan vinculados a la liga automáticamente.</p></div>
+
+    <div class="faq__group-title" style="margin-top:40px">Ligas y torneos</div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Cuántos torneos puedo crear dentro de una liga?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Torneos <strong>ilimitados</strong> en todos los planes. Crea tantos eventos como quieras: jornadas semanales, torneos especiales de temporada, match-play entre jugadores concretos... sin ningún límite.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Los puntos de los torneos puntúan para la liga general?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí, y tú decides cómo. Puedes configurar si un torneo puntúa para el ranking general y con qué multiplicador. Un torneo especial puede valer el <strong>doble</strong> que una jornada normal.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Qué formatos de torneo están disponibles?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Actualmente los torneos se juegan en formato <strong>Stableford</strong>. Próximamente se añadirán más formatos: <strong>Stroke Play (Medal), Skins, Match Play y Ryder Cup</strong>.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Puedo tener varias ligas activas al mismo tiempo?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Con el plan Pro, sí: <strong>ligas ilimitadas</strong>. Puedes ser administrador de tu liga del trabajo, la del club y la familiar al mismo tiempo. Con Starter, solo una liga activa.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Puede el administrador borrar torneos o jugadores?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí. El administrador tiene control total: puede eliminar torneos, editar resultados, añadir o expulsar jugadores y modificar la configuración de la liga en cualquier momento.</p></div>
+
+    <div class="faq__group-title" style="margin-top:40px">Handicap y puntos</div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Cómo funciona el handicap dentro de la app?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Con cada partida registrada, calculamos tu nuevo handicap automáticamente usando el <strong>algoritmo WHS</strong>. Si te diste de alta con tu licencia RFEG, partimos de tu historial oficial; si no, el cálculo evoluciona desde el handicap inicial que introdujiste al unirte. En ligas de tipo pool, el administrador puede aplicar además su propio <strong>criterio de pool</strong>.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Es obligatorio tener licencia federativa para jugar al golf?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí. Para jugar en un campo de golf federado en España es <strong>obligatorio tener licencia federativa</strong> vigente. Es un requisito del campo, no de la app. La licencia también te asigna tu handicap oficial y es lo que usamos para que arranques con tu índice real al registrarte en The Secret Golf Club.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Cómo se calculan los puntos Stableford?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">El sistema estándar: <strong>Eagle = 4 pts, Birdie = 3 pts, Par = 2 pts, Bogey = 1 pt, Doble bogey o peor = 0 pts</strong>. El handicap se aplica hoyo a hoyo según el índice de dificultad (Stroke Index) del campo. Todo se calcula automáticamente.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Qué son los Skins y cómo se gestionan?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Los Skins son apuestas por hoyo: el jugador con el mejor resultado en un hoyo gana el "skin" de ese hoyo. Si hay empate, el skin se acumula al siguiente hoyo. En la app se registra el bote acumulado y los ganadores por hoyo. El cobro es entre los jugadores, la app no procesa pagos.</p></div>
+
+    <div class="faq__group-title" style="margin-top:40px">Estadísticas</div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Qué estadísticas puedo ver?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">En el plan Pro: <strong>evolución de puntos por jornada, análisis por hoyo (dónde puntúas más y menos), evolución del handicap de liga, porcentaje de hoyos en par o mejor, comparativas directas con otros jugadores</strong> e historial completo de temporadas anteriores.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Puedo comparar mis estadísticas con las de mis rivales?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí, con el plan Pro. Puedes seleccionar cualquier jugador de tu liga y comparar vuestros Stableford por ronda, vuestra evolución de handicap y vuestro rendimiento por hoyo. Muy útil para identificar dónde te gana o dónde le ganas.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Las estadísticas se guardan entre temporadas?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Con el plan Pro, sí. El historial completo de temporadas se conserva indefinidamente. Puedes comparar tu rendimiento actual con el de temporadas anteriores para ver tu progresión a largo plazo.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Puedo exportar mis datos?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí en el plan Pro: exportación de resultados, estadísticas y rankings en formato CSV/Excel. El plan Club incluye además acceso API para integrar los datos con sistemas propios.</p></div>
+
+    <div class="faq__group-title" style="margin-top:40px">Planes y precios</div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Puedo cambiar de plan en cualquier momento?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí, en cualquier momento. Si empiezas en Starter y te pasas a Pro, todos tus datos —torneos, estadísticas, historial— se conservan intactos. No hay permanencias ni penalizaciones por cambiar.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿El plan Starter es realmente gratis para siempre?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí. El plan Starter es <strong>gratuito sin límite de tiempo</strong>. No pedimos tarjeta de crédito para empezar. Si en algún momento quieres acceder a las funcionalidades avanzadas, te pasas a Pro.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Qué incluye la facturación anual?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Pagando anualmente el precio del plan Pro baja de <strong>9€ a 7€/mes</strong>, lo que equivale a dos meses gratis al año. Se cobra una única vez de forma anticipada.</p></div>
+
+    <div class="faq__group-title" style="margin-top:40px">App y técnico</div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Está disponible en iOS y Android?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí. La app está disponible en <strong>App Store</strong> (iOS) y <strong>Google Play</strong> (Android). También puedes acceder desde el navegador sin instalar nada en <a href="https://www.laligasecreta.es">laligasecreta.es</a>, con la misma experiencia.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Necesito internet durante la ronda para registrar la tarjeta?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Es recomendable tener conexión para sincronización en tiempo real, pero la app funciona en modo offline para el registro básico. Los datos se sincronizan automáticamente cuando recuperas señal.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Los datos de mis jugadores están seguros?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Sí. Todos los datos se almacenan de forma segura y nunca se comparten con terceros. Cumplimos con la normativa RGPD. Puedes solicitar la eliminación completa de tu cuenta y datos en cualquier momento desde la app.</p></div>
+    <div class="faq__item"><div class="faq__q" onclick="toggleFaq(this)">¿Qué pasa si encuentro un error o necesito ayuda?<span class="faq__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div><p class="faq__a">Puedes contactarnos en <a href="/cdn-cgi/l/email-protection#fc9493909dbc909d90959b9d8f999f8e99889dd2998f"><span class="__cf_email__" data-cfemail="ee8681828fae828f8287898f9d8b8d9c8b9a8fc08b9d">[email&#160;protected]</span></a>. Los usuarios Pro tienen soporte prioritario con respuesta en menos de 24h. Para el plan Starter, el tiempo de respuesta habitual es de 2-3 días laborables.</p></div>
+
+  </div>
+
+  <!-- Contact -->
+  <div class="faq__contact reveal">
+    <div class="faq__contact-text">
+      <h3>¿No encuentras lo que buscas?</h3>
+      <p>Escríbenos directamente. Respondemos en menos de 24 horas en días laborables.</p>
+    </div>
+    <div class="faq__contact-actions">
+      <a href="/cdn-cgi/l/email-protection#2b4344474a6b474a47424c4a584e48594e5f4a054e58" class="btn-lime">Contactar</a>
+      <a href="lls-precios.html" class="btn-outline">Ver precios</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos. Torneos, ranking, estadísticas y handicap oficial.</p></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="index.html#features">Funcionalidades</a></li><li><a href="index.html#how">Cómo funciona</a></li><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
+    <div class="footer__col"><h4>Contacto</h4><ul><li><a href="/cdn-cgi/l/email-protection#3b5354575a7b575a57525c5a485e58495e4f5a155e48"><span class="__cf_email__" data-cfemail="f991969598b9959895909e988a9c9a8b9c8d98d79c8a">[email&#160;protected]</span></a></li><li><a href="#">Instagram</a></li></ul></div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Powered by TSGC Scorecard</span>
+    <div class="footer__social">
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿No tienes cuenta? <a href="#" onclick="showRegister()">Solicitar acceso</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre completo</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Licencia RFEG (opcional)</label><input type="text" class="form__input" placeholder="CM01234567"></div>
+      <div class="form__group"><label class="form__label">Nombre de tu liga</label><input type="text" class="form__input" placeholder="Liga de los Martes"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Crear mi liga gratis</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Iniciar sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+<script>
+function showCategory(cat) {
+  document.querySelectorAll('.faq__group').forEach(g => g.classList.remove('active'));
+  document.querySelectorAll('.faq__tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('cat-all').classList.add('active');
+  event.target.classList.add('active');
+  // For simplicity all questions are in cat-all; real impl would filter
+}
+
+function searchFaq(val) {
+  const q

@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tipos de Competición — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background:var(--primary-dark); padding:100px 52px 64px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.page-hero::before {
+  content:''; position:absolute; top:-200px; left:50%; transform:translateX(-50%);
+  width:900px; height:900px; border-radius:50%;
+  background:radial-gradient(circle, rgba(132,176,38,.06) 0%, transparent 60%);
+  pointer-events:none;
+}
+.page-hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right, transparent, rgba(132,176,38,.35) 40%, rgba(132,176,38,.35) 60%, transparent);
+}
+.page-hero__eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:22px;
+}
+.page-hero__title {
+  font-family:var(--serif); font-size:clamp(34px,5.5vw,72px);
+  font-weight:700; color:#fff; line-height:1.08; margin-bottom:20px;
+}
+.page-hero__sub {
+  font-family:'Cormorant Garamond', Georgia, serif; font-style:italic; font-weight:300;
+  font-size:clamp(17px,1.9vw,23px); color:rgba(255,255,255,.6);
+  max-width:600px; margin:0 auto 16px; line-height:1.65;
+}
+.page-hero__jump {
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:32px; position:relative; z-index:1;
+}
+.jump-pill {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+  color:rgba(255,255,255,.65); border:1px solid rgba(255,255,255,.2); border-radius:40px;
+  padding:9px 20px; transition:.3s; cursor:pointer; text-decoration:none;
+}
+.jump-pill:hover { border-color:var(--accent); color:var(--accent); background:rgba(132,176,38,.08); }
+
+/* ── WRAP ── */
+.guide-wrap { max-width:1080px; margin:0 auto; padding:0 52px; }
+
+/* ── FORMAT CARDS (overview) ── */
+.formats-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  margin:64px 0 0;
+}
+.fmt-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:18px;
+  overflow:hidden; position:relative;
+  transition:border-color .3s, box-shadow .3s, transform .3s;
+}
+.fmt-card:hover {
+  border-color:var(--accent-border); box-shadow:0 12px 40px rgba(132,176,38,.12);
+  transform:translateY(-4px);
+}
+.fmt-card__header {
+  padding:32px 28px 24px; position:relative;
+  background:linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+}
+.fmt-card--pool .fmt-card__header {
+  background:linear-gradient(135deg, #1a2d1c 0%, #2b4a2e 100%);
+}
+.fmt-card--poolregular .fmt-card__header {
+  background:linear-gradient(135deg, #0f1e11 0%, #2F5233 60%, #1a3a1d 100%);
+}
+.fmt-card__num {
+  font-family:var(--serif); font-size:72px; font-weight:700; line-height:1;
+  color:rgba(255,255,255,.07); position:absolute; top:16px; right:20px;
+  user-select:none; pointer-events:none;
+}
+.fmt-card__icon {
+  width:48px; height:48px; border-radius:14px;
+  border:1px solid rgba(132,176,38,.3); background:rgba(132,176,38,.1);
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+}
+.fmt-card__icon svg { width:22px; height:22px; stroke:var(--accent); fill:none; stroke-width:1.8; }
+.fmt-card__badge {
+  font-family:var(--sans); font-size:7.5px; font-weight:700; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:8px; display:block;
+}
+.fmt-card__name {
+  font-family:var(--serif); font-size:clamp(20px,2.4vw,26px); font-weight:700;
+  color:#fff; line-height:1.2;
+}
+.fmt-card__body { padding:24px 28px 28px; }
+.fmt-card__desc {
+  font-family:var(--body); font-size:14px; line-height:1.8; color:var(--text-sec);
+  margin-bottom:20px;
+}
+.fmt-feats { display:flex; flex-direction:column; gap:9px; margin-bottom:24px; }
+.fmt-feat {
+  display:flex; gap:10px; align-items:flex-start;
+}
+.fmt-feat__dot {
+  width:6px; height:6px; border-radius:50%; background:var(--accent);
+  flex-shrink:0; margin-top:6px;
+}
+.fmt-feat__text {
+  font-family:var(--body); font-size:13px; line-height:1.6; color:var(--text-sec);
+}
+.fmt-feat__text strong { color:var(--text-main); font-weight:600; }
+.fmt-card__stats {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  padding-top:18px; border-top:1px solid var(--border);
+}
+.fmt-stat { text-align:center; }
+.fmt-stat__val {
+  font-family:var(--serif); font-size:22px; font-weight:700; color:var(--accent);
+  display:block; line-height:1;
+}
+.fmt-stat__lbl {
+  font-family:var(--sans); font-size:8px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--text-muted); margin-top:4px; display:block;
+}
+.fmt-card__cta {
+  display:block; text-align:center;
+  font-family:var(--sans); font-size:9px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--primary); background:var(--highlight); border:1px solid var(--accent-border);
+  border-radius:var(--r); padding:12px; margin-top:16px; transition:.3s;
+}
+.fmt-card__cta:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* ── COMPARISON TABLE ── */
+.compare-section {
+  background:var(--primary-dark); border-radius:24px; padding:52px 44px;
+  margin:72px 0;
+}
+.compare-header { text-align:center; margin-bottom:44px; }
+.compare-header__label {
+  font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.36em; text-transform:uppercase;
+  color:var(--accent); display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:14px;
+}
+.compare-header__label::before, .compare-header__label::after { content:''; width:36px; height:1px; background:var(--accent); }
+.compare-header__title {
+  font-family:var(--serif); font-size:clamp(22px,3vw,36px); font-weight:700; color:#fff;
+}
+.compare-table { width:100%; border-collapse:collapse; }
+.compare-table th {
+  font-family:var(--sans); font-size:9px; font-weight:700; letter-spacing:.24em; text-transform:uppercase;
+  padding:16px 20px; text-align:center; color:rgba(255,255,255,.4);
+}
+.compare-table th.th-feature { text-align:left; }
+.compare-table th.th-liga { color:var(--accent); border-bottom:2px solid rgba(132,176,38,.4); }
+.compare-table th.th-pool { color:rgba(132,176,38,.7); border-bottom:2px solid rgba(132,176,38,.2); }
+.compare-table th.th-poolreg { color:#fff; border-bottom:2px solid rgba(255,255,255,.2); }
+.compare-table td {
+  padding:14px 20px; border-top:1px solid rgba(255,255,255,.06);
+  font-family:var(--body); font-size:13px; color:rgba(255,255,255,.55);
+  text-align:center; vertical-align:middle;
+}
+.compare-table td.td-feature {
+  text-align:left; font-family:var(--sans); font-size:8.5px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35);
+}
+.compare-table tr:hover td { background:rgba(255,255,255,.025); }
+.compare-table td.td-liga { color:rgba(255,255,255,.85); }
+.cmp-yes {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:50%; background:rgba(132,176,38,.15);
+  border:1px solid rgba(132,176,38,.3);
+}
+.cmp-yes svg { width:12px; height:12px; stroke:var(--accent); fill:none; stroke-width:2.5; }
+.cmp-no {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+}
+.cmp-no svg { width:12px; height:12px; stroke:rgba(255,255,255,.25); fill:none; stroke-width:2; }
+.cmp-badge {
+  display:inline-block; font-family:var(--sans); font-size:8px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:4px 10px; border-radius:20px;
+}
+.cmp-badge--green { color:var(--accent); background:rgba(132,176,38,.12); border:1px solid rgba(132,176,38,.25); }
+.cmp-badge--dim   { color:rgba(255,255,255,.35); background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); }
+.cmp-badge--white { color:rgba(255,255,255,.75); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.15); }
+.cmp-steps {
+  font-family:var(--serif); font-size:20px; font-weight:700;
+}
+.cmp-steps--accent { color:var(--accent); }
+.cmp-steps--dim    { color:rgba(255,255,255,.4); }
+
+/* ── SECTION DIVIDER ── */
+.guide-divider {
+  display:flex; align-items:center; gap:16px; margin:56px 0 32px;
+}
+.guide-divider__line { flex:1; height:1px; background:var(--border); }
+.guide-divider__label {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.34em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap;
+}
+
+/* ── FORMAT DETAIL BLOCKS ── */
+.detail-block {
+  margin-bottom:80px; scroll-margin-top:88px;
+}
+.detail-header {
+  display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:start;
+  background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  padding:36px 40px; margin-bottom:28px;
+}
+.detail-header__icon-wrap {
+  width:60px; height:60px; border-radius:16px; flex-shrink:0;
+  background:linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.detail-header__icon-wrap svg { width:28px; height:28px; stroke:#fff; fill:none; stroke-width:1.8; }
+.detail-header__tag {
+  font-family:var(--sans); font-size:8.5px; font-weight:700; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:8px; display:block;
+}
+.detail-header__title {
+  font-family:var(--serif); font-size:clamp(24px,3vw,36px); font-weight:700;
+  color:var(--text-main); line-height:1.15; margin-bottom:12px;
+}
+.detail-header__desc {
+  font-family:var(--body); font-size:clamp(14px,1.4vw,16px); line-height:1.85; color:var(--text-sec);
+  max-width:640px;
+}
+
+/* Detail feature grid */
+.detail-feats {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:28px;
+}
+.detail-feat {
+  background:var(--bg-main); border:1px solid var(--border); border-radius:12px;
+  padding:20px 22px; transition:border-color .3s;
+}
+.detail-feat:hover { border-color:var(--accent-border); }
+.detail-feat__icon {
+  width:36px; height:36px; border-radius:10px; background:var(--highlight);
+  border:1px solid var(--accent-border); display:flex; align-items:center;
+  justify-content:center; margin-bottom:12px;
+}
+.detail-feat__icon svg { width:16px; height:16px; stroke:var(--primary); fill:none; stroke-width:2; }
+.detail-feat__title {
+  font-family:var(--serif); font-size:15px; font-weight:700; color:var(--text-main); margin-bottom:5px;
+}
+.detail-feat__text {
+  font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec);
+}
+
+/* Steps summary */
+.steps-strip {
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:28px 32px; margin-bottom:28px;
+}
+.steps-strip__label {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--text-muted); margin-bottom:20px;
+}
+.steps-list { display:flex; gap:0; position:relative; }
+.steps-list::before {
+  content:''; position:absolute; top:18px; left:26px; right:26px; height:1px;
+  background:var(--border); z-index:0;
+}
+.step-item { flex:1; text-align:center; position:relative; z-index:1; }
+.step-item__num {
+  width:36px; height:36px; border-radius:50%;
+  background:var(--surface); border:2px solid var(--border);
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--sans); font-size:11px; font-weight:700; color:var(--text-muted);
+  margin-bottom:8px; transition:.3s;
+}
+.step-item:first-child .step-item__num,
+.step-item:last-child .step-item__num {
+  border-color:var(--accent); color:var(--accent); background:var(--highlight);
+}
+.step-item__label {
+  font-family:var(--sans); font-size:8px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--text-muted); line-height:1.4;
+  display:block;
+}
+
+/* Handicap pills */
+.hcp-options {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:28px;
+}
+.hcp-opt {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:20px 22px; transition:border-color .3s;
+}
+.hcp-opt--active { border-color:var(--accent-border); background:var(--highlight); }
+.hcp-opt__name {
+  font-family:var(--sans); font-size:9px; font-weight:700; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--primary); margin-bottom:8px;
+}
+.hcp-opt--active .hcp-opt__name { color:var(--accent); }
+.hcp-opt__desc {
+  font-family:var(--body); font-size:13px; line-height:1.65; color:var(--text-sec);
+}
+
+/* Economics block */
+.econ-block {
+  background:var(--primary-dark); border-radius:16px; padding:36px 36px; margin-bottom:28px;
+}
+.econ-block__title {
+  font-family:var(--serif); font-size:20px; font-weight:700; color:#fff; margin-bottom:20px;
+}
+.econ-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.econ-item { text-align:center; }
+.econ-item__val {
+  font-family:var(--serif); font-size:28px; font-weight:700; color:var(--accent);
+  display:block; margin-bottom:4px;
+}
+.econ-item__lbl {
+  font-family:var(--sans); font-size:8px; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+}
+.econ-item__desc {
+  font-family:var(--body); font-size:12px; color:rgba(255,255,255,.45);
+  margin-top:6px; line-height:1.5;
+}
+
+/* Advanced features for Pool Regular */
+.adv-features { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:28px; }
+.adv-feat {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:18px 20px; transition:border-color .3s;
+}
+.adv-feat:hover { border-color:var(--accent-border); }
+.adv-feat__icon {
+  font-family:var(--serif); font-size:24px; color:var(--accent); margin-bottom:10px;
+}
+.adv-feat__title {
+  font-family:var(--sans); font-size:9px; font-weight:700; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--text-main); margin-bottom:6px;
+}
+.adv-feat__desc {
+  font-family:var(--body); font-size:12px; line-height:1.65; color:var(--text-sec);
+}
+
+/* ── COMMON ELEMENTS ── */
+.common-section {
+  background:var(--bg-main); border:1px solid var(--border); border-radius:20px;
+  padding:48px 44px; margin-bottom:56px;
+}
+.common-section__header { margin-bottom:36px; }
+.common-section__title {
+  font-family:var(--serif); font-size:clamp(20px,2.5vw,28px); font-weight:700;
+  color:var(--text-main); margin-bottom:10px;
+}
+.common-section__sub {
+  font-family:var(--body); font-size:15px; color:var(--text-sec); line-height:1.7;
+}
+.common-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+.common-item {
+  display:flex; gap:14px; align-items:flex-start;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:18px 20px;
+}
+.common-item__icon {
+  flex-shrink:0; width:36px; height:36px; border-radius:10px;
+  background:var(--highlight); border:1px solid var(--accent-border);
+  display:flex; align-items:center; justify-content:center;
+}
+.common-item__icon svg { width:16px; height:16px; stroke:var(--primary); fill:none; stroke-width:2; }
+.common-item__title {
+  font-family:var(--serif); font-size:15px; font-weight:700; color:var(--text-main); margin-bottom:4px;
+}
+.common-item__text {
+  font-family:var(--body); font-size:13px; line-height:1.65; color:var(--text-sec);
+}
+
+/* ── FAQ ── */
+.faq-section { margin-bottom:56px; }
+.faq-item {
+  border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:10px;
+}
+.faq-q {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:18px 22px; cursor:pointer;
+  font-family:var(--serif); font-size:16px; font-weight:700; color:var(--text-main);
+  background:var(--surface); transition:background .2s;
+  gap:16px;
+}
+.faq-q:hover { background:var(--highlight); }
+.faq-q svg { flex-shrink:0; width:16px; height:16px; stroke:var(--text-muted); fill:none; stroke-width:2; transition:transform .3s; }
+.faq-item.open .faq-q { background:var(--highlight); }
+.faq-item.open .faq-q svg { transform:rotate(180deg); stroke:var(--accent); }
+.faq-a {
+  display:none; padding:0 22px 18px;
+  font-family:var(--body); font-size:15px; line-height:1.8; color:var(--text-sec);
+  background:var(--surface);
+}
+.faq-item.open .faq-a { display:block; }
+.faq-a strong { color:var(--text-main); }
+
+/* ── CTA ── */
+.guide-cta {
+  background:var(--primary); border-radius:20px; padding:64px 48px;
+  text-align:center; margin:0 0 80px;
+}
+.guide-cta h2 {
+  font-family:var(--serif); font-size:clamp(22px,3vw,36px); font-weight:700;
+  color:#fff; margin-bottom:14px;
+}
+.guide-cta p {
+  font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7);
+  line-height:1.7; margin-bottom:32px; max-width:520px; margin-left:auto; margin-right:auto;
+}
+.guide-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ── NOTE / TIP ── */
+.note-tip {
+  display:flex; gap:12px; background:var(--bg-main); border:1px solid var(--border);
+  border-radius:10px; padding:14px 18px; align-items:flex-start; margin-bottom:24px;
+}
+.note-tip svg { width:15px; height:15px; stroke:var(--accent); fill:none; stroke-width:2; flex-shrink:0; margin-top:2px; }
+.note-tip p { font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec); }
+.note-tip p strong { color:var(--text-main); }
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  .guide-wrap { padding:0 28px; }
+  .formats-grid { grid-template-columns:1fr; gap:16px; }
+  .fmt-card__header { padding:24px 22px 18px; }
+  .fmt-card__body { padding:20px 22px 22px; }
+  .compare-section { padding:36px 24px; }
+  .compare-table th, .compare-table td { padding:10px 12px; font-size:12px; }
+  .compare-table td.td-feature { font-size:8px; }
+  .detail-header { grid-template-columns:1fr; gap:16px; padding:28px 28px; }
+  .detail-feats { grid-template-columns:1fr; }
+  .adv-features { grid-template-columns:1fr 1fr; }
+  .common-grid { grid-template-columns:1fr; }
+  .econ-grid { grid-template-columns:1fr; }
+}
+@media (max-width:680px) {
+  .page-hero { padding:88px 20px 52px; }
+  .formats-grid { margin-top:44px; }
+  .guide-wrap { padding:0 16px; }
+  .compare-section { padding:28px 18px; overflow-x:auto; }
+  .compare-table { min-width:480px; }
+  .detail-feats { grid-template-columns:1fr; }
+  .detail-header { padding:24px 20px; }
+  .steps-list { gap:0; overflow-x:auto; }
+  .hcp-options { grid-template-columns:1fr; }
+  .adv-features { grid-template-columns:1fr; }
+  .econ-block { padding:28px 20px; }
+  .guide-cta { padding:40px 22px; }
+  .common-section { padding:32px 20px; }
+  .steps-strip { padding:22px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html" class="active"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+          <div class="nav__dropdown__divider"></div>
+          <a href="guia-usuario.html"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Manual del jugador</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+    <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Manual del jugador</div>
+    <a href="guia-usuario.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Índice completo</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="lls-precios.html" class="btn-lime" style="display:block;text-align:center;">Crear mi liga gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero__eyebrow">
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+    Formatos de Competición
+  </div>
+  <h1 class="page-hero__title">Elige el formato<br>de tu grupo</h1>
+  <div style="width:48px;height:2px;background:var(--accent);margin:0 auto 20px;"></div>
+  <p class="page-hero__sub">Tres formatos diseñados para distintos estilos de grupo: desde la liga clásica por puntos hasta la pool con apuesta real en cada jornada.</p>
+  <div class="page-hero__jump">
+    <a href="#liga-regular" class="jump-pill">Liga Regular</a>
+    <a href="#pool" class="jump-pill">Pool</a>
+    <a href="#pool-regular" class="jump-pill">Pool Regular</a>
+    <a href="#comparativa" class="jump-pill">Comparativa</a>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="guide-wrap">
+
+  <!-- FORMAT CARDS -->
+  <div class="formats-grid reveal">
+
+    <!-- Liga Regular -->
+    <div class="fmt-card">
+      <div class="fmt-card__header">
+        <div class="fmt-card__num">01</div>
+        <div class="fmt-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+        </div>
+        <span class="fmt-card__badge">El clásico</span>
+        <div class="fmt-card__name">Liga Regular</div>
+      </div>
+      <div class="fmt-card__body">
+        <p class="fmt-card__desc">El formato de liga tradicional. Cada jugador entrega sus mejores tarjetas durante la temporada y el ranking se decide por puntos Stableford acumulados.</p>
+        <div class="fmt-feats">
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Ranking por Stableford o golpes</strong> — acumula tus mejores N tarjetas de la temporada</div>
+          </div>
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Hándicap TSGC o RFEG</strong> — gestión interna o federativa</div>
+          </div>
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Sistema de slots y recompra</strong> — sustituye tu peor tarjeta cuando mejoras</div>
+          </div>
+        </div>
+        <div class="fmt-card__stats">
+          <div class="fmt-stat">
+            <span class="fmt-stat__val">6</span>
+            <span class="fmt-stat__lbl">Pasos de config.</span>
+          </div>
+          <div class="fmt-stat">
+            <span class="fmt-stat__val">2</span>
+            <span class="fmt-stat__lbl">Tipos de hándicap</span>
+          </div>
+        </div>
+        <a href="#liga-regular" class="fmt-card__cta">Ver en detalle →</a>
+      </div>
+    </div>
+
+    <!-- Pool -->
+    <div class="fmt-card fmt-card--pool">
+      <div class="fmt-card__header">
+        <div class="fmt-card__num">02</div>
+        <div class="fmt-card__icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <span class="fmt-card__badge">La apuesta</span>
+        <div class="fmt-card__name">Pool</div>
+      </div>
+      <div class="fmt-card__body">
+        <p class="fmt-card__desc">Golf con dinero real en cada jornada. Quien juega mejor cobra; quien queda último paga más. El ranking final es el balance económico neto de la temporada.</p>
+        <div class="fmt-feats">
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Ranking por balance económico</strong> — premios cobrados menos cuotas pagadas</div>
+          </div>
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Hándicap RFEG oficial</strong> — actualizado cada noche automáticamente</div>
+          </div>
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Bote acumulado de temporada</strong> — crece evento a evento, se reparte al final</div>
+          </div>
+        </div>
+        <div class="fmt-card__stats">
+          <div class="fmt-stat">
+            <span class="fmt-stat__val">4</span>
+            <span class="fmt-stat__lbl">Pasos de config.</span>
+          </div>
+          <div class="fmt-stat">
+            <span class="fmt-stat__val">1</span>
+            <span class="fmt-stat__lbl">Tipo de hándicap</span>
+          </div>
+        </div>
+        <a href="#pool" class="fmt-card__cta">Ver en detalle →</a>
+      </div>
+    </div>
+
+    <!-- Pool Regular -->
+    <div class="fmt-card fmt-card--poolregular">
+      <div class="fmt-card__header">
+        <div class="fmt-card__num">03</div>
+        <div class="fmt-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span class="fmt-card__badge">El completo</span>
+        <div class="fmt-card__name">Pool Regular</div>
+      </div>
+      <div class="fmt-card__body">
+        <p class="fmt-card__desc">Lo mejor de los dos mundos: economía real en cada jornada más un ranking anual por puntos. El formato más completo y flexible de la plataforma.</p>
+        <div class="fmt-feats">
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Ranking por puntos + economía</strong> — posición en cada evento genera puntos anuales</div>
+          </div>
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>3 tipos de hándicap</strong> — Pool, TSGC o RFEG según prefiera el grupo</div>
+          </div>
+          <div class="fmt-feat">
+            <div class="fmt-feat__dot"></div>
+            <div class="fmt-feat__text"><strong>Bonificaciones y logros</strong> — premios extra por rendimiento Stableford y hitos especiales</div>
+          </div>
+        </div>
+        <div class="fmt-card__stats">
+          <div class="fmt-stat">
+            <span class="fmt-stat__val">6</span>
+            <span class="fmt-stat__lbl">Pasos de config.</span>
+          </div>
+          <div class="fmt-stat">
+            <span class="fmt-stat__val">3</span>
+            <span class="fmt-stat__lbl">Tipos de hándicap</span>
+          </div>
+        </div>
+        <a href="#pool-regular" class="fmt-card__cta">Ver en detalle →</a>
+      </div>
+    </div>
+
+  </div><!-- /formats-grid -->
+
+
+  <!-- COMPARISON TABLE -->
+  <div id="comparativa" class="compare-section reveal" style="scroll-margin-top:88px;">
+    <div class="compare-header">
+      <div class="compare-header__label">Comparativa</div>
+      <h2 class="compare-header__title">¿Cuál encaja con vuestro grupo?</h2>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="th-feature">Característica</th>
+            <th class="th-liga">Liga Regular</th>
+            <th class="th-pool">Pool</th>
+            <th class="th-poolreg">Pool Regular</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-feature">Base del ranking</td>
+            <td class="td-liga"><span class="cmp-badge cmp-badge--green">Puntos SF / Golpes</span></td>
+            <td><span class="cmp-badge cmp-badge--dim">Balance económico (€)</span></td>
+            <td><span class="cmp-badge cmp-badge--white">Puntos + Economía</span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Hándicap disponible</td>
+            <td class="td-liga">TSGC o RFEG</td>
+            <td>Solo RFEG</td>
+            <td>Pool, TSGC o RFEG</td>
+          </tr>
+          <tr>
+            <td class="td-feature">Economía por evento</td>
+            <td class="td-liga"><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Bote de temporada</td>
+            <td class="td-liga"><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Slots de tarjeta</td>
+            <td class="td-liga"><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Recompra de tarjeta</td>
+            <td class="td-liga"><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Torneos oficiales</td>
+            <td class="td-liga">Opcional</td>
+            <td>Parte del sistema</td>
+            <td>Parte del sistema</td>
+          </tr>
+          <tr>
+            <td class="td-feature">Eventos con multiplicador</td>
+            <td class="td-liga"><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Bonificaciones SF</td>
+            <td class="td-liga"><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Logros especiales</td>
+            <td class="td-liga"><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Ryder Cup</td>
+            <td class="td-liga"><span class="cmp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+          </tr>
+          <tr>
+            <td class="td-feature">Pasos de configuración</td>
+            <td class="td-liga"><span class="cmp-steps cmp-steps--accent">6</span></td>
+            <td><span class="cmp-steps cmp-steps--dim">4</span></td>
+            <td><span class="cmp-steps cmp-steps--dim">6</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       LIGA REGULAR
+       ══════════════════════════════════ -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Formato 01</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div id="liga-regular" class="detail-block reveal">
+    <div class="detail-header">
+      <div class="detail-header__icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+      </div>
+      <div>
+        <span class="detail-header__tag">Liga Regular · Formato clásico</span>
+        <h2 class="detail-header__title">La liga de temporada,<br>a tu manera</h2>
+        <p class="detail-header__desc">El formato clásico de liga deportiva trasladado al golf. Cada jugador acumula puntos Stableford (o golpes) entregando sus mejores tarjetas a lo largo de la temporada. El ranking final refleja consistencia y rendimiento puntual en los torneos organizados.</p>
+      </div>
+    </div>
+
+    <div class="detail-feats reveal">
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="detail-feat__title">Sistema de slots</div>
+        <div class="detail-feat__text">Cada jugador tiene un número máximo de tarjetas que cuentan en el ranking (<em>numPartidos</em>). Puede jugar más rondas, pero solo las N mejores suman.</div>
+      </div>
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.41"/></svg>
+        </div>
+        <div class="detail-feat__title">Recompra de tarjeta</div>
+        <div class="detail-feat__text">Con slots llenos, si llega una tarjeta mejor se puede sustituir la peor: <strong>automática</strong> (el sistema lo hace solo, obligatoria con criterio «Todas») o <strong>manual con token</strong> (el jugador confirma gastando un crédito asignado por el admin).</div>
+      </div>
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="detail-feat__title">Torneos con bonus</div>
+        <div class="detail-feat__text">Activa torneos oficiales con puntos extra por posición y define un mínimo de torneos requeridos en el ranking final de temporada.</div>
+      </div>
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="8" x2="8" y2="8"/><line x1="16" y1="12" x2="8" y2="12"/><line x1="10" y1="16" x2="8" y2="16"/></svg>
+        </div>
+        <div class="detail-feat__title">Criterio de entrega</div>
+        <div class="detail-feat__text"><strong>Antes</strong> (declara antes de salir), <strong>Después</strong> (decide al terminar) o <strong>Todas</strong> — en este modo el sistema entrega todas las tarjetas válidas automáticamente y solo conserva las N mejores en el ranking, sustituyendo la peor en cuanto llega una mejor.</div>
+      </div>
+    </div>
+
+    <!-- Handicap options -->
+    <div class="guide-divider reveal" style="margin-top:0;">
+      <div class="guide-divider__line"></div>
+      <div class="guide-divider__label">Tipos de hándicap</div>
+      <div class="guide-divider__line"></div>
+    </div>
+    <div class="hcp-options reveal">
+      <div class="hcp-opt hcp-opt--active">
+        <div class="hcp-opt__name">TSGC (por defecto)</div>
+        <div class="hcp-opt__desc">La plataforma gestiona un índice propio para cada jugador, calculado con el algoritmo WHS (últimas 20 rondas, soft cap +3.0, hard cap +5.0). Se actualiza automáticamente tras cada tarjeta válida. No es el hándicap federativo; solo refleja las rondas jugadas dentro de la app.</div>
+      </div>
+      <div class="hcp-opt">
+        <div class="hcp-opt__name">RFEG (oficial)</div>
+        <div class="hcp-opt__desc">El índice oficial de la Real Federación Española de Golf, importado cada noche de forma automática. La app no realiza ningún cálculo interno; el índice lo actualiza la federación con todas las rondas homologadas del jugador.</div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-strip reveal">
+      <div class="steps-strip__label">6 pasos de configuración</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-item__num">1</div><span class="step-item__label">Tipo</span></div>
+        <div class="step-item"><div class="step-item__num">2</div><span class="step-item__label">Datos básicos</span></div>
+        <div class="step-item"><div class="step-item__num">3</div><span class="step-item__label">Orden de mérito</span></div>
+        <div class="step-item"><div class="step-item__num">4</div><span class="step-item__label">Gestión de tarjetas</span></div>
+        <div class="step-item"><div class="step-item__num">5</div><span class="step-item__label">Plantilla de eventos</span></div>
+        <div class="step-item"><div class="step-item__num">6</div><span class="step-item__label">Revisión y código</span></div>
+      </div>
+    </div>
+
+    <div class="note-tip reveal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p>Al crear la liga se genera un <strong>código de invitación</strong> (ej. <code>LIGA2026</code>) que los jugadores usan para registrarse. El código aparece con un botón de WhatsApp para enviarlo directamente al grupo.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       POOL
+       ══════════════════════════════════ -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Formato 02</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div id="pool" class="detail-block reveal">
+    <div class="detail-header">
+      <div class="detail-header__icon-wrap" style="background:linear-gradient(135deg,#1a2d1c 0%,#3a6640 100%);">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div>
+        <span class="detail-header__tag">Pool · La apuesta semanal</span>
+        <h2 class="detail-header__title">Cada jornada tiene<br>un ganador real</h2>
+        <p class="detail-header__desc">El formato pensado para grupos que se reúnen periódicamente y quieren que cada jornada tenga una dimensión económica real. No hay ranking de puntos Stableford: la clasificación de temporada se construye a partir del balance económico neto de cada jugador.</p>
+      </div>
+    </div>
+
+    <div class="econ-block reveal">
+      <div class="econ-block__title">Economía de la jornada</div>
+      <div class="econ-grid">
+        <div class="econ-item">
+          <span class="econ-item__val">€</span>
+          <span class="econ-item__lbl">Cuota por evento</span>
+          <div class="econ-item__desc">Cada jugador paga al inscribirse. El total recaudado es el pozo del día.</div>
+        </div>
+        <div class="econ-item">
+          <span class="econ-item__val">%</span>
+          <span class="econ-item__lbl">Al bote de temporada</span>
+          <div class="econ-item__desc">Fracción de cada cuota que se aparta. Crece durante toda la temporada.</div>
+        </div>
+        <div class="econ-item">
+          <span class="econ-item__val">+€</span>
+          <span class="econ-item__lbl">Extra al último</span>
+          <div class="econ-item__desc">El peor clasificado de la jornada paga un importe adicional al bote.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-feats reveal">
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="detail-feat__title">Tramos de reparto de premios</div>
+        <div class="detail-feat__text">Define cuántos jugadores cobran y cuánto según el número de inscritos en el evento. Configura importes fijos o porcentajes del pozo total.</div>
+      </div>
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="detail-feat__title">Hándicap RFEG automático</div>
+        <div class="detail-feat__text">La Pool usa únicamente el índice oficial de la federación. Sin gestión interna, sin parámetros adicionales. Se actualiza solo cada noche.</div>
+      </div>
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="detail-feat__title">Balance económico neto</div>
+        <div class="detail-feat__text">El ranking de temporada no es de puntos sino de euros: suma de todos los premios cobrados menos todas las cuotas pagadas en la temporada.</div>
+      </div>
+      <div class="detail-feat">
+        <div class="detail-feat__icon">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="detail-feat__title">Grand Slam y Gran Final</div>
+        <div class="detail-feat__text">Plantillas para eventos especiales con sus propias condiciones económicas y distribución de premios, distintas a los eventos ordinarios.</div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-strip reveal">
+      <div class="steps-strip__label">4 pasos de configuración — el más sencillo</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-item__num">1</div><span class="step-item__label">Tipo</span></div>
+        <div class="step-item"><div class="step-item__num">2</div><span class="step-item__label">Datos básicos</span></div>
+        <div class="step-item"><div class="step-item__num">3</div><span class="step-item__label">Economía</span></div>
+        <div class="step-item"><div class="step-item__num">4</div><span class="step-item__label">Revisión</span></div>
+      </div>
+    </div>
+
+    <div class="note-tip reveal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p>En la Pool no existe el sistema de slots ni la recompra: cada evento se evalúa de forma independiente. <strong>El jugar en el campo es todo lo que necesitas hacer</strong> para que el sistema calcule resultados y distribuya premios.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       POOL REGULAR
+       ══════════════════════════════════ -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Formato 03</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div id="pool-regular" class="detail-block reveal">
+    <div class="detail-header">
+      <div class="detail-header__icon-wrap" style="background:linear-gradient(135deg,#0f1e11 0%,#84B026 100%);">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div>
+        <span class="detail-header__tag">Pool Regular · El formato completo</span>
+        <h2 class="detail-header__title">La emoción económica<br>con la tensión del ranking</h2>
+        <p class="detail-header__desc">La Pool Regular combina la estructura económica de la Pool con un sistema de ranking anual por puntos. Cada posición en cada evento genera puntos que se acumulan durante la temporada, creando una doble dimensión competitiva: quién gana dinero ese día y quién gana la temporada.</p>
+      </div>
+    </div>
+
+    <!-- Handicap 3 options -->
+    <div class="guide-divider reveal" style="margin-top:0;">
+      <div class="guide-divider__line"></div>
+      <div class="guide-divider__label">3 tipos de hándicap disponibles</div>
+      <div class="guide-divider__line"></div>
+    </div>
+    <div class="hcp-options reveal">
+      <div class="hcp-opt">
+        <div class="hcp-opt__name">Pool</div>
+        <div class="hcp-opt__desc">Índice interno ajustado por economía: sube cuando el jugador pierde dinero, baja cuando gana. Con parámetros configurables de apreciación, ajuste por euros y barras de salida.</div>
+      </div>
+      <div class="hcp-opt hcp-opt--active">
+        <div class="hcp-opt__name">TSGC</div>
+        <div class="hcp-opt__desc">Índice calculado por la plataforma con el algoritmo WHS. Parte del hándicap oficial como valor inicial y evoluciona con cada ronda completada en la app.</div>
+      </div>
+      <div class="hcp-opt">
+        <div class="hcp-opt__name">RFEG</div>
+        <div class="hcp-opt__desc">El índice oficial de la federación española, importado cada noche. Sin gestión interna; el slope se configura evento a evento en el campo.</div>
+      </div>
+    </div>
+
+    <!-- Advanced features -->
+    <div class="guide-divider reveal" style="margin-top:0;">
+      <div class="guide-divider__line"></div>
+      <div class="guide-divider__label">Herramientas avanzadas</div>
+      <div class="guide-divider__line"></div>
+    </div>
+    <div class="adv-features reveal">
+      <div class="adv-feat">
+        <div class="adv-feat__icon">★</div>
+        <div class="adv-feat__title">Bonificaciones SF</div>
+        <div class="adv-feat__desc">3 tramos de puntos extra por rendimiento Stableford (ej. ≥31 SF → +1 pt, ≥36 SF → +3 pts, ≥41 SF → +5 pts). Premian las vueltas excepcionales.</div>
+      </div>
+      <div class="adv-feat">
+        <div class="adv-feat__icon">⊙</div>
+        <div class="adv-feat__title">Logros especiales</div>
+        <div class="adv-feat__desc">Nearest pin, drive más largo, eagle, hoyo en uno… El admin registra los logros durante el evento y la app suma los puntos automáticamente.</div>
+      </div>
+      <div class="adv-feat">
+        <div class="adv-feat__icon">N</div>
+        <div class="adv-feat__title">Mejores N jornadas</div>
+        <div class="adv-feat__desc">Solo cuentan los N mejores resultados del año. Permite faltar alguna jornada sin quedar fuera de la clasificación.</div>
+      </div>
+      <div class="adv-feat">
+        <div class="adv-feat__icon">×</div>
+        <div class="adv-feat__title">Multiplicadores Grand Slam</div>
+        <div class="adv-feat__desc">Los eventos especiales (Grand Slam, Gran Final) pueden multiplicar los puntos base por posición, haciendo que esas jornadas decidan más.</div>
+      </div>
+      <div class="adv-feat">
+        <div class="adv-feat__icon">↑</div>
+        <div class="adv-feat__title">Ranking personalizado</div>
+        <div class="adv-feat__desc">Define la tabla de puntos por posición según el estilo de tu grupo (ej. 1.º=30, 2.º=20, 3.º=15, resto=5). Distribución plana o escalada.</div>
+      </div>
+      <div class="adv-feat">
+        <div class="adv-feat__icon">≥</div>
+        <div class="adv-feat__title">Participaciones mínimas</div>
+        <div class="adv-feat__desc">Fija un número mínimo de eventos para aparecer en el ranking final. Evita que alguien que jugó solo 2 eventos ocupe posiciones con puntuación alta.</div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-strip reveal">
+      <div class="steps-strip__label">6 pasos de configuración</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-item__num">1</div><span class="step-item__label">Tipo</span></div>
+        <div class="step-item"><div class="step-item__num">2</div><span class="step-item__label">Datos básicos</span></div>
+        <div class="step-item"><div class="step-item__num">3</div><span class="step-item__label">Clasificación y economía</span></div>
+        <div class="step-item"><div class="step-item__num">4</div><span class="step-item__label">Hándicap</span></div>
+        <div class="step-item"><div class="step-item__num">5</div><span class="step-item__label">Eventos especiales</span></div>
+        <div class="step-item"><div class="step-item__num">6</div><span class="step-item__label">Revisión</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- COMMON ELEMENTS -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Disponible en todos los formatos</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="common-section reveal">
+    <div class="common-section__header">
+      <h2 class="common-section__title">Funcionalidades compartidas</h2>
+      <p class="common-section__sub">Independientemente del formato elegido, todos los grupos tienen acceso a estas herramientas.</p>
+    </div>
+    <div class="common-grid">
+      <div class="common-item">
+        <div class="common-item__icon">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div>
+          <div class="common-item__title">Leaderboard en vivo</div>
+          <div class="common-item__text">La clasificación del evento se actualiza cada 30 segundos durante el juego. Todos los jugadores pueden seguir el estado del campo en tiempo real.</div>
+        </div>
+      </div>
+      <div class="common-item">
+        <div class="common-item__icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <div class="common-item__title">Juegos secundarios</div>
+          <div class="common-item__text">En cualquier partida: Match Play 1v1, Fourball 2v2, Sindicato y Skins. Corren en paralelo al registro para el ranking, sin interferir en el hándicap WHS.</div>
+        </div>
+      </div>
+      <div class="common-item">
+        <div class="common-item__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </div>
+        <div>
+          <div class="common-item__title">CaddieAI</div>
+          <div class="common-item__text">El asistente inteligente de la plataforma responde en lenguaje natural sobre rendimiento, clasificación, predicciones e historial de partidas.</div>
+        </div>
+      </div>
+      <div class="common-item">
+        <div class="common-item__icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="common-item__title">Rondas de 9 hoyos</div>
+          <div class="common-item__text">Todos los formatos aceptan medias vueltas (9 hoyos). El sistema extrapola el resultado para los cálculos de hándicap WHS cuando está configurado.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FAQ -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Preguntas frecuentes</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="faq-section reveal">
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Cuál es la diferencia principal entre Liga y Pool?
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a">
+        En la <strong>Liga</strong> el ranking se decide por puntos Stableford (o golpes) acumulados durante la temporada mediante un sistema de slots de tarjeta. En la <strong>Pool</strong> el ranking se decide por el balance económico neto: euros ganados menos euros pagados. La Liga puede usar hándicap TSGC (calculado internamente) o RFEG (oficial de la federación); la Pool usa siempre el RFEG sin gestión interna.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué ventaja tiene la Pool Regular frente a la Pool simple?
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a">
+        La <strong>Pool simple</strong> clasifica únicamente por dinero ganado. La <strong>Pool Regular</strong> añade un sistema de puntos por posición en cada evento que genera un ranking anual independiente. Además permite elegir entre tres tipos de hándicap y dispone de herramientas avanzadas: bonificaciones por Stableford, logros especiales, eventos con multiplicadores y sistema de mejores N jornadas.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué diferencia hay entre el hándicap TSGC y el RFEG?
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a">
+        El <strong>hándicap TSGC</strong> es un índice que la plataforma calcula internamente: parte del hándicap oficial del jugador como valor inicial y se actualiza automáticamente cada vez que completa una tarjeta válida en la app, aplicando el algoritmo WHS (últimas 20 rondas, soft cap +3.0, hard cap +5.0). No está vinculado a ninguna federación. El <strong>hándicap RFEG</strong> es el índice oficial de la federación española: se importa cada noche automáticamente y la app no ejecuta ningún cálculo propio.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Cuándo se fuerza la recompra automática en la Liga?
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a">
+        Cuando el criterio de entrega es <strong>"Todas"</strong>. En ese modo todas las tarjetas válidas se entregan automáticamente, por lo que si un jugador ya tiene los slots llenos, la sustitución también debe ser automática. No tendría sentido preguntar si quiere hacer una recompra cuando ya ha declarado de antemano que quiere entregar todas sus tarjetas.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué es el bote y cuándo se distribuye?
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a">
+        En Pool y Pool Regular, un porcentaje de cada cuota de evento se aparta en un <strong>bote acumulado</strong> que no se distribuye en el momento. Crece durante toda la temporada y se reparte en el evento Gran Final o al cerrar la temporada entre los primeros clasificados del ranking anual.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Puede un administrador gestionar varios formatos a la vez?
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a">
+        Sí. Cada liga o pool es independiente y tiene su propia temporada activa. Un mismo administrador puede gestionar, por ejemplo, una Liga y una Pool Regular para el mismo grupo de jugadores si así lo decide. Los jugadores pueden pertenecer a varias ligas simultáneamente.
+      </div>
+    </div>
+
+  </div><!-- /faq-section -->
+
+
+  <!-- CTA -->
+  <div class="guide-cta reveal">
+    <h2>¿Ya sabes cuál es el vuestro?</h2>
+    <p>Crea tu liga en 6 pasos y empieza a jugar esta temporada. El código de invitación permite a todos tus compañeros unirse al instante.</p>
+    <div class="guide-cta__btns">
+      <a href="lls-crear-liga.html" class="btn-lime">Crear mi liga gratis</a>
+      <a href="lls-precios.html" class="btn-outline" style="color:#fff;border-color:rgba(255,255,255,.3);">Ver precios</a>
+    </div>
+  </div>
+
+</div><!-- /guide-wrap -->
+
+<!-- FOOTER -->
+<footer style="background:var(--primary-dark);padding:60px 52px 40px;">
+  <div style="max-width:1080px;margin:0 auto;text-align:center;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <img src="assets/TSGC_icon.svg" style="width:28px;height:28px;" alt="TSGC">
+      <span style="font-family:var(--serif);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);">The Secret Golf Club</span>
+    </a>
+    <p style="font-family:var(--sans);font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.25);text-transform:uppercase;">© 2026 The Secret Golf Club · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">⛳</div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com" autocomplete="email"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+
+<script>
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

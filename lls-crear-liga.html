@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cómo crear una liga — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── CREAR LIGA PAGE ── */
+
+/* Intro section */
+.cl-intro { display:grid; grid-template-columns:1fr 400px; gap:60px; align-items:center; max-width:1100px; margin:0 auto 56px; }
+.cl-intro__text {}
+.cl-intro__label { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.34em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+.cl-intro__title { font-family:var(--serif); font-size:clamp(28px,3.5vw,42px); font-weight:700; color:var(--text-main); line-height:1.2; margin-bottom:20px; }
+.cl-intro__desc { font-family:var(--body); font-size:clamp(14px,1.4vw,17px); line-height:1.85; color:var(--text-sec); margin-bottom:32px; }
+.cl-intro__stats { display:flex; gap:32px; flex-wrap:wrap; }
+.cl-intro__stat { }
+.cl-intro__stat-num { font-family:var(--serif); font-size:32px; font-weight:700; color:var(--primary); line-height:1; margin-bottom:4px; }
+.cl-intro__stat-label { font-family:var(--sans); font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--text-muted); }
+.cl-intro__phone { display:flex; justify-content:center; }
+
+/* Phone mockup container */
+.phone-wrap { position:relative; display:inline-block; }
+.phone-wrap img { width:260px; max-width:100%; height:auto; display:block; border-radius:32px; box-shadow:0 24px 60px rgba(0,0,0,.18), 0 8px 20px rgba(0,0,0,.1); }
+.phone-wrap--large img { width:300px; }
+
+/* Step divider */
+.cl-steps-label { text-align:center; margin-bottom:32px; }
+.cl-steps-label__line { display:flex; align-items:center; gap:24px; max-width:700px; margin:0 auto; }
+.cl-steps-label__line::before, .cl-steps-label__line::after { content:''; flex:1; height:1px; background:var(--border); }
+.cl-steps-label__text { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.34em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
+
+/* Steps */
+.cl-step { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; padding:48px 0; border-bottom:1px solid var(--border); max-width:1100px; margin:0 auto; }
+.cl-step:last-child { border-bottom:none; }
+.cl-step--reverse { direction:rtl; }
+.cl-step--reverse > * { direction:ltr; }
+
+.cl-step__content {}
+.cl-step__num { font-family:var(--serif); font-size:64px; font-weight:700; color:rgba(47,82,51,.08); line-height:1; margin-bottom:-8px; }
+.cl-step__tag { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.34em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; }
+.cl-step__title { font-family:var(--serif); font-size:clamp(22px,2.6vw,30px); font-weight:700; color:var(--text-main); margin-bottom:16px; line-height:1.25; }
+.cl-step__desc { font-family:var(--body); font-size:clamp(14px,1.35vw,16px); line-height:1.85; color:var(--text-sec); margin-bottom:24px; }
+
+/* Detail pills inside a step */
+.cl-details { display:flex; flex-direction:column; gap:12px; margin-top:4px; }
+.cl-detail { display:flex; gap:14px; align-items:flex-start; }
+.cl-detail__icon { flex-shrink:0; width:32px; height:32px; border-radius:8px; background:var(--highlight); display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.cl-detail__icon svg { width:15px; height:15px; stroke:var(--primary); fill:none; stroke-width:2; }
+.cl-detail__text { font-family:var(--body); font-size:14px; line-height:1.75; color:var(--text-sec); }
+.cl-detail__text strong { color:var(--text-main); font-weight:600; }
+
+/* Tip box */
+.cl-tip { display:flex; gap:13px; background:var(--highlight); border:1px solid var(--accent-border); border-radius:10px; padding:16px 18px; margin-top:20px; align-items:flex-start; }
+.cl-tip__icon { flex-shrink:0; margin-top:2px; }
+.cl-tip__icon svg { width:16px; height:16px; stroke:var(--accent); fill:none; stroke-width:2; }
+.cl-tip__text { font-family:var(--body); font-size:13px; line-height:1.75; color:var(--text-sec); }
+.cl-tip__text strong { color:var(--text-main); font-weight:600; }
+
+/* Phone visual side */
+.cl-step__visual { display:flex; justify-content:center; align-items:center; }
+
+/* Format comparison cards */
+.cl-format-cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
+.cl-format-card { border:1.5px solid var(--border); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:16px; transition:border-color .3s; }
+.cl-format-card--liga { border-color:rgba(47,82,51,.25); background:linear-gradient(135deg, rgba(47,82,51,.03) 0%, transparent 60%); }
+.cl-format-card--pool { border-color:rgba(132,176,38,.3); background:linear-gradient(135deg, rgba(132,176,38,.04) 0%, transparent 60%); }
+.cl-format-card__header { display:flex; gap:12px; align-items:flex-start; }
+.cl-format-card__icon { width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.cl-format-card--liga .cl-format-card__icon { background:rgba(47,82,51,.1); }
+.cl-format-card--liga .cl-format-card__icon svg { width:16px; height:16px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+.cl-format-card--pool .cl-format-card__icon { background:rgba(132,176,38,.12); }
+.cl-format-card--pool .cl-format-card__icon svg { width:16px; height:16px; stroke:var(--accent-dark); fill:none; stroke-width:1.8; }
+.cl-format-card__name { font-family:var(--serif); font-size:15px; font-weight:700; color:var(--text-main); line-height:1.2; }
+.cl-format-card__sub { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--text-muted); margin-top:3px; }
+.cl-format-card--liga .cl-format-card__sub { color:var(--primary); opacity:.7; }
+.cl-format-card--pool .cl-format-card__sub { color:var(--accent-dark); opacity:.8; }
+.cl-format-card__desc { font-family:var(--body); font-size:13px; line-height:1.8; color:var(--text-sec); }
+.cl-format-card__points { display:flex; flex-direction:column; gap:8px; border-top:1px solid var(--border); padding-top:14px; }
+.cl-format-card__point { display:flex; gap:9px; align-items:flex-start; font-family:var(--body); font-size:12.5px; line-height:1.6; color:var(--text-sec); }
+.cl-format-card__point svg { width:13px; height:13px; stroke:var(--accent); fill:none; stroke-width:2.5; flex-shrink:0; margin-top:3px; }
+
+.cl-format-card__section { border-top:1px solid var(--border); padding-top:14px; margin-top:4px; display:flex; flex-direction:column; gap:10px; }
+.cl-format-card__section-title { font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--primary); display:flex; align-items:center; gap:7px; }
+.cl-format-card__section-title svg { width:13px; height:13px; stroke:var(--primary); fill:none; stroke-width:1.8; flex-shrink:0; }
+.cl-format-card__section-desc { font-family:var(--body); font-size:12.5px; line-height:1.75; color:var(--text-sec); }
+
+.cl-format-card__options { display:flex; flex-direction:column; gap:7px; }
+.cl-format-card__option { background:var(--bg-main); border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+.cl-format-card__option-label { font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-main); display:block; margin-bottom:3px; }
+.cl-format-card__option-desc { font-family:var(--body); font-size:12px; line-height:1.65; color:var(--text-sec); }
+
+@media (max-width:640px) {
+  .cl-format-cards { grid-template-columns:1fr; }
+}
+
+/* Pool-exclusive block */
+.cl-pool { max-width:1100px; margin:0 auto; padding:60px 0; border-bottom:1px solid var(--border); }
+.cl-pool__header { display:flex; align-items:center; gap:16px; margin-bottom:48px; }
+.cl-pool__badge { background:var(--primary); color:#fff; font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.28em; text-transform:uppercase; padding:8px 18px; border-radius:40px; white-space:nowrap; flex-shrink:0; }
+.cl-pool__header-line { flex:1; height:1px; background:var(--border); }
+.cl-pool__header-text { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
+.cl-pool__intro { max-width:620px; margin-bottom:48px; }
+.cl-pool__intro h3 { font-family:var(--serif); font-size:clamp(20px,2.4vw,26px); font-weight:700; color:var(--text-main); margin-bottom:12px; }
+.cl-pool__intro p { font-family:var(--body); font-size:clamp(14px,1.35vw,16px); line-height:1.85; color:var(--text-sec); }
+.cl-pool__grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+.cl-pool__card { display:flex; flex-direction:column; gap:24px; }
+.cl-pool__card-phone { display:flex; justify-content:center; }
+.cl-pool__card-text {}
+.cl-pool__card-tag { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.3em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; display:block; }
+.cl-pool__card-title { font-family:var(--serif); font-size:clamp(17px,2vw,22px); font-weight:700; color:var(--text-main); margin-bottom:10px; }
+.cl-pool__card-desc { font-family:var(--body); font-size:14px; line-height:1.8; color:var(--text-sec); }
+.cl-pool__card-desc strong { color:var(--text-main); font-weight:600; }
+.cl-pool__items { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+.cl-pool__item { display:flex; gap:10px; align-items:flex-start; font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec); }
+.cl-pool__item::before { content:'→'; color:var(--accent); font-weight:700; flex-shrink:0; margin-top:1px; }
+.cl-pool__item strong { color:var(--text-main); font-weight:600; }
+
+@media (max-width:760px) {
+  .cl-pool__grid { grid-template-columns:1fr; gap:48px; }
+  .cl-pool__header { flex-wrap:wrap; }
+}
+
+/* CTA banner */
+.cl-cta { background:var(--primary); border-radius:20px; padding:64px 48px; text-align:center; margin:80px auto 0; max-width:860px; }
+.cl-cta h2 { font-family:var(--serif); font-size:clamp(24px,3vw,36px); font-weight:700; color:#fff; margin-bottom:14px; }
+.cl-cta p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; margin-bottom:32px; max-width:520px; margin-left:auto; margin-right:auto; }
+.cl-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .cl-intro { grid-template-columns:1fr; gap:48px; }
+  .cl-intro__phone { order:-1; }
+  .cl-intro__phone img { width:220px; }
+
+  .cl-step { grid-template-columns:1fr; gap:40px; }
+  .cl-step--reverse { direction:ltr; }
+  .cl-step__visual { order:-1; }
+
+  .phone-wrap img { width:220px; }
+  .phone-wrap--large img { width:240px; }
+
+  .cl-cta { padding:40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html" class="active"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Torneos</a>
+        <a href="#"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <a href="index.html#stats" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="#" onclick="openApp();return false;">Iniciar Sesión</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero__label">Guía paso a paso</div>
+  <h1 class="page-hero__title">Crea tu liga en minutos</h1>
+  <div class="page-hero__title-line"></div>
+  <p class="page-hero__sub">Desde el primer clic hasta el primer torneo — todo lo que necesitas para poner en marcha tu liga privada de golf.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<section style="background:var(--surface); padding-bottom:100px;">
+
+  <!-- INTRO -->
+  <div class="cl-intro reveal">
+    <div class="cl-intro__text">
+      <div class="cl-intro__label">Panel de administración</div>
+      <h2 class="cl-intro__title">Tu liga, bajo tu control total</h2>
+      <p class="cl-intro__desc">
+        El creador de la liga es su <strong>administrador</strong>. Desde el panel de administración puedes configurar cada detalle de la temporada, gestionar jugadores, crear torneos y ver el ranking en tiempo real — todo desde la app.
+      </p>
+      <div class="cl-intro__stats">
+        <div class="cl-intro__stat">
+          <div class="cl-intro__stat-num">&lt;10'</div>
+          <div class="cl-intro__stat-label">Para crear la liga</div>
+        </div>
+        <div class="cl-intro__stat">
+          <div class="cl-intro__stat-num">5</div>
+          <div class="cl-intro__stat-label">Pasos de configuración</div>
+        </div>
+        <div class="cl-intro__stat">
+          <div class="cl-intro__stat-num">∞</div>
+          <div class="cl-intro__stat-label">Torneos por temporada</div>
+        </div>
+      </div>
+    </div>
+    <div class="cl-intro__phone">
+      <div class="phone-wrap phone-wrap--large">
+        <img src="assets/CreaLiga/Acceso.webp" alt="Panel de administración The Secret Golf Club" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="cl-steps-label reveal">
+    <div class="cl-steps-label__line">
+      <span class="cl-steps-label__text">Los 5 pasos de configuración</span>
+    </div>
+  </div>
+
+  <!-- PASO 1: Tipo de liga -->
+  <div class="cl-step reveal">
+    <div class="cl-step__content">
+      <div class="cl-step__num">01</div>
+      <span class="cl-step__tag">Tipo de competición</span>
+      <h2 class="cl-step__title">Liga regular o Pool: ¿cuál es tu estilo?</h2>
+      <p class="cl-step__desc">
+        Son dos filosofías de juego distintas. La Liga gira en torno a la libertad individual — juegas cuando puedas, acumulas tarjetas y compites por el ranking. La Pool gira en torno al evento semanal — hay un torneo, te apuntas, y ese día se reparten premios y puntos.
+      </p>
+
+      <!-- Comparison cards -->
+      <div class="cl-format-cards">
+
+        <div class="cl-format-card cl-format-card--liga">
+          <div class="cl-format-card__header">
+            <div class="cl-format-card__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div>
+              <div class="cl-format-card__name">Liga regular</div>
+              <div class="cl-format-card__sub">Juega cuando quieras</div>
+            </div>
+          </div>
+          <p class="cl-format-card__desc">
+            Los jugadores salen al campo cuando quieran, con quien quieran — siempre que haya al menos otro miembro de la liga en la misma partida. Cada ronda genera una tarjeta, y tú decides exactamente cómo y cuándo puntúan para la clasificación.
+          </p>
+          <div class="cl-format-card__points">
+            <div class="cl-format-card__point">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Sin necesidad de eventos ni torneos fijados</span>
+            </div>
+            <div class="cl-format-card__point">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Hándicap calculado con todas las rondas jugadas — como torneos RFEG</span>
+            </div>
+          </div>
+
+          <!-- Cómo cuentan las tarjetas -->
+          <div class="cl-format-card__section">
+            <div class="cl-format-card__section-title">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Cómo cuentan las tarjetas
+            </div>
+            <div class="cl-format-card__options">
+              <div class="cl-format-card__option">
+                <span class="cl-format-card__option-label">Entrega voluntaria</span>
+                <span class="cl-format-card__option-desc">El jugador decide al entregar cada tarjeta si quiere que cuente para la clasificación o no. Máximo control, ronda a ronda.</span>
+              </div>
+              <div class="cl-format-card__option">
+                <span class="cl-format-card__option-label">X mejores automáticas</span>
+                <span class="cl-format-card__option-desc">El sistema selecciona automáticamente las N mejores tarjetas de cada jugador. El ranking siempre refleja el mejor rendimiento.</span>
+              </div>
+              <div class="cl-format-card__option">
+                <span class="cl-format-card__option-label">Todas las tarjetas</span>
+                <span class="cl-format-card__option-desc">Cada tarjeta entregada suma al ranking directamente, sin filtro. El acumulado de toda la temporada decide la clasificación.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recompras -->
+          <div class="cl-format-card__section">
+            <div class="cl-format-card__section-title">
+              <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              Recompra de tarjetas
+            </div>
+            <p class="cl-format-card__section-desc">Si el administrador lo activa, los jugadores pueden sustituir una tarjeta ya entregada por una nueva con mejor resultado. El ranking se recalcula al instante. Puede ser automático o requerir que el jugador gaste un token de recompra.</p>
+          </div>
+
+          <!-- Torneos RFEG -->
+          <div class="cl-format-card__section">
+            <div class="cl-format-card__section-title">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              Torneos oficiales RFEG obligatorios
+            </div>
+            <p class="cl-format-card__section-desc">Puedes exigir que una parte de las tarjetas válidas procedan de torneos oficiales de la RFEG — no solo pachangas. Por ejemplo: máximo 10 tarjetas en la temporada, de las cuales al menos 3 deben ser de torneo oficial. Una liga con estándares de competición real.</p>
+          </div>
+
+        </div>
+
+        <div class="cl-format-card cl-format-card--pool">
+          <div class="cl-format-card__header">
+            <div class="cl-format-card__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div>
+              <div class="cl-format-card__name">Pool regular</div>
+              <div class="cl-format-card__sub">Torneo semanal con premios</div>
+            </div>
+          </div>
+          <p class="cl-format-card__desc">
+            El formato de la Pool se articula mediante eventos o torneos periódicos — semanales, quincenales, o con la regularidad que queráis. Cada torneo tiene una cuota de entrada que genera un bote: los participantes se apuntan, juegan ese día, y el sistema reparte los premios automáticamente según la clasificación. Opcionalmente, los puntos de cada torneo alimentan un ranking de temporada.
+          </p>
+          <div class="cl-format-card__points">
+            <div class="cl-format-card__point">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Torneo cerrado: se juega un día, se reparten premios ese mismo día</span>
+            </div>
+            <div class="cl-format-card__point">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Gestión automática del bote: cuota entrada, % acumulado y reparto por tramos</span>
+            </div>
+            <div class="cl-format-card__point">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Ranking de temporada opcional — acumula puntos torneo a torneo</span>
+            </div>
+            <div class="cl-format-card__point">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Ideal para grupos que se organizan en torno a una jornada fija</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cl-format-cards -->
+
+    </div>
+    <div class="cl-step__visual">
+      <div class="phone-wrap">
+        <img src="assets/CreaLiga/TipoLiga.webp" alt="Selección de tipo de liga" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 2: Datos básicos -->
+  <div class="cl-step cl-step--reverse reveal reveal-d1">
+    <div class="cl-step__content">
+      <div class="cl-step__num">02</div>
+      <span class="cl-step__tag">Identidad de la liga</span>
+      <h2 class="cl-step__title">Datos básicos y campo de juego</h2>
+      <p class="cl-step__desc">
+        Dale nombre a tu liga, define las fechas de la temporada y establece el campo habitual donde jugaréis. También aquí se crea la contraseña de invitación que recibirán tus jugadores.
+      </p>
+      <div class="cl-details">
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+          <div class="cl-detail__text"><strong>Nombre de la liga</strong> — El nombre con el que aparecerá en el ranking y en las notificaciones de todos los jugadores.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="cl-detail__text"><strong>Fechas de temporada</strong> — Inicio y fin de la competición. El ranking se calcula solo con las tarjetas registradas dentro de este período.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="cl-detail__text"><strong>Campo de juego habitual</strong> — Busca el club y el recorrido base de la liga. Cada torneo puede jugarse en un campo distinto.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div class="cl-detail__text"><strong>Contraseña de invitación</strong> — Clave única que tus jugadores usarán para unirse a la liga al registrarse. Puedes cambiarla en cualquier momento.</div>
+        </div>
+      </div>
+    </div>
+    <div class="cl-step__visual">
+      <div class="phone-wrap">
+        <img src="assets/CreaLiga/InformaconGeneral.webp" alt="Datos básicos de la liga" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 3: Clasificación -->
+  <div class="cl-step reveal reveal-d2">
+    <div class="cl-step__content">
+      <div class="cl-step__num">03</div>
+      <span class="cl-step__tag">Sistema de puntos</span>
+      <h2 class="cl-step__title">Configura la clasificación y el hándicap</h2>
+      <p class="cl-step__desc">
+        Define cómo se ordenan los jugadores en el ranking general y cómo se aplica el hándicap dentro de la competición.
+      </p>
+      <div class="cl-details">
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+          <div class="cl-detail__text"><strong>Sistema de puntuación</strong> — Puntos Stableford (lo más habitual) o golpes totales (Stroke Play). Stableford iguala el nivel entre jugadores de distinto hándicap.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="cl-detail__text"><strong>Momento de entrega</strong> — Si la tarjeta puntúa antes o después de conocer el resultado de los demás, o en cualquier momento. Afecta a la estrategia de los jugadores.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="cl-detail__text"><strong>Resultado mínimo</strong> — Puntuación mínima de SF para que una tarjeta cuente en el ranking. Evita que rondas muy malas penalicen el clasificación.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="cl-detail__text"><strong>Tipo de hándicap</strong> — WHS oficial de la RFEG (se actualiza automáticamente tras cada ronda) o Pool (hándicap manual de liga asignado por el administrador).</div>
+        </div>
+      </div>
+    </div>
+    <div class="cl-step__visual">
+      <div class="phone-wrap">
+        <img src="assets/CreaLiga/Clasificacion.webp" alt="Configuración de clasificación y hándicap" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 4: Tarjetas -->
+  <div class="cl-step cl-step--reverse reveal reveal-d3">
+    <div class="cl-step__content">
+      <div class="cl-step__num">04</div>
+      <span class="cl-step__tag">Límites y tarjetas</span>
+      <h2 class="cl-step__title">Define los límites de entrega y la recompra</h2>
+      <p class="cl-step__desc">
+        Aquí controlas cuántas tarjetas puntúan por jugador en la temporada y qué ocurre cuando un jugador supera su mejor resultado registrado.
+      </p>
+      <div class="cl-details">
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="cl-detail__text"><strong>Máximo de tarjetas por temporada</strong> — Solo las mejores N tarjetas de cada jugador puntúan para el ranking. El resto se registran pero no afectan la clasificación.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div class="cl-detail__text"><strong>Recompra de tarjeta</strong> — Si un jugador ya tiene el cupo lleno y sube una tarjeta mejor, puede reemplazar la peor. <em>Automática</em>: se hace solo. <em>Manual (token)</em>: el jugador decide si quiere usarla.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+          <div class="cl-detail__text"><strong>Distinguir torneos de pachangas</strong> — Si activas esta opción, las rondas en eventos oficiales puntúan de forma separada a las rondas libres, permitiendo clasificaciones diferenciadas.</div>
+        </div>
+      </div>
+      <div class="cl-tip">
+        <div class="cl-tip__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <p class="cl-tip__text">La <strong>recompra automática</strong> es la opción más sencilla para ligas grandes. El sistema decide solo y actualiza el ranking al instante. La opción con <strong>token</strong> da más control al jugador.</p>
+      </div>
+    </div>
+    <div class="cl-step__visual">
+      <div class="phone-wrap">
+        <img src="assets/CreaLiga/TarjetasLiga.webp" alt="Configuración de tarjetas y recompra" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- POOL EXCLUSIVE -->
+  <div class="cl-pool reveal">
+    <div class="cl-pool__header">
+      <span class="cl-pool__badge">Solo en Pool regular</span>
+      <div class="cl-pool__header-line"></div>
+      <span class="cl-pool__header-text">Pasos exclusivos del formato Pool</span>
+    </div>
+    <div class="cl-pool__intro">
+      <h3>Gestión de premios y puntos por evento</h3>
+      <p>Cuando eliges <strong>Pool regular</strong>, la configuración incluye dos pasos adicionales: el reparto económico de la temporada y cómo se distribuyen los premios y puntos dentro de cada evento. Así todo queda automatizado desde el primer torneo.</p>
+    </div>
+    <div class="cl-pool__grid">
+
+      <div class="cl-pool__card">
+        <div class="cl-pool__card-phone">
+          <div class="phone-wrap">
+            <img src="assets/CreaLiga/PremiosPool.webp" alt="Configuración de premios del pool" loading="lazy">
+          </div>
+        </div>
+        <div class="cl-pool__card-text">
+          <span class="cl-pool__card-tag">Paso 4 · Solo Pool</span>
+          <h4 class="cl-pool__card-title">Reparto de premios de la temporada</h4>
+          <p class="cl-pool__card-desc">Define la economía del pool: cuánto paga cada jugador por entrar en un torneo y cómo se reparte el bote acumulado según el número de participantes.</p>
+          <div class="cl-pool__items">
+            <div class="cl-pool__item"><strong>Cuota de entrada (€)</strong> — Lo que aporta cada jugador al bote por torneo jugado.</div>
+            <div class="cl-pool__item"><strong>% al bote</strong> — Porcentaje de la cuota que va al bote acumulado de la temporada; el resto se reparte en el torneo.</div>
+            <div class="cl-pool__item"><strong>Extra último al bote</strong> — Penalización opcional para el último clasificado, que añade más al bote final.</div>
+            <div class="cl-pool__item"><strong>Reparto por tramos</strong> — Configura cuánto gana el 1º, 2º, 3º… según el rango de jugadores inscritos (mínimo/máximo). Fijos en € o porcentaje del bote.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cl-pool__card">
+        <div class="cl-pool__card-phone">
+          <div class="phone-wrap">
+            <img src="assets/CreaLiga/TorneosPool.webp" alt="Eventos del pool con premios y puntos" loading="lazy">
+          </div>
+        </div>
+        <div class="cl-pool__card-text">
+          <span class="cl-pool__card-tag">Paso 5 · Solo Pool</span>
+          <h4 class="cl-pool__card-title">Eventos: premios y puntos por plantilla</h4>
+          <p class="cl-pool__card-desc">En Pool, cada plantilla de evento define por separado el reparto económico de ese torneo y cómo puntúa para el ranking de la temporada.</p>
+          <div class="cl-pool__items">
+            <div class="cl-pool__item"><strong>Tipo de evento</strong> — Grand Slam, Torneo Regular u otros formatos con distinto peso en el ranking.</div>
+            <div class="cl-pool__item"><strong>Reparto de Premios (Economía)</strong> — Distribución del bote entre los primeros clasificados de ese torneo concreto.</div>
+            <div class="cl-pool__item"><strong>Reparto de Puntos (Ranking)</strong> — Puntos SF adicionales que se suman al ranking general según la posición final en el evento.</div>
+            <div class="cl-pool__item"><strong>Mínimo de jugadores</strong> — Quórum necesario para que el torneo sea válido y reparta premios.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PASO 5: Eventos -->
+  <div class="cl-step reveal reveal-d4">
+    <div class="cl-step__content">
+      <div class="cl-step__num">05</div>
+      <span class="cl-step__tag">Plantillas de eventos</span>
+      <h2 class="cl-step__title">Prepara las plantillas de tus torneos</h2>
+      <p class="cl-step__desc">
+        Define qué tipos de torneos o eventos habrá en la temporada. Cada plantilla es un modelo reutilizable — cuando llegue el momento de crear un torneo real, ya tendrás todo preconfigurado.
+      </p>
+      <div class="cl-details">
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="cl-detail__text"><strong>Tipo de torneo</strong> — Torneo Regular, Torneo Especial u otros formatos. El tipo determina cómo puntúa para el ranking general de la liga.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="cl-detail__text"><strong>Mínimo de jugadores</strong> — Número mínimo de inscritos para que el torneo sea válido. Si no se alcanza el quórum, el administrador puede cancelar el evento.</div>
+        </div>
+        <div class="cl-detail">
+          <div class="cl-detail__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="cl-detail__text"><strong>Puntos extra por posición</strong> — Añade puntos SF adicionales para los primeros clasificados de cada torneo. Incentiva la competición en los eventos más importantes.</div>
+        </div>
+      </div>
+      <div class="cl-tip">
+        <div class="cl-tip__icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <p class="cl-tip__text">Puedes <strong>añadir más plantillas</strong> en cualquier momento desde el panel de administración. No es necesario tenerlas todas definidas antes de crear la liga.</p>
+      </div>
+    </div>
+    <div class="cl-step__visual">
+      <div class="phone-wrap">
+        <img src="assets/CreaLiga/TorneosLiga.webp" alt="Plantillas de eventos y torneos" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cl-cta reveal">
+    <h2>¿Todo claro? Empieza ahora.</h2>
+    <p>En menos de 10 minutos tendrás tu liga configurada y el enlace de invitación listo para compartir con tus jugadores. Sin tarjeta de crédito para empezar.</p>
+    <div class="cl-cta__btns">
+      <a href="#" onclick="openApp();return false;" class="btn-lime">Crear mi liga gratis</a>
+      <a href="lls-precios.html" class="btn-outline">Ver planes</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos. Torneos, ranking, estadísticas y handicap oficial.</p></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="index.html#features">Funcionalidades</a></li><li><a href="index.html#how">Cómo funciona</a></li><li><a href="lls-crear-liga.html" class="active">Crear una liga</a></li><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
+    <div class="footer__col"><h4>Contacto</h4><ul><li><a href="mailto:hola@laligasecreta.es">hola@laligasecreta.es</a></li><li><a href="#">Instagram</a></li></ul></div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Powered by TSGC Scorecard</span>
+    <div class="footer__social">
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿No tienes cuenta? <a href="#" onclick="showRegister()">Solicitar acceso</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre completo</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Licencia RFEG (opcional)</label><input type="text" class="form__input" placeholder="CM01234567"></div>
+      <div class="form__group"><label class="form__label">Nombre de tu liga</label><input type="text" class="form__input" placeholder="Liga de los Martes"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Crear mi liga gratis</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Iniciar sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+</body>
+</html>
+

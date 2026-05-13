@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Comparar jugadores — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background:var(--primary-dark); padding:100px 52px 56px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.page-hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right, transparent, rgba(132,176,38,.3) 40%, rgba(132,176,38,.3) 60%, transparent);
+}
+.page-hero__eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:24px;
+}
+.page-hero__title {
+  font-family:var(--serif); font-size:clamp(32px,5vw,64px);
+  font-weight:700; color:#fff; line-height:1.1; margin-bottom:20px;
+}
+.page-hero__sub {
+  font-family:'Cormorant Garamond', Georgia, serif; font-style:italic; font-weight:300;
+  font-size:clamp(16px,1.8vw,22px); color:rgba(255,255,255,.6);
+  max-width:580px; margin:0 auto 16px; line-height:1.7;
+}
+.page-hero__note {
+  font-family:var(--body); font-size:13px; color:rgba(132,176,38,.75);
+}
+
+/* ── WRAPPER ── */
+.guide-wrap { max-width:1060px; margin:0 auto; padding:0 52px; }
+
+/* ── INTRO CALLOUT ── */
+.intro-callout {
+  background:var(--highlight); border:1px solid var(--accent-border);
+  border-radius:16px; padding:28px 32px; margin:36px 0;
+  display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;
+}
+.intro-callout__icon {
+  width:48px; height:48px; border-radius:12px; background:rgba(47,82,51,.12);
+  border:1px solid var(--accent-border); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.intro-callout__icon svg { width:22px; height:22px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+.intro-callout__title { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--text-main); margin-bottom:8px; }
+.intro-callout__text { font-family:var(--body); font-size:15px; line-height:1.8; color:var(--text-sec); }
+
+/* ── DIVIDER ── */
+.guide-divider {
+  display:flex; align-items:center; gap:16px; margin:36px 0 24px;
+}
+.guide-divider__line { flex:1; height:1px; background:var(--border); }
+.guide-divider__label {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.34em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap;
+}
+
+/* ── STAT BLOCK ── */
+.stat-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:72px;
+  align-items:center; padding:48px 0;
+}
+.stat-block--reverse { direction:rtl; }
+.stat-block--reverse > * { direction:ltr; }
+
+.stat-block__tag {
+  font-family:var(--sans); font-size:8.5px; font-weight:700; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--accent); display:block; margin-bottom:12px;
+}
+.stat-block__title {
+  font-family:var(--serif); font-size:clamp(22px,2.6vw,32px); font-weight:700;
+  color:var(--text-main); line-height:1.2; margin-bottom:16px;
+}
+.stat-block__desc {
+  font-family:var(--body); font-size:clamp(14px,1.35vw,16px);
+  line-height:1.85; color:var(--text-sec); margin-bottom:24px;
+}
+
+.stat-items { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+.stat-item { display:flex; gap:14px; align-items:flex-start; }
+.stat-item__icon {
+  flex-shrink:0; width:30px; height:30px; border-radius:8px;
+  background:var(--highlight); border:1px solid var(--accent-border);
+  display:flex; align-items:center; justify-content:center; margin-top:2px;
+}
+.stat-item__icon svg { width:13px; height:13px; stroke:var(--primary); fill:none; stroke-width:2.2; }
+.stat-item__text { font-family:var(--body); font-size:14px; line-height:1.75; color:var(--text-sec); }
+.stat-item__text strong { color:var(--text-main); font-weight:600; }
+
+.stat-tip {
+  display:flex; gap:12px; background:var(--bg-main); border:1px solid var(--border);
+  border-radius:10px; padding:14px 18px; align-items:flex-start;
+}
+.stat-tip svg { width:15px; height:15px; stroke:var(--accent); fill:none; stroke-width:2; flex-shrink:0; margin-top:2px; }
+.stat-tip p { font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec); }
+.stat-tip p strong { color:var(--text-main); }
+
+/* ── PHONE VISUAL ── */
+.stat-block__visual { display:flex; justify-content:center; align-items:flex-start; gap:16px; }
+.phone-wrap img {
+  width:230px; max-width:100%; height:auto; display:block;
+  border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,.16), 0 6px 16px rgba(0,0,0,.08);
+}
+.phone-wrap--sm img { width:190px; }
+
+/* ── FACTORS GRID ── */
+.factors-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
+.factor-card {
+  background:var(--bg-main); border:1px solid var(--border); border-radius:10px; padding:16px 18px;
+}
+.factor-card--accent { border-color:var(--accent-border); background:var(--highlight); }
+.factor-card__name {
+  font-family:var(--sans); font-size:8px; font-weight:700; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;
+}
+.factor-card--accent .factor-card__name { color:var(--primary); }
+.factor-card__weight {
+  font-family:var(--serif); font-size:22px; font-weight:700; color:var(--accent); margin-bottom:4px;
+}
+.factor-card__desc { font-family:var(--body); font-size:12px; color:var(--text-sec); line-height:1.5; }
+
+/* ── QUALITY TABLE ── */
+.quality-table { width:100%; border-collapse:collapse; margin:16px 0; }
+.quality-table th {
+  font-family:var(--sans); font-size:8px; font-weight:600; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--text-muted); padding:8px 12px;
+  border-bottom:2px solid var(--border); text-align:left;
+}
+.quality-table td { padding:10px 12px; border-bottom:1px solid var(--border); font-family:var(--body); font-size:14px; color:var(--text-sec); }
+.quality-table tr:last-child td { border-bottom:none; }
+.quality-table td:first-child { color:var(--text-main); font-weight:500; }
+.q-highlight { color:var(--accent); font-weight:700; }
+
+/* ── CTA ── */
+.guide-cta { background:var(--primary); border-radius:20px; padding:44px 36px; text-align:center; margin:48px 0; }
+.guide-cta h2 { font-family:var(--serif); font-size:clamp(22px,3vw,34px); font-weight:700; color:#fff; margin-bottom:14px; }
+.guide-cta p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; margin-bottom:32px; max-width:500px; margin-left:auto; margin-right:auto; }
+.guide-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .guide-wrap { padding:0 24px; }
+  .stat-block { grid-template-columns:1fr; gap:36px; }
+  .stat-block--reverse { direction:ltr; }
+  .stat-block__visual { order:1; }
+  .phone-wrap img { width:190px; }
+  .intro-callout { grid-template-columns:1fr; gap:16px; padding:28px 24px; }
+  .factors-grid { grid-template-columns:1fr 1fr; }
+  .guide-cta { padding:40px 24px; }
+}
+@media (max-width:560px) {
+  .page-hero { padding:120px 20px 60px; }
+  .factors-grid { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html" class="active"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+          <a href="lls-comparar.html" class="active"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/></svg>Cómo funciona</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="lls-precios.html" class="btn-lime" style="display:block;text-align:center;">Crear mi liga gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero__eyebrow">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Comparación
+  </div>
+  <h1 class="page-hero__title">¿Quién juega<br>mejor que quién?</h1>
+  <div style="width:48px;height:2px;background:var(--accent);margin:0 auto 20px;"></div>
+  <p class="page-hero__sub">Compara a cualquier jugador de la liga con otro: métricas, calidad de juego, evolución del hándicap, rendimiento en campos comunes y una predicción IA de quién ganaría un partido hoy.</p>
+  <p class="page-hero__note">Selecciona dos jugadores de tu liga y obtén el análisis completo al instante</p>
+</div>
+
+<!-- CONTENT -->
+<div class="guide-wrap">
+
+  <!-- Intro callout -->
+  <div class="intro-callout reveal">
+    <div class="intro-callout__icon">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <div>
+      <div class="intro-callout__title">Un enfrentamiento estadístico completo</div>
+      <div class="intro-callout__text">Elige dos jugadores de tu liga y la app genera en segundos una comparativa con cuatro bloques: rendimiento en números, calidad de sus rondas, evolución del hándicap en paralelo, campos donde ambos han jugado, y una predicción IA con los factores que decantarían el partido a favor de uno u otro.</div>
+    </div>
+  </div>
+
+  <!-- ── 1. MÉTRICAS COMPARADAS ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">① Métricas comparadas</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block reveal">
+    <div>
+      <span class="stat-block__tag">Números frente a frente</span>
+      <h2 class="stat-block__title">Rendimiento general<br>y rendimiento de liga.</h2>
+      <p class="stat-block__desc">Las métricas de ambos jugadores en dos columnas. Cada cifra compara directamente: la que va en verde es la mejor de los dos en ese indicador.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="stat-item__text"><strong>Rendimiento General</strong> — partidas jugadas, media de puntos, mejor score, media de golpes. Incluye todas las rondas, con o sin entrega.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="stat-item__text"><strong>Rendimiento de Liga</strong> — las mismas métricas filtradas a solo las tarjetas entregadas para clasificación, más el porcentaje de entrega (rondas que contaron para el ranking vs total jugadas).</div>
+        </div>
+      </div>
+      <div class="stat-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>El <strong>% de entregadas</strong> revela quién aprovecha mejor sus rondas para el ranking — un jugador puede jugar menos pero entregar más y estar mejor clasificado.</p>
+      </div>
+    </div>
+    <div class="stat-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Comparar/metricasComparar1.webp" alt="Métricas comparadas">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. CALIDAD DE JUEGO + HCP ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">② Calidad de juego y evolución del hándicap</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block stat-block--reverse reveal">
+    <div>
+      <span class="stat-block__tag">Consistencia · Hándicap en paralelo</span>
+      <h2 class="stat-block__title">¿Quién es más<br>consistente?</h2>
+      <p class="stat-block__desc">Dos análisis complementarios que van más allá de la media: cómo se distribuyen las rondas entre buenas y malas, y cómo ha evolucionado el hándicap de cada uno a lo largo del tiempo.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="stat-item__text"><strong>Calidad de juego</strong> — distribución de rondas en 4 categorías con barras comparativas: Partidazo (≥38 pts), Cumpliendo (34-37), Paseo (30-33) y Matao (&lt;30). Cuanto más alto el % en Partidazo, mejor.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="stat-item__text"><strong>Evolución del hándicap</strong> — gráfico de línea dual con el índice WHS de los dos jugadores ronda a ronda. Cada línea tiene su color. Se aprecia quién mejora más rápido y quién es más estable.</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Comparar/metricasComparar2.webp" alt="Calidad de juego y hándicap">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. CAMPOS + PREDICCIÓN ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">③ Campos comunes y predicción IA</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block reveal">
+    <div>
+      <span class="stat-block__tag">Terreno común · Quién ganaría hoy</span>
+      <h2 class="stat-block__title">En los campos donde<br>coinciden, ¿quién domina?</h2>
+      <p class="stat-block__desc">La comparativa termina con dos bloques especialmente reveladores: el rendimiento en campos donde ambos han jugado, y una predicción IA de quién sacaría más puntos si jugaran hoy.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div class="stat-item__text"><strong>Campos compartidos</strong> — media de puntos de cada jugador en los campos donde ambos tienen historial. Contexto directo sobre el terreno que conocen los dos.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="stat-item__text"><strong>Predicción Stableford</strong> — probabilidad de victoria de cada uno (ej. 66% vs 34%) calculada por IA con 7 factores estadísticos. Incluye una explicación en texto del motivo principal de la ventaja.</div>
+        </div>
+      </div>
+      <div class="stat-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>La predicción tiene un <strong>nivel de confianza</strong> que depende del historial disponible de cada jugador. Cuantas más rondas, más precisa.</p>
+      </div>
+    </div>
+    <div class="stat-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Comparar/metricasComparar3.webp" alt="Campos comunes y predicción">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. ANÁLISIS DE PREDICCIÓN ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">④ Análisis detallado de la predicción</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block stat-block--reverse reveal">
+    <div>
+      <span class="stat-block__tag">IA · 7 factores · Con nivel de confianza</span>
+      <h2 class="stat-block__title">No solo un porcentaje.<br>Cada factor explicado.</h2>
+      <p class="stat-block__desc">Al pulsar "Ver análisis completo", se despliega un panel con el detalle de los 7 factores que componen la predicción. Cada factor muestra quién tiene ventaja, en cuánto y por qué.</p>
+      <div class="factors-grid">
+        <div class="factor-card factor-card--accent">
+          <div class="factor-card__name">Ritmo de juego</div>
+          <div class="factor-card__weight">25%</div>
+          <div class="factor-card__desc">Forma reciente ponderada. Con qué frecuencia juega cada uno.</div>
+        </div>
+        <div class="factor-card factor-card--accent">
+          <div class="factor-card__name">Forma reciente</div>
+          <div class="factor-card__weight">15%</div>
+          <div class="factor-card__desc">Media ponderada de las últimas rondas.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card__name">Consistencia</div>
+          <div class="factor-card__weight">15%</div>
+          <div class="factor-card__desc">% rondas buenas y desviación estándar.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card__name">Tendencia HCP</div>
+          <div class="factor-card__weight">15%</div>
+          <div class="factor-card__desc">Si el hándicap mejora o empeora en los últimos 6 meses.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card__name">Factor competitivo</div>
+          <div class="factor-card__weight">10%</div>
+          <div class="factor-card__desc">Rendimiento bajo presión: diferencia en torneos vs pachangas.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card__name">Head-to-head</div>
+          <div class="factor-card__weight">10%</div>
+          <div class="factor-card__desc">Resultados directos históricos entre los dos jugadores.</div>
+        </div>
+      </div>
+      <div class="stat-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>El panel indica el <strong>nivel de confianza</strong> (Alta / Media / Baja) según el historial de cada jugador. Con menos de 5 rondas el modelo lo advierte explícitamente.</p>
+      </div>
+    </div>
+    <div class="stat-block__visual" style="flex-direction:column;gap:16px;align-items:center;">
+      <div class="phone-wrap">
+        <img src="assets/Comparar/DetallePrediccion1.webp" alt="Análisis de predicción detallado">
+      </div>
+      <div class="phone-wrap phone-wrap--sm">
+        <img src="assets/Comparar/DetallePrediccion2.webp" alt="Factores de predicción">
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="guide-cta reveal">
+    <h2>Que los datos hablen<br>antes de que lo haga la excusa.</h2>
+    <p>La comparativa y la predicción están disponibles para cualquier jugador de tu liga, en cualquier momento.</p>
+    <div class="guide-cta__btns">
+      <a href="lls-precios.html" class="btn-lime">Crear mi liga gratis</a>
+      <a href="index.html" class="btn-outline" style="color:#fff;border-color:rgba(255,255,255,.3);">Volver al inicio</a>
+    </div>
+  </div>
+
+</div><!-- /guide-wrap -->
+
+<!-- FOOTER -->
+<footer style="background:var(--primary-dark);padding:60px 52px 40px;">
+  <div style="max-width:1060px;margin:0 auto;text-align:center;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <img src="assets/TSGC_icon.svg" style="width:28px;height:28px;" alt="TSGC">
+      <span style="font-family:var(--serif);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);">The Secret Golf Club</span>
+    </a>
+    <p style="font-family:var(--sans);font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.25);text-transform:uppercase;">© 2025 The Secret Golf Club · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">⛳</div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com" autocomplete="email"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+</body>
+</html>
+

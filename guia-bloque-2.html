@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bloque 2: Tu Liga y Perfil — Guía de Usuario TSGC</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="guia-bloque-1.html" onerror="">
+<style>
+/* Reuse block styles — inline copy of shared guide styles */
+.guide-breadcrumb{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 52px;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:11px;color:var(--text-muted);position:sticky;top:68px;z-index:50}
+.guide-breadcrumb a{color:var(--text-sec);transition:color .2s}.guide-breadcrumb a:hover{color:var(--primary)}.guide-breadcrumb__sep{opacity:.4}.guide-breadcrumb__current{color:var(--primary);font-weight:600}
+.guide-layout{display:grid;grid-template-columns:260px 1fr;max-width:1140px;margin:0 auto;gap:0;align-items:start}
+.guide-toc{position:sticky;top:110px;padding:28px 32px 28px 52px;border-right:1px solid var(--border)}
+.guide-toc__title{font-family:var(--sans);font-size:8.5px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.guide-toc__list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.guide-toc__item a{display:block;padding:8px 12px;border-radius:7px;font-family:var(--body);font-size:14px;color:var(--text-sec);transition:background .2s,color .2s;line-height:1.4}
+.guide-toc__item a:hover,.guide-toc__item a.active{background:var(--highlight);color:var(--primary)}.guide-toc__item a.active{font-weight:600}
+.guide-toc__blocks{margin-top:28px;border-top:1px solid var(--border);padding-top:20px}
+.guide-toc__block-link{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:7px;font-family:var(--sans);font-size:11px;color:var(--text-muted);transition:color .2s,background .2s}
+.guide-toc__block-link:hover{color:var(--text-sec);background:var(--bg-main)}.guide-toc__block-link.current{color:var(--primary);font-weight:600}
+.guide-toc__block-num{width:20px;height:20px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.guide-toc__block-link.current .guide-toc__block-num{background:var(--primary);color:#fff}
+.guide-content{padding:28px 52px 40px 48px;min-width:0}
+.guide-content__header{padding-bottom:20px;margin-bottom:28px;border-bottom:1px solid var(--border)}
+.guide-content__block-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.guide-content__block-badge::before{content:'';width:28px;height:1px;background:var(--accent)}
+.guide-content__title{font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--text-main);line-height:1.08;margin-bottom:16px}
+.guide-content__intro{font-family:var(--body);font-size:clamp(16px,1.6vw,19px);color:var(--text-sec);line-height:1.8;max-width:640px}
+.guide-section{margin-bottom:32px;scroll-margin-top:120px}
+.guide-section__num{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.guide-section__title{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);font-weight:700;color:var(--text-main);margin-bottom:12px}
+.guide-section__story{display:flex;align-items:flex-start;gap:12px;background:var(--highlight);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;font-family:var(--body);font-size:15px;font-style:italic;color:var(--text-sec);line-height:1.65}
+.guide-section__story::before{content:'"';font-family:var(--serif);font-size:32px;color:var(--accent);line-height:1;flex-shrink:0}
+.guide-section__flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:14px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.guide-section__flow-label{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:6px;flex-shrink:0}
+.guide-section__flow-step{font-family:var(--body);font-size:13px;color:var(--text-sec)}.guide-section__flow-arrow{color:var(--accent);font-size:12px}
+.guide-elements{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.guide-element{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:border-color .2s}
+.guide-element:hover{border-color:var(--accent-border)}
+.guide-element__dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0}
+.guide-element__term{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px}
+.guide-element__def{font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.65}
+.guide-element__def strong{color:var(--text-main);font-weight:600}
+.guide-callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:20px 0;font-family:var(--body);font-size:14px;line-height:1.7}
+.guide-callout--info{background:var(--highlight);border:1px solid var(--accent-border);color:var(--primary)}
+.guide-callout__icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.screenshot-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--bg-main);max-width:300px;margin:12px auto;box-shadow:var(--shadow-elevated)}
+.screenshot-wrap img{width:100%;height:auto;display:block}
+.screenshot-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:48px 24px;color:var(--text-muted);text-align:center}
+.screenshot-placeholder svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1.5}
+.screenshot-placeholder span{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.screenshots-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.screenshots-row .screenshot-wrap{max-width:240px;flex:1;min-width:180px}
+.guide-nav{display:flex;justify-content:space-between;gap:16px;margin-top:36px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
+.guide-nav__btn{display:flex;flex-direction:column;gap:4px;padding:18px 24px;border:1px solid var(--border);border-radius:10px;min-width:200px;flex:1;text-decoration:none;transition:border-color .3s,box-shadow .3s}
+.guide-nav__btn:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(132,176,38,.1)}
+.guide-nav__btn--prev{align-items:flex-start}.guide-nav__btn--next{align-items:flex-end}
+.guide-nav__label{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--text-muted)}
+.guide-nav__title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text-main)}
+/* Stat columns */
+.stat-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.stat-col{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+.stat-col__title{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);margin-bottom:12px}
+.stat-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.stat-col ul li{font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.5;padding-left:16px;position:relative}
+.stat-col ul li::before{content:'·';position:absolute;left:0;color:var(--accent);font-weight:700}
+@media(max-width:960px){.guide-layout{grid-template-columns:1fr}.guide-toc{display:none}.guide-breadcrumb{padding:12px 20px}.guide-content{padding:36px 20px 60px}}
+@media(max-width:680px){.guide-nav{flex-direction:column}.guide-nav__btn{min-width:unset}.stat-columns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li class="nav__item">
+      <a href="#">Guías<svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      <div class="nav__dropdown"><div class="nav__dropdown__inner">
+        <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Crea tu liga</a>
+        <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Registra partidas</a>
+        <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+        <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Comparación</a>
+        <div class="nav__dropdown__divider"></div>
+        <a href="guia-usuario.html" class="active"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Manual del jugador</a>
+      </div></div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header"><span class="nav-drawer__logo">The Secret Golf Club</span><button class="nav-drawer__close" onclick="closeDrawer()">✕</button></div>
+  <div class="nav-drawer__links">
+    <div class="nav-drawer__section-label">Manual del jugador</div>
+    <a href="guia-usuario.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/></svg>Índice general</a>
+    <a href="guia-bloque-1.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 1 · Primeros pasos</a>
+    <a href="guia-bloque-2.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 2 · Tu perfil y liga</a>
+    <a href="guia-bloque-3.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 3 · Registrar ronda</a>
+    <a href="guia-bloque-4.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 4 · Jugar con otros</a>
+    <a href="guia-bloque-5.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 5 · Estadísticas</a>
+    <a href="guia-bloque-6.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 6 · Incidencias</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta"><a href="#" onclick="openApp();return false;">Iniciar Sesión</a></div>
+</div>
+
+<div class="guide-breadcrumb">
+  <a href="guia-usuario.html">Manual del jugador</a>
+  <span class="guide-breadcrumb__sep">›</span>
+  <span class="guide-breadcrumb__current">Bloque 2 — Tu Liga y Perfil</span>
+</div>
+
+<div style="background:var(--surface);border-bottom:1px solid var(--border)">
+<div class="guide-layout">
+  <aside class="guide-toc">
+    <div class="guide-toc__title">En este bloque</div>
+    <ul class="guide-toc__list">
+      <li class="guide-toc__item"><a href="#s2-1" class="active">2.1 · Panel Principal</a></li>
+      <li class="guide-toc__item"><a href="#s2-2">2.2 · Mi Perfil</a></li>
+    </ul>
+    <div class="guide-toc__blocks">
+      <div style="font-family:var(--sans);font-size:8.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Todos los bloques</div>
+      <a href="guia-bloque-1.html" class="guide-toc__block-link"><span class="guide-toc__block-num">1</span>Primeros Pasos</a>
+      <a href="guia-bloque-2.html" class="guide-toc__block-link current"><span class="guide-toc__block-num">2</span>Tu Liga y Perfil</a>
+      <a href="guia-bloque-3.html" class="guide-toc__block-link"><span class="guide-toc__block-num">3</span>Registrar Ronda</a>
+      <a href="guia-bloque-4.html" class="guide-toc__block-link"><span class="guide-toc__block-num">4</span>Jugar con Otros</a>
+      <a href="guia-bloque-5.html" class="guide-toc__block-link"><span class="guide-toc__block-num">5</span>Entender tu Progreso</a>
+      <a href="guia-bloque-6.html" class="guide-toc__block-link"><span class="guide-toc__block-num">6</span>Incidencias</a>
+    </div>
+  </aside>
+
+  <main class="guide-content">
+    <div class="guide-content__header">
+      <div class="guide-content__block-badge">Bloque 2</div>
+      <h1 class="guide-content__title">Tu Liga y Perfil</h1>
+      <p class="guide-content__intro">Tras entrar, este bloque te ayuda a entender rápido dónde estás en la liga y cómo te está yendo. Desde la clasificación general hasta el análisis profundo de tus estadísticas personales.</p>
+    </div>
+
+    <!-- 2.1 -->
+    <section class="guide-section" id="s2-1">
+      <div class="guide-section__num">Sección 2.1</div>
+      <h2 class="guide-section__title">El Panel Principal: Clasificación y Hándicap de Juego</h2>
+      <div class="guide-section__story">Como jugador, quiero ver mi posición en la liga y saber rápidamente cuántos golpes me da cualquier campo antes de jugar.</div>
+      <div class="guide-section__flow">
+        <span class="guide-section__flow-label">Flujo</span>
+        <span class="guide-section__flow-step">Inicio</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">Pantalla de Clasificación</span>
+      </div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Indicadores rápidos (cabecera)</div>
+            <div class="guide-element__def">
+              <strong>Hándicap:</strong> Tu índice WHS actual en la liga.<br>
+              <strong>Dist. 1º:</strong> Cuántos puntos te separan del líder.<br>
+              <strong>Posición:</strong> Tu puesto en el ranking.
+            </div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">¿Con qué hándicap juego hoy? (HCP Juego)</div>
+            <div class="guide-element__def">Al pulsar el indicador de hándicap se abre un <strong>modal interactivo</strong>. Elige el campo y el color de salida (barras) para ver los golpes que recibes, calculados aplicando slope y rating en tiempo real.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Tabla de Clasificación</div>
+            <div class="guide-element__def">
+              <strong>POS</strong> — Posición en el ranking.<br>
+              <strong>JUGADOR</strong> — Nombre y avatar.<br>
+              <strong>HCP</strong> — Índice WHS actual.<br>
+              <strong>P</strong> — Pachangas entregadas.<br>
+              <strong>T</strong> — Torneos entregados (visible solo si la liga tiene torneos activos).<br>
+              <strong>AVG</strong> — Media de puntos Stableford por tarjeta.<br>
+              <strong>PTOS</strong> — Puntos acumulados (suma de las mejores N tarjetas).
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screenshots-row">
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/home_page_leaderboard_1776632698994.png" alt="Clasificación General" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><line x1=\'18\' y1=\'20\' x2=\'18\' y2=\'10\'/><line x1=\'12\' y1=\'20\' x2=\'12\' y2=\'4\'/><line x1=\'6\' y1=\'20\' x2=\'6\' y2=\'14\'/></svg><span>Clasificación</span></div>'">
+        </div>
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/hcp_juego_modal_1776632707585.png" alt="Calculadora HCP de Juego" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><line x1=\'12\' y1=\'8\' x2=\'12\' y2=\'12\'/><line x1=\'12\' y1=\'16\' x2=\'12.01\' y2=\'16\'/></svg><span>HCP de Juego</span></div>'">
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.2 -->
+    <section class="guide-section" id="s2-2">
+      <div class="guide-section__num">Sección 2.2</div>
+      <h2 class="guide-section__title">Mi Perfil: Análisis Profundo de Estadísticas</h2>
+      <div class="guide-section__story">Como jugador, quiero analizar mis fortalezas y debilidades mediante gráficos y datos por campo.</div>
+      <div class="guide-section__flow">
+        <span class="guide-section__flow-label">Flujo</span>
+        <span class="guide-section__flow-step">Barra inferior</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">"Mi Perfil"</span>
+      </div>
+
+      <div class="stat-columns">
+        <div class="stat-col">
+          <div class="stat-col__title">HCP y Rendimiento</div>
+          <ul>
+            <li><strong>HCP TSGC</strong> — Calculado con las últimas 20 rondas.</li>
+            <li><strong>HCP Oficial RFEG</strong> — Sincronizado con la federación (actúa de techo).</li>
+            <li>Tendencia de score (gráfico de línea).</li>
+            <li>Desglose por tipo de resultado: Eagles, Birdies, Pares, Bogeys, Doble+.</li>
+            <li>Rendimiento segmentado por Par 3, Par 4 y Par 5.</li>
+            <li>Porcentaje de GIR (Greens in Regulation).</li>
+          </ul>
+        </div>
+        <div class="stat-col">
+          <div class="stat-col__title">Rendimiento por Campo</div>
+          <ul>
+            <li>Tabla de campos jugados con mejor resultado, promedio y nº de rondas.</li>
+            <li>Detalle por campo: mejores y peores hoyos históricos.</li>
+            <li>Consistencia histórica en cada recorrido.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Historial de Tarjetas</div>
+            <div class="guide-element__def">Fichas de color: <strong>verde lima</strong> para pachangas, <strong>borde verde oscuro</strong> para torneos (solo si la liga tiene torneos activos). Pulsa cualquier ficha para ver el detalle hoyo a hoyo.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Win Probability</div>
+            <div class="guide-element__def">Barra de probabilidad de ganar la temporada, visible cuando hay datos suficientes. Pulsa sobre ella para ver el desglose de los factores que la calculan.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">HCP TSGC vs HCP Oficial</div>
+            <div class="guide-element__def">En ligas tradicionales, el HCP oficial actúa de <strong>techo de seguridad</strong> — el TSGC nunca puede superar al oficial. Si juegas poco fuera de la liga, tu HCP TSGC será más dinámico y preciso.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screenshots-row">
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/stats_slide_1_main_1776632731467.png" alt="Estadísticas Principales" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><line x1=\'18\' y1=\'20\' x2=\'18\' y2=\'10\'/><line x1=\'12\' y1=\'20\' x2=\'12\' y2=\'4\'/><line x1=\'6\' y1=\'20\' x2=\'6\' y2=\'14\'/></svg><span>Estadísticas principales</span></div>'">
+        </div>
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/stats_rendimiento_campo_table_1776632829359.png" alt="Rendimiento por Campo" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><line x1=\'3\' y1=\'9\' x2=\'21\' y2=\'9\'/><line x1=\'9\' y1=\'21\' x2=\'9\' y2=\'9\'/></svg><span>Rendimiento por campo</span></div>'">
+        </div>
+      </div>
+    </section>
+
+    <nav class="guide-nav">
+      <a href="guia-bloque-1.html" class="guide-nav__btn guide-nav__btn--prev">
+        <span class="guide-nav__label">← Anterior</span>
+        <span class="guide-nav__title">Bloque 1 · Primeros Pasos</span>
+      </a>
+      <a href="guia-bloque-3.html" class="guide-nav__btn guide-nav__btn--next">
+        <span class="guide-nav__label">Siguiente →</span>
+        <span class="guide-nav__title">Bloque 3 · Registrar una Ronda</span>
+      </a>
+    </nav>
+  </main>
+</div>
+</div>
+
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos.</p></div>
+    <div class="footer__col"><h4>Manual</h4><ul><li><a href="guia-usuario.html">Índice general</a></li><li><a href="guia-bloque-1.html">Primeros Pasos</a></li><li><a href="guia-bloque-3.html">Registrar Ronda</a></li><li><a href="guia-bloque-5.html">Estadísticas</a></li></ul></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="index.html#features">Funcionalidades</a></li><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li></ul></div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span></span>
+    <div class="footer__social"><a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2><p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Email</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center;margin-top:8px">Iniciar Sesión</a>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Email</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center;margin-top:8px">Crear mi liga gratis</a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+<script>
+const sections = document.querySelectorAll('.guide-section');
+const tocLinks = document.querySelectorAll('.guide-toc__item a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.guide-toc__item a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
+

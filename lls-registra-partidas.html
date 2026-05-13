@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cómo registrar una partida — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── REGISTRA PARTIDAS PAGE ── */
+
+/* Two-mode toggle */
+.mode-toggle { display:flex; gap:0; border:1px solid var(--border); border-radius:12px; overflow:hidden; max-width:480px; margin:0 auto 40px; }
+.mode-btn {
+  flex:1; padding:18px 24px; text-align:center; cursor:pointer;
+  font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--text-muted); background:transparent; border:none;
+  transition:.25s; display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.mode-btn.active { background:var(--primary); color:#fff; }
+.mode-btn__icon { width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
+.mode-btn__icon svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.8; }
+.mode-btn__label { font-size:9px; letter-spacing:.2em; }
+.mode-btn__sub { font-family:var(--body); font-size:11px; letter-spacing:0; text-transform:none; opacity:.75; }
+
+/* Steps */
+.rp-steps { max-width:1100px; margin:0 auto; }
+
+.rp-step { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; padding:48px 0; border-bottom:1px solid var(--border); }
+.rp-step:last-child { border-bottom:none; }
+.rp-step--reverse { direction:rtl; }
+.rp-step--reverse > * { direction:ltr; }
+
+.rp-step__content {}
+.rp-step__num { font-family:var(--serif); font-size:64px; font-weight:700; color:rgba(47,82,51,.08); line-height:1; margin-bottom:-8px; }
+.rp-step__tag { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.34em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; }
+.rp-step__title { font-family:var(--serif); font-size:clamp(22px,2.6vw,30px); font-weight:700; color:var(--text-main); margin-bottom:16px; line-height:1.25; }
+.rp-step__desc { font-family:var(--body); font-size:clamp(14px,1.35vw,16px); line-height:1.85; color:var(--text-sec); margin-bottom:24px; }
+
+.rp-details { display:flex; flex-direction:column; gap:12px; margin-top:4px; }
+.rp-detail { display:flex; gap:14px; align-items:flex-start; }
+.rp-detail__icon { flex-shrink:0; width:32px; height:32px; border-radius:8px; background:var(--highlight); display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.rp-detail__icon svg { width:15px; height:15px; stroke:var(--primary); fill:none; stroke-width:2; }
+.rp-detail__text { font-family:var(--body); font-size:14px; line-height:1.75; color:var(--text-sec); }
+.rp-detail__text strong { color:var(--text-main); font-weight:600; }
+
+.rp-tip { display:flex; gap:13px; background:var(--highlight); border:1px solid var(--accent-border); border-radius:10px; padding:16px 18px; margin-top:20px; align-items:flex-start; }
+.rp-tip svg { width:16px; height:16px; stroke:var(--accent); fill:none; stroke-width:2; flex-shrink:0; margin-top:2px; }
+.rp-tip p { font-family:var(--body); font-size:13px; line-height:1.75; color:var(--text-sec); }
+.rp-tip p strong { color:var(--text-main); font-weight:600; }
+
+/* Phone wrap */
+.phone-wrap { position:relative; display:inline-block; }
+.phone-wrap img { width:260px; max-width:100%; height:auto; display:block; border-radius:32px; box-shadow:0 24px 60px rgba(0,0,0,.18), 0 8px 20px rgba(0,0,0,.1); }
+.rp-step__visual { display:flex; justify-content:center; align-items:center; }
+
+/* Manual upload section */
+.rp-manual { max-width:1100px; margin:0 auto; padding:48px 0 0; }
+.rp-manual__header { display:flex; align-items:center; gap:16px; margin-bottom:48px; }
+.rp-manual__badge { background:var(--accent); color:#fff; font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.28em; text-transform:uppercase; padding:8px 18px; border-radius:40px; white-space:nowrap; flex-shrink:0; }
+.rp-manual__line { flex:1; height:1px; background:var(--border); }
+.rp-manual__header-text { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; }
+
+.rp-manual__grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+.rp-manual__text {}
+.rp-manual__title { font-family:var(--serif); font-size:clamp(22px,2.6vw,30px); font-weight:700; color:var(--text-main); margin-bottom:16px; line-height:1.25; }
+.rp-manual__desc { font-family:var(--body); font-size:clamp(14px,1.35vw,16px); line-height:1.85; color:var(--text-sec); margin-bottom:24px; }
+
+.rp-manual__apps { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+.rp-manual__app { display:flex; gap:14px; align-items:center; background:var(--bg-main); border:1px solid var(--border); border-radius:10px; padding:14px 18px; }
+.rp-manual__app-icon { width:36px; height:36px; border-radius:8px; background:var(--highlight); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.rp-manual__app-icon svg { width:18px; height:18px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+.rp-manual__app-text { font-family:var(--body); font-size:14px; color:var(--text-sec); line-height:1.5; }
+.rp-manual__app-text strong { color:var(--text-main); font-weight:600; display:block; margin-bottom:2px; }
+
+.rp-manual__fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.rp-manual__field { background:var(--bg-main); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+.rp-manual__field-label { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:5px; }
+.rp-manual__field-val { font-family:var(--body); font-size:13px; color:var(--text-main); font-weight:500; }
+.rp-manual__field-val.placeholder { color:var(--text-muted); font-style:italic; font-weight:400; }
+
+/* CTA */
+.rp-cta { background:var(--primary); border-radius:20px; padding:44px 36px; text-align:center; margin:48px auto 0; max-width:860px; }
+.rp-cta h2 { font-family:var(--serif); font-size:clamp(24px,3vw,36px); font-weight:700; color:#fff; margin-bottom:14px; }
+.rp-cta p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; margin-bottom:32px; max-width:520px; margin-left:auto; margin-right:auto; }
+.rp-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .rp-step { grid-template-columns:1fr; gap:40px; }
+  .rp-step--reverse { direction:ltr; }
+  .rp-step__visual { order:-1; }
+  .phone-wrap img { width:220px; }
+  .rp-manual__grid { grid-template-columns:1fr; }
+  .rp-manual__header { flex-wrap:wrap; }
+  .rp-cta { padding:40px 24px; }
+  .mode-toggle { max-width:100%; }
+}
+@media (max-width:560px) {
+  .rp-manual__fields { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html" class="active"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Torneos</a>
+        <a href="#"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <a href="index.html#stats" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="#" onclick="openApp();return false;">Iniciar Sesión</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero__label">Guía paso a paso</div>
+  <h1 class="page-hero__title">Registra tu partida</h1>
+  <div class="page-hero__title-line"></div>
+  <p class="page-hero__sub">Hoyo a hoyo en tiempo real o subida manual del resultado final. Tú decides cómo registrar — la liga se actualiza igual.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<section style="background:var(--surface); padding-bottom:100px;">
+
+  <!-- Mode toggle -->
+  <div class="mode-toggle reveal">
+    <div class="mode-btn active">
+      <div class="mode-btn__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <span class="mode-btn__label">Hoyo a hoyo</span>
+      <span class="mode-btn__sub">Registra en tiempo real</span>
+    </div>
+    <div class="mode-btn">
+      <div class="mode-btn__icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <span class="mode-btn__label">Subida manual</span>
+      <span class="mode-btn__sub">Sube el resultado final</span>
+    </div>
+  </div>
+
+  <!-- STEPS: Hoyo a hoyo -->
+  <div class="rp-steps">
+
+    <!-- PASO 1: Selecciona campo -->
+    <div class="rp-step reveal">
+      <div class="rp-step__content">
+        <div class="rp-step__num">01</div>
+        <span class="rp-step__tag">Crea el partido</span>
+        <h2 class="rp-step__title">Elige el campo y el tipo de ronda</h2>
+        <p class="rp-step__desc">
+          Antes de salir al tee, configura el partido desde la app. El sistema muestra tu hándicap actual y el hándicap de juego calculado para ese campo — todo listo desde el primer hoyo.
+        </p>
+        <div class="rp-details">
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="rp-detail__text"><strong>Recorrido</strong> — Busca el campo y el recorrido donde jugaréis. La app tiene la base de datos de campos españoles con sus slope y course rating oficiales.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="rp-detail__text"><strong>Tipo de ronda</strong> — 18 hoyos completos, 9 hoyos Ida o 9 hoyos Vuelta. Si tu liga tiene los 9 hoyos activados, también puntúan para la clasificación.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg></div>
+            <div class="rp-detail__text"><strong>Tees</strong> — Selecciona las barras de salida (amarillas, blancas, rojas…). El hándicap de juego se recalcula automáticamente según las barras elegidas.</div>
+          </div>
+        </div>
+      </div>
+      <div class="rp-step__visual">
+        <div class="phone-wrap">
+          <img src="assets/JuegaPartida/Hoyos/SeleccionaCampo.webp" alt="Seleccionar campo y tipo de ronda" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2: Jugadores -->
+    <div class="rp-step rp-step--reverse reveal reveal-d1">
+      <div class="rp-step__content">
+        <div class="rp-step__num">02</div>
+        <span class="rp-step__tag">Compañeros de ronda</span>
+        <h2 class="rp-step__title">Añade a tus compañeros de partida</h2>
+        <p class="rp-step__desc">
+          Busca a los jugadores de tu liga que van a jugar contigo. Cada uno aparece con su hándicap WHS y su hándicap de juego calculado para el campo seleccionado — para que todos sepan los golpes que dan.
+        </p>
+        <div class="rp-details">
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            <div class="rp-detail__text"><strong>Busca por nombre</strong> — Solo aparecen jugadores de tu liga. En una partida multijugador todos ven el marcador en tiempo real desde sus propios móviles.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="rp-detail__text"><strong>HCP · Juego</strong> — Se muestran el hándicap WHS oficial y el hándicap de juego ajustado al slope del recorrido. Sin cálculos manuales.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div class="rp-detail__text"><strong>Hasta 4 jugadores</strong> por partida. Si sois más, cread dos partidas paralelas — los puntos se consolidan en el ranking de la liga igualmente.</div>
+          </div>
+        </div>
+      </div>
+      <div class="rp-step__visual">
+        <div class="phone-wrap">
+          <img src="assets/JuegaPartida/Hoyos/SeleccionaJugadores.webp" alt="Añadir jugadores a la partida" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 3: Registra hoyos -->
+    <div class="rp-step reveal reveal-d2">
+      <div class="rp-step__content">
+        <div class="rp-step__num">03</div>
+        <span class="rp-step__tag">En el campo</span>
+        <h2 class="rp-step__title">Registra cada hoyo al terminar</h2>
+        <p class="rp-step__desc">
+          Hoyo a hoyo, introduce los golpes de cada jugador con los botones + y −. La scorecard se actualiza al instante: Stableford acumulado, golpes totales y posición provisional en tiempo real.
+        </p>
+        <div class="rp-details">
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <div class="rp-detail__text"><strong>Puntos calculados al instante</strong> — La app aplica el hándicap hoyo a hoyo según el Stroke Index del campo. Sabrás en todo momento cuántos puntos llevas.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div class="rp-detail__text"><strong>Scorecard completo</strong> — Vista de todos los hoyos jugados con metros, par, HCP e índice de cada jugador. Desliza para ver la tarjeta entera.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div>
+            <div class="rp-detail__text"><strong>Navegación entre hoyos</strong> — Avanza al siguiente hoyo o vuelve atrás para corregir un golpe mal introducido. Sin restricciones.</div>
+          </div>
+        </div>
+        <div class="rp-tip">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p>La app funciona con <strong>conectividad limitada</strong>. Si pierdes señal en mitad del campo, los datos se guardan localmente y se sincronizan cuando recuperas cobertura.</p>
+        </div>
+      </div>
+      <div class="rp-step__visual">
+        <div class="phone-wrap">
+          <img src="assets/JuegaPartida/Hoyos/RegistraHoyos.webp" alt="Registro hoyo a hoyo en tiempo real" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4: Entrega tarjeta -->
+    <div class="rp-step rp-step--reverse reveal reveal-d3">
+      <div class="rp-step__content">
+        <div class="rp-step__num">04</div>
+        <span class="rp-step__tag">Fin de ronda</span>
+        <h2 class="rp-step__title">Confirma y entrega la tarjeta</h2>
+        <p class="rp-step__desc">
+          Al completar el último hoyo, la app te muestra la pantalla de entrega. Confirma si la ronda puntúa para la clasificación de la liga y si se trata de un torneo oficial.
+        </p>
+        <div class="rp-details">
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <div class="rp-detail__text"><strong>¿Torneo oficial?</strong> — Marca si la ronda es un evento oficial de la liga o una pachanga. Esto determina los contadores de la temporada y cómo afecta al hándicap WHS.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div class="rp-detail__text"><strong>Jugadores y puntos</strong> — Revisión final de cada jugador con sus puntos Stableford totales antes de confirmar. Puedes desmarcar un jugador si su tarjeta no debe entregarse.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div class="rp-detail__text"><strong>Actualización inmediata</strong> — Al confirmar, el ranking de la liga se recalcula al instante. El hándicap WHS se actualiza automáticamente si corresponde.</div>
+          </div>
+        </div>
+      </div>
+      <div class="rp-step__visual">
+        <div class="phone-wrap">
+          <img src="assets/JuegaPartida/Hoyos/EntregaTarjeta.webp" alt="Confirmar y entregar tarjeta" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 5: Resumen -->
+    <div class="rp-step reveal reveal-d4">
+      <div class="rp-step__content">
+        <div class="rp-step__num">05</div>
+        <span class="rp-step__tag">Resultado</span>
+        <h2 class="rp-step__title">Consulta el resumen y tu posición</h2>
+        <p class="rp-step__desc">
+          Una vez entregada la tarjeta, el resumen de la partida muestra el ranking de la ronda, los puntos Stableford de cada jugador y la tarjeta hoyo a hoyo completa. También puedes ver el equivalente en golpes totales.
+        </p>
+        <div class="rp-details">
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+            <div class="rp-detail__text"><strong>Stableford y golpes</strong> — Alterna entre la vista de puntos Stableford y la de golpes totales con el nivel jugado respecto al par del campo.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="rp-detail__text"><strong>Posición en la liga</strong> — Ves al instante tu nueva posición en el ranking general de la temporada, con los puntos acumulados.</div>
+          </div>
+          <div class="rp-detail">
+            <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <div class="rp-detail__text"><strong>Scorecard hoyo a hoyo</strong> — La tarjeta completa con metros, par, HCP de cada hoyo y los golpes de todos los jugadores queda guardada en el historial de la liga.</div>
+          </div>
+        </div>
+      </div>
+      <div class="rp-step__visual">
+        <div class="phone-wrap">
+          <img src="assets/JuegaPartida/Hoyos/resumenPartida.webp" alt="Resumen de partida y ranking" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /rp-steps -->
+
+  <!-- MANUAL UPLOAD -->
+  <div class="rp-manual reveal">
+    <div class="rp-manual__header">
+      <span class="rp-manual__badge">Subida manual</span>
+      <div class="rp-manual__line"></div>
+      <span class="rp-manual__header-text">¿Ya usas otra app? No pasa nada</span>
+    </div>
+
+    <!-- Intro -->
+    <div style="max-width:700px; margin-bottom:56px;">
+      <h3 class="rp-manual__title">Sube directamente el resultado final</h3>
+      <p class="rp-manual__desc">Si prefieres registrar la ronda en papel, con la app del campo o con cualquier otra aplicación de golf, no hay ningún problema. Al terminar, entra en The Secret Golf Club, introduce el resultado en tres pasos y el ranking se actualiza al instante.</p>
+      <div class="rp-manual__apps">
+        <div class="rp-manual__app">
+          <div class="rp-manual__app-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="rp-manual__app-text"><strong>Tarjeta de papel del campo</strong> Anota los golpes en la tarjeta oficial y sube solo el total de puntos Stableford al terminar.</div>
+        </div>
+        <div class="rp-manual__app">
+          <div class="rp-manual__app-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <div class="rp-manual__app-text"><strong>Otra aplicación de golf</strong> GolfGameBook, Handicap GPS, la app del club… úsala para el registro hoyo a hoyo y nosotros nos encargamos de la liga y el hándicap.</div>
+        </div>
+        <div class="rp-manual__app">
+          <div class="rp-manual__app-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+          <div class="rp-manual__app-text"><strong>Foto de la tarjeta (OCR)</strong> Saca una foto a la tarjeta oficial y la app extrae los datos automáticamente con reconocimiento de imagen.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 pasos con pantallazos -->
+    <div class="rp-steps">
+
+      <div class="rp-step reveal">
+        <div class="rp-step__content">
+          <div class="rp-step__num">01</div>
+          <span class="rp-step__tag">Campo y testigo</span>
+          <h2 class="rp-step__title">Selecciona el campo y quién firmó la tarjeta</h2>
+          <p class="rp-step__desc">
+            Elige el recorrido donde has jugado — la app autocompleta el slope y course rating para calcular el hándicap de juego correctamente. Luego indica quién ha firmado tu tarjeta como testigo, que también debe ser jugador de la liga.
+          </p>
+          <div class="rp-details">
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div class="rp-detail__text"><strong>Campo, recorrido y barras</strong> — El sistema aplica automáticamente el slope y rating oficiales del recorrido para ajustar tu hándicap de juego.</div>
+            </div>
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div class="rp-detail__text"><strong>¿Quién firmó la tarjeta?</strong> — El testigo debe ser otro jugador de la liga que haya estado en la ronda contigo. Es la validación equivalente a la firma en torneos RFEG.</div>
+            </div>
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+              <div class="rp-detail__text"><strong>Tus contadores de temporada</strong> — En la cabecera ves el estado de tus tarjetas, pachangas y torneos entregados hasta ahora, para saber cuánto hueco te queda.</div>
+            </div>
+          </div>
+        </div>
+        <div class="rp-step__visual">
+          <div class="phone-wrap">
+            <img src="assets/JuegaPartida/Manual/CampoYMarcador.webp" alt="Seleccionar campo y marcador" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="rp-step rp-step--reverse reveal reveal-d1">
+        <div class="rp-step__content">
+          <div class="rp-step__num">02</div>
+          <span class="rp-step__tag">Resultado</span>
+          <h2 class="rp-step__title">Introduce la fecha y los puntos obtenidos</h2>
+          <p class="rp-step__desc">
+            Solo necesitas dos datos: la fecha en que se jugó la ronda y los puntos Stableford netos totales. Sin hoyo a hoyo, sin capturas adicionales — el dato que cuenta es el resultado final.
+          </p>
+          <div class="rp-details">
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+              <div class="rp-detail__text"><strong>Fecha de la partida</strong> — Puede ser el día de hoy o una fecha pasada. El sistema la asocia a la semana y temporada correcta para el ranking.</div>
+            </div>
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+              <div class="rp-detail__text"><strong>Puntos Stableford netos</strong> — Introduce directamente el total de puntos netos de la ronda. El hándicap WHS se actualiza a partir de este dato igual que con cualquier tarjeta de torneo.</div>
+            </div>
+          </div>
+          <div class="rp-tip">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <p>El <strong>hándicap WHS se actualiza exactamente igual</strong> que si hubieras registrado la ronda hoyo a hoyo. El método de captura no afecta al cálculo.</p>
+          </div>
+        </div>
+        <div class="rp-step__visual">
+          <div class="phone-wrap">
+            <img src="assets/JuegaPartida/Manual/Resultado.webp" alt="Introducir fecha y puntos Stableford" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="rp-step reveal reveal-d2">
+        <div class="rp-step__content">
+          <div class="rp-step__num">03</div>
+          <span class="rp-step__tag">Opciones de entrega</span>
+          <h2 class="rp-step__title">Decide si es torneo y si la entregas a la liga</h2>
+          <p class="rp-step__desc">
+            El último paso te da control total sobre cómo computa la ronda. Una ronda puede registrarse sin que puntúe para la clasificación — sigue contando para el hándicap y las estadísticas.
+          </p>
+          <div class="rp-details">
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="rp-detail__text"><strong>¿Es un torneo?</strong> — Marca si la ronda es un evento oficial de la liga o una pachanga libre. Esto afecta a los contadores de torneos vs pachangas de la temporada.</div>
+            </div>
+            <div class="rp-detail">
+              <div class="rp-detail__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+              <div class="rp-detail__text"><strong>¿Entregar tarjeta a la liga?</strong> — Si ya tienes el cupo de tarjetas lleno o la ronda fue de entrenamiento, puedes registrarla sin que ocupe un slot en el ranking. El hándicap se actualiza igualmente.</div>
+            </div>
+          </div>
+        </div>
+        <div class="rp-step__visual">
+          <div class="phone-wrap">
+            <img src="assets/JuegaPartida/Manual/Opciones.webp" alt="Opciones de entrega: torneo y clasificación" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /rp-steps manual -->
+  </div>
+
+  <!-- CTA -->
+  <div class="rp-cta reveal">
+    <h2>¿Listo para tu próxima ronda?</h2>
+    <p>Descarga la app, configura el partido antes de salir al tee y que el campo haga el resto. El ranking se actualiza solo al entregar la tarjeta.</p>
+    <div class="rp-cta__btns">
+      <a href="#" onclick="openApp();return false;" class="btn-lime">Descargar la app</a>
+      <a href="lls-crear-liga.html" class="btn-outline">Crear una liga</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos. Torneos, ranking, estadísticas y handicap oficial.</p></div>
+    <div class="footer__col"><h4>Guías</h4><ul><li><a href="lls-crear-liga.html">Crea tu liga</a></li><li><a href="lls-registra-partidas.html" class="active">Registra partidas</a></li><li><a href="lls-torneos.html">Torneos</a></li><li><a href="#">Estadísticas</a></li><li><a href="#">Comparación</a></li></ul></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="index.html#features">Funcionalidades</a></li><li><a href="index.html#how">Cómo funciona</a></li><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Contacto</h4><ul><li><a href="mailto:hola@laligasecreta.es">hola@laligasecreta.es</a></li><li><a href="#">Instagram</a></li></ul></div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Powered by TSGC Scorecard</span>
+    <div class="footer__social">
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿No tienes cuenta? <a href="#" onclick="showRegister()">Solicitar acceso</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre completo</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Licencia RFEG (opcional)</label><input type="text" class="form__input" placeholder="CM01234567"></div>
+      <div class="form__group"><label class="form__label">Nombre de tu liga</label><input type="text" class="form__input" placeholder="Liga de los Martes"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Crear mi liga gratis</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Iniciar sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+</body>
+</html>
+

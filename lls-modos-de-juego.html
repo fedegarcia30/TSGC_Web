@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Modos de juego secundarios — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background:var(--primary-dark); padding:100px 52px 56px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.page-hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right, transparent, rgba(132,176,38,.3) 40%, rgba(132,176,38,.3) 60%, transparent);
+}
+.page-hero__eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:24px;
+}
+.page-hero__title {
+  font-family:var(--serif); font-size:clamp(32px,5vw,64px);
+  font-weight:700; color:#fff; line-height:1.1; margin-bottom:20px;
+}
+.page-hero__sub {
+  font-family:'Cormorant Garamond', Georgia, serif; font-style:italic; font-weight:300;
+  font-size:clamp(16px,1.8vw,22px); color:rgba(255,255,255,.6);
+  max-width:560px; margin:0 auto 12px; line-height:1.7;
+}
+.page-hero__note {
+  font-family:var(--body); font-size:13px; color:rgba(132,176,38,.75); letter-spacing:.02em;
+}
+
+/* ── CONTENT WRAPPER ── */
+.guide-wrap { max-width:1060px; margin:0 auto; padding:0 52px; }
+
+/* ── INTRO CALLOUT ── */
+.intro-callout {
+  background:var(--highlight); border:1px solid var(--accent-border);
+  border-radius:16px; padding:28px 32px; margin:36px 0;
+  display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;
+}
+.intro-callout__icon {
+  width:48px; height:48px; border-radius:12px; background:rgba(47,82,51,.12);
+  border:1px solid var(--accent-border); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.intro-callout__icon svg { width:22px; height:22px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+.intro-callout__title { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--text-main); margin-bottom:8px; }
+.intro-callout__text { font-family:var(--body); font-size:15px; line-height:1.8; color:var(--text-sec); }
+
+/* ── SECTION DIVIDER ── */
+.guide-divider {
+  display:flex; align-items:center; gap:16px; margin:44px 0 28px;
+}
+.guide-divider__line { flex:1; height:1px; background:var(--border); }
+.guide-divider__label {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.34em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap;
+}
+
+/* ── MODE BLOCK ── */
+.mode-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:52px;
+  align-items:center; padding:44px 0; border-bottom:1px solid var(--border);
+}
+.mode-block:last-child { border-bottom:none; }
+.mode-block--reverse { direction:rtl; }
+.mode-block--reverse > * { direction:ltr; }
+
+.mode-block__tag {
+  font-family:var(--sans); font-size:8.5px; font-weight:700; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--accent); display:block; margin-bottom:12px;
+}
+.mode-block__title {
+  font-family:var(--serif); font-size:clamp(24px,2.8vw,36px); font-weight:700;
+  color:var(--text-main); line-height:1.2; margin-bottom:16px;
+}
+.mode-block__desc {
+  font-family:var(--body); font-size:clamp(14px,1.35vw,16px);
+  line-height:1.85; color:var(--text-sec); margin-bottom:28px;
+}
+
+.mode-rules { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+.mode-rule { display:flex; gap:14px; align-items:flex-start; }
+.mode-rule__icon {
+  flex-shrink:0; width:30px; height:30px; border-radius:8px;
+  background:var(--highlight); border:1px solid var(--accent-border);
+  display:flex; align-items:center; justify-content:center; margin-top:2px;
+}
+.mode-rule__icon svg { width:13px; height:13px; stroke:var(--primary); fill:none; stroke-width:2.2; }
+.mode-rule__text { font-family:var(--body); font-size:14px; line-height:1.75; color:var(--text-sec); }
+.mode-rule__text strong { color:var(--text-main); font-weight:600; }
+
+.mode-tip {
+  display:flex; gap:12px; background:var(--bg-main); border:1px solid var(--border);
+  border-radius:10px; padding:14px 18px; align-items:flex-start;
+}
+.mode-tip svg { width:15px; height:15px; stroke:var(--accent); fill:none; stroke-width:2; flex-shrink:0; margin-top:2px; }
+.mode-tip p { font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec); }
+.mode-tip p strong { color:var(--text-main); }
+
+/* ── SCORING TABLE ── */
+.scoring-table {
+  width:100%; border-collapse:collapse; margin:20px 0;
+  font-family:var(--body); font-size:14px;
+}
+.scoring-table th {
+  font-family:var(--sans); font-size:8px; font-weight:600; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--text-muted); padding:10px 14px;
+  border-bottom:2px solid var(--border); text-align:left;
+}
+.scoring-table td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text-sec); }
+.scoring-table tr:last-child td { border-bottom:none; }
+.scoring-table td:first-child { color:var(--text-main); font-weight:500; }
+.score-highlight { color:var(--accent); font-weight:700; }
+
+/* ── PHONE VISUAL ── */
+.mode-block__visual { display:flex; justify-content:center; align-items:flex-start; gap:16px; }
+.phone-wrap img {
+  width:220px; max-width:100%; height:auto; display:block;
+  border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,.16), 0 6px 16px rgba(0,0,0,.08);
+}
+.phone-wrap--sm img { width:170px; }
+
+/* ── VIEWS SECTION ── */
+.views-section { background:var(--primary-dark); border-radius:20px; padding:44px 36px; margin:44px 0; }
+.views-section__header { text-align:center; margin-bottom:48px; }
+.views-section__title { font-family:var(--serif); font-size:clamp(22px,2.8vw,32px); font-weight:700; color:#fff; margin-bottom:12px; }
+.views-section__sub { font-family:var(--body); font-size:15px; color:rgba(255,255,255,.55); line-height:1.7; max-width:500px; margin:0 auto; }
+.views-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.view-card {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+  border-radius:14px; overflow:hidden; text-align:center;
+}
+.view-card--active { border-color:rgba(132,176,38,.35); }
+.view-card__label {
+  font-family:var(--sans); font-size:8px; font-weight:700; letter-spacing:.3em;
+  text-transform:uppercase; padding:16px 16px 4px;
+  color:rgba(255,255,255,.35);
+}
+.view-card--active .view-card__label { color:var(--accent); }
+.view-card__desc { font-family:var(--body); font-size:13px; color:rgba(255,255,255,.45); line-height:1.6; padding:0 16px 14px; }
+.view-card__img { background:rgba(0,0,0,.25); display:flex; justify-content:center; padding:12px 20px 0; }
+.view-card__img img { width:100%; max-width:180px; border-radius:8px 8px 0 0; display:block; }
+
+/* ── HCP % INFO ── */
+.hcp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0; }
+.hcp-pill {
+  text-align:center; padding:14px 8px; border:1px solid var(--border);
+  border-radius:10px; background:var(--bg-main);
+}
+.hcp-pill__val { font-family:var(--serif); font-size:22px; font-weight:700; color:var(--accent); display:block; margin-bottom:4px; }
+.hcp-pill__label { font-family:var(--sans); font-size:8px; letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted); }
+
+/* ── CTA ── */
+.guide-cta { background:var(--primary); border-radius:20px; padding:64px 48px; text-align:center; margin:80px 0; }
+.guide-cta h2 { font-family:var(--serif); font-size:clamp(22px,3vw,34px); font-weight:700; color:#fff; margin-bottom:14px; }
+.guide-cta p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; margin-bottom:32px; max-width:500px; margin-left:auto; margin-right:auto; }
+.guide-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .guide-wrap { padding:0 24px; }
+  .mode-block { grid-template-columns:1fr; gap:36px; }
+  .mode-block--reverse { direction:ltr; }
+  .mode-block__visual { order:-1; }
+  .phone-wrap img { width:180px; }
+  .views-grid { grid-template-columns:1fr; }
+  .views-section { padding:40px 24px; }
+  .hcp-grid { grid-template-columns:repeat(2,1fr); }
+  .intro-callout { grid-template-columns:1fr; gap:16px; padding:28px 24px; }
+  .guide-cta { padding:40px 24px; }
+}
+@media (max-width:560px) {
+  .page-hero { padding:120px 20px 60px; }
+  .hcp-grid { grid-template-columns:repeat(4,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html" class="active"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+          <a href="#"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="lls-precios.html" class="btn-lime" style="display:block;text-align:center;">Crear mi liga gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero__eyebrow">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Competición secundaria
+  </div>
+  <h1 class="page-hero__title">Modos de juego</h1>
+  <div style="width:48px;height:2px;background:var(--accent);margin:0 auto 20px;"></div>
+  <p class="page-hero__sub">Juega tu ronda de liga y, a la vez, compite en Match Play, Fourball, Sindicato o Skins con tus compañeros de grupo.</p>
+  <p class="page-hero__note">Invisible para quien no lo active · No afecta al hándicap WHS ni al ranking de liga</p>
+</div>
+
+<!-- CONTENT -->
+<div class="guide-wrap">
+
+  <!-- Intro callout -->
+  <div class="intro-callout reveal">
+    <div class="intro-callout__icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div>
+      <div class="intro-callout__title">¿Cómo funciona?</div>
+      <div class="intro-callout__text">Al crear una partida multijugador, activas el juego secundario antes de empezar. Elige el modo (Match, Sindicato o Fourball) y, opcionalmente, añade Skins con el precio por hoyo que queráis. Una vez en el campo, cada jugador puede cambiar entre tres vistas desde el scorecard: su tarjeta Stableford de liga, el marcador del juego secundario, y el estado de los Skins.</div>
+    </div>
+  </div>
+
+  <!-- Modos section -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Los modos de juego</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <!-- MATCH PLAY -->
+  <div class="mode-block reveal">
+    <div>
+      <span class="mode-block__tag">1 vs 1 · 2 jugadores</span>
+      <h2 class="mode-block__title">Match Play</h2>
+      <p class="mode-block__desc">La competición más directa del golf. Tú contra otro jugador, hoyo a hoyo. Gana el hoyo quien tenga el mejor resultado neto. No importa cuántos golpes lleves en total — lo único que cuenta es ganar más hoyos que el rival.</p>
+      <div class="mode-rules">
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Resultado neto por hoyo:</strong> se aplica el hándicap de juego en cada hoyo según su índice. El que hace menos golpes netos gana el hoyo.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Marcador UP / DOWN / AS:</strong> la app muestra en todo momento quién va ganando y por cuántos hoyos.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Gana el partido:</strong> quien lleve más hoyos de ventaja de los que quedan por jugar, o quien tenga más hoyos al final de los 18.</div>
+        </div>
+      </div>
+      <div class="mode-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Solo disponible con <strong>2 jugadores</strong>. El % de hándicap aplicado (50%, 75%, 90% o 100%) se configura antes de salir.</p>
+      </div>
+    </div>
+    <div class="mode-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/modosDeJuego/Match.webp" alt="Configurar Match Play">
+      </div>
+    </div>
+  </div>
+
+  <!-- SINDICATO -->
+  <div class="mode-block mode-block--reverse reveal">
+    <div>
+      <span class="mode-block__tag">Individual · 3 jugadores</span>
+      <h2 class="mode-block__title">Sindicato</h2>
+      <p class="mode-block__desc">El formato más popular en los tríos españoles. Cada hoyo reparte 6 puntos entre los tres jugadores según su posición en ese hoyo. Gana quien más puntos acumule al terminar los 18.</p>
+      <div class="mode-rules">
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Reparto por hoyo:</strong> el sistema calcula el resultado neto de cada jugador y reparte los 6 puntos.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Normalización:</strong> el último siempre se queda en 0, garantizando que el total de puntos repartidos por hoyo sea siempre 6.</div>
+        </div>
+      </div>
+      <table class="scoring-table">
+        <thead>
+          <tr><th>Situación</th><th>1º</th><th>2º</th><th>3º</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sin empates</td><td class="score-highlight">4</td><td>2</td><td>0</td></tr>
+          <tr><td>Empate en 1º</td><td class="score-highlight">3</td><td class="score-highlight">3</td><td>0</td></tr>
+          <tr><td>Empate en 2º</td><td class="score-highlight">4</td><td>1</td><td>1</td></tr>
+          <tr><td>Triple empate</td><td class="score-highlight">2</td><td class="score-highlight">2</td><td class="score-highlight">2</td></tr>
+        </tbody>
+      </table>
+      <div class="mode-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Solo disponible con <strong>3 jugadores</strong>. Los jugadores aparecen como P1, P2 y P3 en el marcador.</p>
+      </div>
+    </div>
+    <div class="mode-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/modosDeJuego/Sindicato.webp" alt="Configurar Sindicato">
+      </div>
+    </div>
+  </div>
+
+  <!-- FOURBALL -->
+  <div class="mode-block reveal">
+    <div>
+      <span class="mode-block__tag">2 vs 2 · 4 jugadores</span>
+      <h2 class="mode-block__title">Fourball</h2>
+      <p class="mode-block__desc">Dos parejas compiten entre sí. En cada hoyo, cada equipo presenta la mejor bola de sus dos jugadores. El equipo con mejor resultado neto se lleva el hoyo. Gana quien más hoyos gane al final.</p>
+      <div class="mode-rules">
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Equipos Azul y Rojo:</strong> se asignan al configurar la partida. Cada pareja elige quién va con quién.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Mejor bola:</strong> cuenta solo el resultado neto más bajo del equipo en cada hoyo. El que no gana el hoyo, lo pierde (no hay empate si un equipo gana).</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="mode-rule__text"><strong>Marcador de equipo:</strong> la app lleva el marcador con los hoyos ganados por cada equipo, igual que en Match Play.</div>
+        </div>
+      </div>
+      <div class="mode-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Solo disponible con <strong>4 jugadores</strong>. El marcador muestra el mismo indicador UP/DOWN que el Match Play individual.</p>
+      </div>
+    </div>
+    <div class="mode-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/modosDeJuego/fourball.webp" alt="Configurar Fourball">
+      </div>
+    </div>
+  </div>
+
+  <!-- SKINS -->
+  <div class="mode-block mode-block--reverse reveal">
+    <div>
+      <span class="mode-block__tag">Con dinero · Combinable con cualquier modo</span>
+      <h2 class="mode-block__title">Skins</h2>
+      <p class="mode-block__desc">Cada hoyo vale dinero. El jugador con el mejor resultado neto gana el skin de ese hoyo. Si hay empate, el skin se acumula (bote) y se suma al siguiente hoyo. La app lleva la cuenta exacta al céntimo en todo momento.</p>
+      <div class="mode-rules">
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="mode-rule__text"><strong>Precio por hoyo:</strong> se configura al crear la partida (ej. €1 / hoyo). Cada jugador que participa paga ese importe por hoyo.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="mode-rule__text"><strong>Bote acumulado:</strong> los empates no reparten el skin — se suma al siguiente hoyo. Un bote grande en los hoyos finales puede cambiar el resultado total.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="mode-rule__text"><strong>Opt-in por jugador:</strong> no todos tienen que participar en los Skins. Cada jugador decide si se apunta al configurar la partida.</div>
+        </div>
+        <div class="mode-rule">
+          <div class="mode-rule__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="mode-rule__text"><strong>Compatible con todo:</strong> los Skins se pueden activar a la vez que Match, Sindicato o Fourball. Son independientes.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/modosDeJuego/skins.webp" alt="Configurar Skins">
+      </div>
+    </div>
+  </div>
+
+  <!-- % HANDICAP -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Porcentaje de hándicap</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="reveal" style="max-width:640px;margin:0 auto 48px;text-align:center;">
+    <p style="font-family:var(--body);font-size:clamp(14px,1.4vw,16px);color:var(--text-sec);line-height:1.8;margin-bottom:32px;">En todos los modos (excepto Skins), podéis elegir qué porcentaje del hándicap de juego se aplica en la competición secundaria. A menor porcentaje, más niveláis el campo a favor del mejor jugador.</p>
+    <div class="hcp-grid">
+      <div class="hcp-pill"><span class="hcp-pill__val">50%</span><span class="hcp-pill__label">Mínimo</span></div>
+      <div class="hcp-pill"><span class="hcp-pill__val">75%</span><span class="hcp-pill__label">Reducido</span></div>
+      <div class="hcp-pill"><span class="hcp-pill__val">90%</span><span class="hcp-pill__label">Normal</span></div>
+      <div class="hcp-pill" style="border-color:var(--accent-border);background:var(--highlight);"><span class="hcp-pill__val">100%</span><span class="hcp-pill__label">Completo</span></div>
+    </div>
+  </div>
+
+  <!-- VISTAS EN JUEGO -->
+  <div class="views-section reveal">
+    <div class="views-section__header">
+      <h2 class="views-section__title">Durante el juego,<br>tú eliges qué ver</h2>
+      <p class="views-section__sub">En cada hoyo puedes cambiar de vista con un toque. Tu tarjeta de liga siempre disponible, sin perder el hilo de la apuesta.</p>
+    </div>
+    <div class="views-grid">
+      <div class="view-card">
+        <div class="view-card__label">Vista STB</div>
+        <div class="view-card__desc">Tu tarjeta Stableford para la liga. Golpes y puntos hoyo a hoyo.</div>
+        <div class="view-card__img"><img src="assets/modosDeJuego/resultadosStableford.webp" alt="Vista Stableford"></div>
+      </div>
+      <div class="view-card view-card--active">
+        <div class="view-card__label">Vista MATCH</div>
+        <div class="view-card__desc">Marcador del juego secundario en tiempo real. UP / DOWN / AS o puntos de Sindicato.</div>
+        <div class="view-card__img"><img src="assets/modosDeJuego/resultadosFourball.webp" alt="Vista Match"></div>
+      </div>
+      <div class="view-card">
+        <div class="view-card__label">Vista SKINS</div>
+        <div class="view-card__desc">Bote acumulado y balance de cada jugador, actualizado en cada hoyo.</div>
+        <div class="view-card__img"><img src="assets/modosDeJuego/resultadosSkins.webp" alt="Vista Skins"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="guide-cta reveal">
+    <h2>Empieza a jugar con más aliciente</h2>
+    <p>Los modos de juego secundarios están disponibles desde la primera partida, sin configuración adicional en tu liga.</p>
+    <div class="guide-cta__btns">
+      <a href="lls-precios.html" class="btn-lime">Crear mi liga gratis</a>
+      <a href="index.html" class="btn-outline" style="color:#fff;border-color:rgba(255,255,255,.3);">Volver al inicio</a>
+    </div>
+  </div>
+
+</div><!-- /guide-wrap -->
+
+<!-- FOOTER -->
+<footer style="background:var(--primary-dark);padding:60px 52px 40px;">
+  <div style="max-width:1060px;margin:0 auto;text-align:center;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <img src="assets/TSGC_icon.svg" style="width:28px;height:28px;" alt="TSGC">
+      <span style="font-family:var(--serif);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);">The Secret Golf Club</span>
+    </a>
+    <p style="font-family:var(--sans);font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.25);text-transform:uppercase;">© 2025 The Secret Golf Club · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">⛳</div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com" autocomplete="email"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Estadísticas de jugador — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background:var(--primary-dark); padding:100px 52px 56px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.page-hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right, transparent, rgba(132,176,38,.3) 40%, rgba(132,176,38,.3) 60%, transparent);
+}
+.page-hero__eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:24px;
+}
+.page-hero__title {
+  font-family:var(--serif); font-size:clamp(32px,5vw,64px);
+  font-weight:700; color:#fff; line-height:1.1; margin-bottom:20px;
+}
+.page-hero__sub {
+  font-family:'Cormorant Garamond', Georgia, serif; font-style:italic; font-weight:300;
+  font-size:clamp(16px,1.8vw,22px); color:rgba(255,255,255,.6);
+  max-width:580px; margin:0 auto 12px; line-height:1.7;
+}
+.page-hero__note {
+  font-family:var(--body); font-size:13px; color:rgba(132,176,38,.75);
+}
+
+/* ── WRAPPER ── */
+.guide-wrap { max-width:1060px; margin:0 auto; padding:0 52px; }
+
+/* ── INTRO CALLOUT ── */
+.intro-callout {
+  background:var(--highlight); border:1px solid var(--accent-border);
+  border-radius:16px; padding:28px 32px; margin:36px 0;
+  display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;
+}
+.intro-callout__icon {
+  width:48px; height:48px; border-radius:12px; background:rgba(47,82,51,.12);
+  border:1px solid var(--accent-border); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.intro-callout__icon svg { width:22px; height:22px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+.intro-callout__title { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--text-main); margin-bottom:8px; }
+.intro-callout__text { font-family:var(--body); font-size:15px; line-height:1.8; color:var(--text-sec); }
+
+/* ── DIVIDER ── */
+.guide-divider {
+  display:flex; align-items:center; gap:16px; margin:36px 0 24px;
+}
+.guide-divider__line { flex:1; height:1px; background:var(--border); }
+.guide-divider__label {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.34em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap;
+}
+
+/* ── STAT BLOCK ── */
+.stat-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:72px;
+  align-items:center; padding:48px 0;
+}
+.stat-block--reverse { direction:rtl; }
+.stat-block--reverse > * { direction:ltr; }
+
+.stat-block__tag {
+  font-family:var(--sans); font-size:8.5px; font-weight:700; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--accent); display:block; margin-bottom:12px;
+}
+.stat-block__title {
+  font-family:var(--serif); font-size:clamp(22px,2.6vw,32px); font-weight:700;
+  color:var(--text-main); line-height:1.2; margin-bottom:16px;
+}
+.stat-block__desc {
+  font-family:var(--body); font-size:clamp(14px,1.35vw,16px);
+  line-height:1.85; color:var(--text-sec); margin-bottom:24px;
+}
+
+.stat-items { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+.stat-item { display:flex; gap:14px; align-items:flex-start; }
+.stat-item__icon {
+  flex-shrink:0; width:30px; height:30px; border-radius:8px;
+  background:var(--highlight); border:1px solid var(--accent-border);
+  display:flex; align-items:center; justify-content:center; margin-top:2px;
+}
+.stat-item__icon svg { width:13px; height:13px; stroke:var(--primary); fill:none; stroke-width:2.2; }
+.stat-item__text { font-family:var(--body); font-size:14px; line-height:1.75; color:var(--text-sec); }
+.stat-item__text strong { color:var(--text-main); font-weight:600; }
+
+.stat-tip {
+  display:flex; gap:12px; background:var(--bg-main); border:1px solid var(--border);
+  border-radius:10px; padding:14px 18px; align-items:flex-start;
+}
+.stat-tip svg { width:15px; height:15px; stroke:var(--accent); fill:none; stroke-width:2; flex-shrink:0; margin-top:2px; }
+.stat-tip p { font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec); }
+.stat-tip p strong { color:var(--text-main); }
+
+/* ── PHONE VISUAL ── */
+.stat-block__visual { display:flex; justify-content:center; align-items:flex-start; gap:16px; }
+.phone-wrap img {
+  width:230px; max-width:100%; height:auto; display:block;
+  border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,.16), 0 6px 16px rgba(0,0,0,.08);
+}
+.phone-wrap--sm img { width:190px; }
+
+/* ── METRICS GRID (pill display) ── */
+.metrics-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.metric-pill {
+  background:var(--bg-main); border:1px solid var(--border); border-radius:10px;
+  padding:14px 12px; text-align:center;
+}
+.metric-pill__val {
+  font-family:var(--serif); font-size:22px; font-weight:700;
+  color:var(--primary); display:block; margin-bottom:3px;
+}
+.metric-pill__val--accent { color:var(--accent); }
+.metric-pill__label {
+  font-family:var(--sans); font-size:8px; font-weight:500;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted);
+}
+
+/* ── FILTER PILLS ── */
+.filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.filter-pill {
+  font-family:var(--sans); font-size:8.5px; font-weight:500; letter-spacing:.16em;
+  text-transform:uppercase; padding:7px 16px; border-radius:40px;
+  border:1px solid var(--border); color:var(--text-muted); background:transparent;
+}
+.filter-pill--active {
+  background:var(--primary); color:#fff; border-color:var(--primary);
+}
+
+/* ── CTA ── */
+.guide-cta { background:var(--primary); border-radius:20px; padding:44px 36px; text-align:center; margin:48px 0; }
+.guide-cta h2 { font-family:var(--serif); font-size:clamp(22px,3vw,34px); font-weight:700; color:#fff; margin-bottom:14px; }
+.guide-cta p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; margin-bottom:32px; max-width:500px; margin-left:auto; margin-right:auto; }
+.guide-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .guide-wrap { padding:0 24px; }
+  .stat-block { grid-template-columns:1fr; gap:36px; }
+  .stat-block--reverse { direction:ltr; }
+  .stat-block__visual { order:1; }
+  .phone-wrap img { width:190px; }
+  .intro-callout { grid-template-columns:1fr; gap:16px; padding:28px 24px; }
+  .metrics-grid { grid-template-columns:repeat(2,1fr); }
+  .guide-cta { padding:40px 24px; }
+}
+@media (max-width:560px) {
+  .page-hero { padding:120px 20px 60px; }
+  .metrics-grid { grid-template-columns:repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html" class="active"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Comparación</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/></svg>Cómo funciona</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="lls-precios.html" class="btn-lime" style="display:block;text-align:center;">Crear mi liga gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero__eyebrow">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Estadísticas
+  </div>
+  <h1 class="page-hero__title">Conoce tu juego<br>mejor que nadie.</h1>
+  <div style="width:48px;height:2px;background:var(--accent);margin:0 auto 20px;"></div>
+  <p class="page-hero__sub">Estadísticas detalladas de cada jugador de la liga: rendimiento, evolución, campos favoritos e historial completo de cada ronda.</p>
+  <div style="display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+    <span style="font-family:var(--sans);font-size:8.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#fff;background:var(--accent);padding:7px 18px;border-radius:40px;">Temporada</span>
+    <span style="font-family:var(--sans);font-size:8.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);padding:7px 18px;border-radius:40px;">Período</span>
+    <span style="font-family:var(--sans);font-size:8.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);padding:7px 18px;border-radius:40px;">Histórico</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="guide-wrap">
+
+  <!-- Intro callout -->
+  <div class="intro-callout reveal">
+    <div class="intro-callout__icon">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    </div>
+    <div>
+      <div class="intro-callout__title">Todo lo que necesitas para entender tu rendimiento</div>
+      <div class="intro-callout__text">Desde la cabecera con tu posición en la liga y distancia al primero, hasta el detalle hoyo a hoyo de cualquier ronda. Disponible para cualquier jugador de tu liga — no solo el tuyo.</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:16px;">
+        <div>
+          <div style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">Temporada</div>
+          <div style="font-family:var(--body);font-size:13px;color:var(--text-sec);line-height:1.6;">Estadísticas de la temporada activa. Lo que cuenta para el ranking.</div>
+        </div>
+        <div>
+          <div style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">Período</div>
+          <div style="font-family:var(--body);font-size:13px;color:var(--text-sec);line-height:1.6;">Filtra por últimas N rondas, trimestre, semestre o rango de fechas libre.</div>
+        </div>
+        <div>
+          <div style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">Histórico</div>
+          <div style="font-family:var(--body);font-size:13px;color:var(--text-sec);line-height:1.6;">Toda la carrera del jugador, incluyendo rondas de temporadas anteriores.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 1. RESUMEN DE LIGA ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">① Resumen de liga</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block reveal">
+    <div>
+      <span class="stat-block__tag">Cabecera siempre visible</span>
+      <h2 class="stat-block__title">Tu posición en la liga,<br>de un vistazo.</h2>
+      <p class="stat-block__desc">La primera pantalla de estadísticas muestra lo más importante: dónde estás en la clasificación, cuánto le sacas o te sacan, y la comparativa entre tu hándicap WHS de la liga y el hándicap oficial de la RFEG.</p>
+      <div class="metrics-grid">
+        <div class="metric-pill"><span class="metric-pill__val metric-pill--accent">#5</span><span class="metric-pill__label">Posición</span></div>
+        <div class="metric-pill"><span class="metric-pill__val">119</span><span class="metric-pill__label">Dist. al 1º</span></div>
+        <div class="metric-pill"><span class="metric-pill__val">11.7</span><span class="metric-pill__label">HCP Liga</span></div>
+        <div class="metric-pill"><span class="metric-pill__val">11.7</span><span class="metric-pill__label">HCP RFEG</span></div>
+        <div class="metric-pill"><span class="metric-pill__val">4</span><span class="metric-pill__label">Pachangas</span></div>
+        <div class="metric-pill"><span class="metric-pill__val metric-pill--accent">1%</span><span class="metric-pill__label">Prob. ganar</span></div>
+      </div>
+      <div class="stat-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>La <strong>probabilidad de ganar la liga</strong> se calcula mediante simulación Monte Carlo con tus scores históricos y las rondas que quedan de temporada.</p>
+      </div>
+    </div>
+    <div class="stat-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Estadisticas/MetricasTemporada1.webp" alt="Resumen de liga">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. MÉTRICAS DE TEMPORADA ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">② Métricas de temporada</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block stat-block--reverse reveal">
+    <div>
+      <span class="stat-block__tag">Rendimiento global</span>
+      <h2 class="stat-block__title">Partidas, scores y forma reciente.</h2>
+      <p class="stat-block__desc">Todas las métricas de tu temporada en una sola vista: cuántas rondas llevas, cuál es tu mejor score, cómo estás de forma en las últimas partidas. También el histórico de tus últimos 10 resultados ordenados cronológicamente.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="stat-item__text"><strong>Partidas jugadas</strong> — total de rondas registradas en la temporada.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="stat-item__text"><strong>Mejor score</strong> — tu marca personal en la temporada en golpes totales.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="stat-item__text"><strong>Forma reciente</strong> — indicador del nivel de juego en las últimas rondas comparado con la media.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="stat-item__text"><strong>Últimos 10 resultados</strong> — timeline visual de puntos Stableford con navegación izquierda/derecha.</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Estadisticas/MetricasTemporada2.webp" alt="Métricas de temporada">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. EVOLUCIÓN DEL HÁNDICAP ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">③ Evolución del hándicap</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block reveal">
+    <div>
+      <span class="stat-block__tag">Cálculo WHS · Transparente</span>
+      <h2 class="stat-block__title">Tu hándicap, ronda<br>a ronda.</h2>
+      <p class="stat-block__desc">Gráfico de la evolución de tu índice WHS a lo largo de la temporada. Ves exactamente cómo ha subido o bajado después de cada ronda entregada.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="stat-item__text"><strong>Gráfico de evolución</strong> — puntos en el eje Y (índice WHS), rondas en el eje X.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="stat-item__text"><strong>Últimas 20 tarjetas para el cálculo</strong> — grid visual con los diferenciales de cada ronda. Las tarjetas resaltadas son las que entran en el cálculo actual del índice WHS.</div>
+        </div>
+      </div>
+      <div class="stat-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>El algoritmo WHS usa los <strong>mejores N diferenciales</strong> de las últimas 20 rondas. El grid muestra exactamente cuáles están siendo usados en tu cálculo actual.</p>
+      </div>
+    </div>
+    <div class="stat-block__visual" style="flex-direction:column;gap:16px;align-items:center;">
+      <div class="phone-wrap">
+        <img src="assets/Estadisticas/EvolucionHandicap.webp" alt="Evolución del hándicap">
+      </div>
+      <div class="phone-wrap phone-wrap--sm">
+        <img src="assets/Estadisticas/Ultimos20NivelesJugadosparaCalculoHandicap.webp" alt="Últimas 20 tarjetas para cálculo WHS">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. EVOLUCIÓN DE RESULTADOS ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">④ Evolución de resultados</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block stat-block--reverse reveal">
+    <div>
+      <span class="stat-block__tag">Tendencia de forma</span>
+      <h2 class="stat-block__title">¿Estás mejorando<br>o empeorando?</h2>
+      <p class="stat-block__desc">Gráfico de línea con tus puntos Stableford en cada ronda, ordenados cronológicamente. De un vistazo ves si tu forma es ascendente, descendente o irregular.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <div class="stat-item__text"><strong>Tendencia visual</strong> — los puntos del gráfico están coloreados según si la ronda fue buena (verde), normal (amarillo) o mala (rojo) respecto a tu media.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="stat-item__text"><strong>Eje X con fechas reales</strong> — cada punto corresponde a una fecha concreta, facilitando relacionar el rendimiento con el calendario.</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Estadisticas/EvolucionResultados.webp" alt="Evolución de resultados">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. RENDIMIENTO POR CAMPO ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">⑤ Rendimiento por campo</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block reveal">
+    <div>
+      <span class="stat-block__tag">Por campo · Con detalle</span>
+      <h2 class="stat-block__title">¿En qué campo<br>juegas mejor?</h2>
+      <p class="stat-block__desc">Tabla con todos los campos en que has jugado: número de rondas, mejor resultado, media y peor ronda. Toca cualquier campo para ver el desglose completo con filtros de período y el historial de cada ronda.</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div class="stat-item__text"><strong>Tabla de campos</strong> — rondas jugadas, mejor score, media y peor en cada campo.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <div class="stat-item__text"><strong>Detalle por campo</strong> — panel deslizable al tocar: métricas del período seleccionado (últimas 5, 10, 20 rondas o por trimestre/semestre) y lista cronológica de cada ronda con puntos y golpes.</div>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-pill filter-pill--active">Últ. 5</div>
+        <div class="filter-pill">Últ. 10</div>
+        <div class="filter-pill">Últ. 20</div>
+        <div class="filter-pill">Trimestre</div>
+        <div class="filter-pill">Semestre</div>
+      </div>
+    </div>
+    <div class="stat-block__visual" style="flex-direction:column;gap:16px;align-items:center;">
+      <div class="phone-wrap">
+        <img src="assets/Estadisticas/RendimientoPorCampo.webp" alt="Rendimiento por campo">
+      </div>
+      <div class="phone-wrap phone-wrap--sm">
+        <img src="assets/Estadisticas/DetalleRendimientoPorCampo.webp" alt="Detalle rendimiento por campo">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. HISTORIAL Y DETALLE ── -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">⑥ Historial y detalle de partidas</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="stat-block stat-block--reverse reveal">
+    <div>
+      <span class="stat-block__tag">Cada ronda, documentada</span>
+      <h2 class="stat-block__title">El historial completo<br>de tu temporada.</h2>
+      <p class="stat-block__desc">Lista de todas tus rondas con fecha, campo, resultado vs par y puntos Stableford. Toca cualquiera para ver el scorecard completo: golpes hoyo a hoyo, puntos por hoyo, hándicap de juego y nivel jugado (diferencial WHS).</p>
+      <div class="stat-items">
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+          <div class="stat-item__text"><strong>Lista cronológica</strong> — todas las rondas de la temporada con campo, fecha, golpes totales y puntos. Las tarjetas entregadas para la liga aparecen destacadas.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="stat-item__text"><strong>Scorecard completo</strong> — tabla hoyo a hoyo con metros, par, HCP del hoyo, golpes y puntos Stableford de ida y vuelta.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="stat-item__text"><strong>Nivel jugado</strong> — diferencial WHS de esa ronda visible en la cabecera del scorecard.</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-block__visual" style="flex-direction:column;gap:16px;align-items:center;">
+      <div class="phone-wrap">
+        <img src="assets/Estadisticas/HistorialPartidos.webp" alt="Historial de partidas">
+      </div>
+      <div class="phone-wrap phone-wrap--sm">
+        <img src="assets/Estadisticas/ResumenPartido.webp" alt="Resumen de partida">
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="guide-cta reveal">
+    <h2>Los datos son tuyos.<br>Úsalos para ganar.</h2>
+    <p>Todas las estadísticas disponibles desde el primer día, sin configuración adicional. Solo juega y la app lo recoge todo.</p>
+    <div class="guide-cta__btns">
+      <a href="lls-precios.html" class="btn-lime">Crear mi liga gratis</a>
+      <a href="index.html" class="btn-outline" style="color:#fff;border-color:rgba(255,255,255,.3);">Volver al inicio</a>
+    </div>
+  </div>
+
+</div><!-- /guide-wrap -->
+
+<!-- FOOTER -->
+<footer style="background:var(--primary-dark);padding:60px 52px 40px;">
+  <div style="max-width:1060px;margin:0 auto;text-align:center;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <img src="assets/TSGC_icon.svg" style="width:28px;height:28px;" alt="TSGC">
+      <span style="font-family:var(--serif);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);">The Secret Golf Club</span>
+    </a>
+    <p style="font-family:var(--sans);font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.25);text-transform:uppercase;">© 2025 The Secret Golf Club · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">⛳</div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com" autocomplete="email"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+</body>
+</html>
+

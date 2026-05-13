@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Torneos — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background:var(--primary-dark); padding:100px 52px 56px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.page-hero::before {
+  content:''; position:absolute; top:-200px; left:50%; transform:translateX(-50%);
+  width:900px; height:900px; border-radius:50%;
+  background:radial-gradient(circle, rgba(132,176,38,.06) 0%, transparent 65%);
+  pointer-events:none;
+}
+.page-hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right, transparent, rgba(132,176,38,.3) 40%, rgba(132,176,38,.3) 60%, transparent);
+}
+.page-hero__eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:24px;
+}
+.page-hero__title {
+  font-family:var(--serif); font-size:clamp(36px,6vw,72px);
+  font-weight:700; color:#fff; line-height:1.08; margin-bottom:18px;
+}
+.page-hero__sub {
+  font-family:'Cormorant Garamond', Georgia, serif; font-style:italic; font-weight:300;
+  font-size:clamp(17px,1.9vw,23px); color:rgba(255,255,255,.62);
+  max-width:580px; margin:0 auto 16px; line-height:1.7;
+}
+.page-hero__badges {
+  display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:16px;
+}
+.page-hero__badge {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+  color:rgba(132,176,38,.85); border:1px solid rgba(132,176,38,.28);
+  border-radius:20px; padding:5px 14px;
+}
+
+/* ── CONTENT WRAPPER ── */
+.guide-wrap { max-width:1060px; margin:0 auto; padding:0 52px; }
+
+/* ── INTRO CALLOUT ── */
+.intro-callout {
+  background:var(--highlight); border:1px solid var(--accent-border);
+  border-radius:16px; padding:28px 32px; margin:36px 0;
+  display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;
+}
+.intro-callout__icon {
+  width:48px; height:48px; border-radius:12px; background:rgba(47,82,51,.12);
+  border:1px solid var(--accent-border); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.intro-callout__icon svg { width:22px; height:22px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+.intro-callout__title { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--text-main); margin-bottom:8px; }
+.intro-callout__text { font-family:var(--body); font-size:15px; line-height:1.8; color:var(--text-sec); }
+
+/* ── SECTION DIVIDER ── */
+.guide-divider {
+  display:flex; align-items:center; gap:16px; margin:44px 0 28px;
+}
+.guide-divider__line { flex:1; height:1px; background:var(--border); }
+.guide-divider__label {
+  font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.34em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap;
+}
+
+/* ── STEP BLOCK ── */
+.step-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:80px;
+  align-items:center; padding:64px 0; border-bottom:1px solid var(--border);
+}
+.step-block:last-of-type { border-bottom:none; }
+.step-block--reverse { direction:rtl; }
+.step-block--reverse > * { direction:ltr; }
+
+.step-block__num {
+  font-family:var(--serif); font-size:11px; font-weight:700; letter-spacing:.08em;
+  color:var(--accent); opacity:.7; display:block; margin-bottom:10px;
+}
+.step-block__tag {
+  font-family:var(--sans); font-size:8.5px; font-weight:700; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:12px;
+}
+.step-block__title {
+  font-family:var(--serif); font-size:clamp(24px,2.8vw,38px); font-weight:700;
+  color:var(--text-main); line-height:1.15; margin-bottom:16px;
+}
+.step-block__desc {
+  font-family:var(--body); font-size:clamp(14px,1.35vw,16px);
+  line-height:1.85; color:var(--text-sec); margin-bottom:28px;
+}
+
+.step-rules { display:flex; flex-direction:column; gap:12px; margin-bottom:28px; }
+.step-rule { display:flex; gap:14px; align-items:flex-start; }
+.step-rule__icon {
+  flex-shrink:0; width:30px; height:30px; border-radius:8px;
+  background:var(--highlight); border:1px solid var(--accent-border);
+  display:flex; align-items:center; justify-content:center; margin-top:2px;
+}
+.step-rule__icon svg { width:13px; height:13px; stroke:var(--primary); fill:none; stroke-width:2.2; }
+.step-rule__text { font-family:var(--body); font-size:14px; line-height:1.75; color:var(--text-sec); }
+.step-rule__text strong { color:var(--text-main); font-weight:600; }
+
+.step-tip {
+  display:flex; gap:12px; background:var(--bg-main); border:1px solid var(--border);
+  border-radius:10px; padding:14px 18px; align-items:flex-start;
+}
+.step-tip svg { width:15px; height:15px; stroke:var(--accent); fill:none; stroke-width:2; flex-shrink:0; margin-top:2px; }
+.step-tip p { font-family:var(--body); font-size:13px; line-height:1.7; color:var(--text-sec); }
+.step-tip p strong { color:var(--text-main); }
+
+/* ── PHONE VISUAL ── */
+.step-block__visual { display:flex; justify-content:center; align-items:flex-start; gap:16px; }
+.phone-wrap img {
+  width:230px; max-width:100%; height:auto; display:block;
+  border-radius:32px; box-shadow:0 24px 60px rgba(0,0,0,.18), 0 6px 16px rgba(0,0,0,.08);
+}
+.phone-wrap--sm img { width:180px; }
+
+/* ── LIVE LEADERBOARD SHOWCASE ── */
+.live-section {
+  background:var(--primary-dark); border-radius:20px; padding:56px 48px;
+  margin:16px 0 0; display:grid; grid-template-columns:1fr 420px; gap:56px; align-items:center;
+}
+.live-section__text h2 {
+  font-family:var(--serif); font-size:clamp(22px,3vw,34px); font-weight:700;
+  color:#fff; margin-bottom:14px;
+}
+.live-section__text p {
+  font-family:var(--body); font-size:15px; color:rgba(255,255,255,.6);
+  line-height:1.75; margin-bottom:24px;
+}
+.live-features { display:flex; flex-direction:column; gap:14px; }
+.live-feature {
+  display:flex; gap:14px; align-items:flex-start;
+}
+.live-feature__dot {
+  width:8px; height:8px; border-radius:50%; background:var(--accent);
+  flex-shrink:0; margin-top:7px;
+}
+.live-feature__text { font-family:var(--body); font-size:14px; line-height:1.7; color:rgba(255,255,255,.55); }
+.live-feature__text strong { color:#fff; }
+.live-section__phone { display:flex; justify-content:center; }
+.live-section__phone img {
+  width:220px; max-width:100%; border-radius:32px;
+  box-shadow:0 24px 60px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.2);
+}
+
+/* ── PREDICTION HIGHLIGHT ── */
+.prediction-section {
+  background:var(--highlight); border:1px solid var(--accent-border);
+  border-radius:20px; padding:56px 48px; margin:72px 0;
+  display:grid; grid-template-columns:1fr 280px; gap:64px; align-items:center;
+}
+.prediction-section__phone img {
+  width:220px; max-width:100%; border-radius:32px;
+  box-shadow:0 24px 50px rgba(0,0,0,.12), 0 6px 16px rgba(0,0,0,.06);
+}
+.prediction-section__text h2 {
+  font-family:var(--serif); font-size:clamp(22px,3vw,34px); font-weight:700;
+  color:var(--text-main); margin-bottom:14px;
+}
+.prediction-section__text p {
+  font-family:var(--body); font-size:15px; color:var(--text-sec);
+  line-height:1.8; margin-bottom:20px;
+}
+.prediction-factors { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.prediction-factor {
+  background:#fff; border:1px solid var(--border); border-radius:10px;
+  padding:12px 14px; display:flex; gap:10px; align-items:center;
+}
+.prediction-factor__icon {
+  width:28px; height:28px; border-radius:7px; flex-shrink:0;
+  background:var(--highlight); border:1px solid var(--accent-border);
+  display:flex; align-items:center; justify-content:center;
+}
+.prediction-factor__icon svg { width:12px; height:12px; stroke:var(--primary); fill:none; stroke-width:2.2; }
+.prediction-factor__label { font-family:var(--body); font-size:13px; color:var(--text-sec); line-height:1.4; }
+.prediction-factor__label strong { color:var(--text-main); font-size:12px; font-weight:600; display:block; }
+
+/* ── CTA ── */
+.guide-cta { background:var(--primary); border-radius:20px; padding:72px 48px; text-align:center; margin:80px 0; }
+.guide-cta h2 { font-family:var(--serif); font-size:clamp(22px,3vw,34px); font-weight:700; color:#fff; margin-bottom:14px; }
+.guide-cta p { font-family:var(--body); font-size:clamp(14px,1.4vw,16px); color:rgba(255,255,255,.7); line-height:1.7; margin-bottom:32px; max-width:500px; margin-left:auto; margin-right:auto; }
+.guide-cta__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:980px) {
+  .guide-wrap { padding:0 24px; }
+  .step-block { grid-template-columns:1fr; gap:36px; }
+  .step-block--reverse { direction:ltr; }
+  .step-block__visual { order:-1; }
+  .phone-wrap img { width:190px; }
+  .live-section { grid-template-columns:1fr; gap:36px; padding:40px 28px; }
+  .live-section__phone { order:-1; }
+  .prediction-section { grid-template-columns:1fr; gap:32px; padding:40px 28px; }
+  .prediction-section__phone { display:flex; justify-content:center; }
+  .prediction-factors { grid-template-columns:1fr; }
+  .guide-cta { padding:48px 24px; }
+}
+@media (max-width:560px) {
+  .page-hero { padding:120px 20px 64px; }
+  .intro-callout { grid-template-columns:1fr; gap:16px; padding:28px 24px; }
+  .prediction-factors { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html" class="active"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+          <a href="lls-torneos.html" class="active"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="lls-precios.html" class="btn-lime" style="display:block;text-align:center;">Crear mi liga gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero__eyebrow">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+    Competición oficial de liga
+  </div>
+  <h1 class="page-hero__title">Torneos</h1>
+  <div style="width:48px;height:2px;background:var(--accent);margin:16px auto 24px;"></div>
+  <p class="page-hero__sub">Organiza torneos dentro de tu liga, gestiona grupos, sigue la clasificación en tiempo real y anticipa el resultado final antes de que acabe la última ronda.</p>
+  <div class="page-hero__badges">
+    <span class="page-hero__badge">Clasificación en vivo</span>
+    <span class="page-hero__badge">Predicción IA</span>
+    <span class="page-hero__badge">Puntos de liga</span>
+    <span class="page-hero__badge">HCP WHS</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="guide-wrap">
+
+  <!-- Intro callout -->
+  <div class="intro-callout reveal">
+    <div class="intro-callout__icon">
+      <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+    </div>
+    <div>
+      <div class="intro-callout__title">¿Qué es un torneo en TSGC?</div>
+      <div class="intro-callout__text">Los torneos son eventos oficiales dentro de tu liga: cuentan para el ranking, actualizan el hándicap WHS y reparten los puntos configurados por el administrador. El administrador crea el torneo, define el campo y organiza los grupos. Cada jugador sale con su tarjeta stableford en la app y, en tiempo real, toda la liga puede ver quién va ganando.</div>
+    </div>
+  </div>
+
+  <!-- Steps divider -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Cómo funciona paso a paso</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <!-- PASO 1: CREAR TORNEO -->
+  <div class="step-block reveal">
+    <div>
+      <span class="step-block__num">01</span>
+      <span class="step-block__tag">Antes del torneo · Admin</span>
+      <h2 class="step-block__title">Crea el torneo y organiza los grupos</h2>
+      <p class="step-block__desc">El administrador de la liga abre el torneo con antelación. Los jugadores se apuntan desde la app y quedan en la lista de inscritos. Cuando llega el día, el admin asigna a cada jugador a su grupo, elige el campo y las barras de juego, y arranca cada grupo cuando toque salir.</p>
+      <div class="step-rules">
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Inscripción libre:</strong> cualquier miembro de la liga puede apuntarse al torneo desde la pantalla de eventos.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Grupos flexibles:</strong> el admin arrastra jugadores entre grupos y puede añadir participantes de último momento.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Campo y barras por jugador:</strong> se configura el recorrido del torneo; cada jugador tiene su barra de juego y su HCP calculado automáticamente.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Inicio por grupos:</strong> cada grupo arranca de forma independiente — no hace falta esperar a que todos estén listos.</div>
+        </div>
+      </div>
+      <div class="step-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Los puntos del torneo se configuran al crearlo: puedes usar una plantilla de tu liga (Grand Slam, Fin de Semana, etc.) o definir el reparto manualmente.</p>
+      </div>
+    </div>
+    <div class="step-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Torneos/CreaTuTorneo.webp" alt="Crear torneo y organizar grupos">
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 2: JUEGA -->
+  <div class="step-block reveal">
+    <div>
+      <span class="step-block__num">02</span>
+      <span class="step-block__tag">En el campo · Todos los jugadores</span>
+      <h2 class="step-block__title">Juega con tu grupo como siempre</h2>
+      <p class="step-block__desc">Una vez iniciado el grupo, cada jugador tiene su tarjeta stableford en la app. Se juega exactamente igual que una ronda de liga normal: hoyo a hoyo, registrando golpes. Los puntos de cada hoyo se calculan en tiempo real según el HCP de juego individual.</p>
+      <div class="step-rules">
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Tarjeta compartida:</strong> todos los jugadores del grupo ven la tarjeta de sus compañeros en la misma pantalla. Sin necesidad de mirar otras apps.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>HCP de juego individual:</strong> cada jugador tiene su propio handicap calculado según la barra que juega y el slope del recorrido.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Score vs Par en vivo:</strong> la puntuación respecto al par se actualiza hoyo a hoyo y aparece en la clasificación general del torneo.</div>
+        </div>
+      </div>
+      <div class="step-tip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Si un jugador necesita retirarse a mitad de torneo, el admin puede marcarlo como retirado desde la ficha del evento. Su partida se cancela pero su inscripción queda registrada.</p>
+      </div>
+    </div>
+    <div class="step-block__visual">
+      <div class="phone-wrap">
+        <img src="assets/Torneos/Juega.webp" alt="Tarjeta de juego del torneo">
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 3: CLASIFICACION EN VIVO -->
+  <div class="guide-divider reveal" style="margin-top:72px;">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">En tiempo real</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <div class="live-section reveal">
+    <div class="live-section__text">
+      <span style="font-family:var(--sans);font-size:8.5px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:12px;">03 · Clasificación</span>
+      <h2>Clasificación en vivo al estilo PGA Tour</h2>
+      <p>Mientras la ronda está en marcha, cualquier miembro de la liga puede abrir la clasificación del torneo y ver en tiempo real cómo evoluciona cada jugador. La pantalla combina el marcador estilo PGA con avatares de los líderes.</p>
+      <div class="live-features">
+        <div class="live-feature">
+          <div class="live-feature__dot"></div>
+          <div class="live-feature__text"><strong>Tira de avatares:</strong> los cinco primeros clasificados aparecen arriba con su posición, foto y su score actual respecto al par.</div>
+        </div>
+        <div class="live-feature">
+          <div class="live-feature__dot"></div>
+          <div class="live-feature__text"><strong>Tabla completa:</strong> columnas POS · JUGADOR · TOTAL · THRU · HCP. Verde si está bajo par, rojo sobre par, negro en par.</div>
+        </div>
+        <div class="live-feature">
+          <div class="live-feature__dot"></div>
+          <div class="live-feature__text"><strong>Orden inteligente:</strong> los jugadores que aún no han salido se ordenan por su posición en el ranking de liga, no al azar.</div>
+        </div>
+        <div class="live-feature">
+          <div class="live-feature__dot"></div>
+          <div class="live-feature__text"><strong>Empates reconocidos:</strong> el sistema detecta automáticamente los empates y muestra T2, T3, etc.</div>
+        </div>
+      </div>
+    </div>
+    <div class="live-section__phone">
+      <img src="assets/Torneos/ClasificacionEnVivo.webp" alt="Clasificación en vivo del torneo">
+    </div>
+  </div>
+
+  <!-- PASO 4: PREDICCION -->
+  <div class="prediction-section reveal">
+    <div class="prediction-section__text">
+      <span style="font-family:var(--sans);font-size:8.5px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:12px;">04 · Predicción</span>
+      <h2>¿Quién va a ganar? La IA lo predice</h2>
+      <p>En cualquier momento durante el torneo puedes abrir el panel de <strong>Predicción</strong>. El algoritmo cruza cinco factores para estimar la clasificación final antes de que acabe la última ronda.</p>
+      <p style="font-size:14px;color:var(--text-muted);">Cada jugador recibe una puntuación ponderada y una etiqueta <strong style="color:var(--accent)">MEDIA</strong>, <strong style="color:#e74c3c">BAJA</strong> o <strong style="color:#2980b9">EST</strong> según la confianza de la predicción.</p>
+      <div class="prediction-factors">
+        <div class="prediction-factor">
+          <div class="prediction-factor__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+          <div class="prediction-factor__label"><strong>Score actual</strong>Hoyos jugados hasta ahora</div>
+        </div>
+        <div class="prediction-factor">
+          <div class="prediction-factor__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="prediction-factor__label"><strong>Histórico reciente</strong>Últimas 5 rondas del jugador</div>
+        </div>
+        <div class="prediction-factor">
+          <div class="prediction-factor__icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <div class="prediction-factor__label"><strong>Rendimiento por campo</strong>Resultados en ese recorrido</div>
+        </div>
+        <div class="prediction-factor">
+          <div class="prediction-factor__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="prediction-factor__label"><strong>HCP de juego</strong>Handicap aplicado en esta ronda</div>
+        </div>
+        <div class="prediction-factor" style="grid-column:span 2;">
+          <div class="prediction-factor__icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="prediction-factor__label"><strong>Tendencia de hándicap</strong>Evolución WHS en los últimos meses</div>
+        </div>
+      </div>
+    </div>
+    <div class="prediction-section__phone">
+      <img src="assets/Torneos/PrediccionResultado.webp" alt="Predicción de resultado final">
+    </div>
+  </div>
+
+  <!-- Divider antes del CTA -->
+  <div class="guide-divider reveal">
+    <div class="guide-divider__line"></div>
+    <div class="guide-divider__label">Al terminar el torneo</div>
+    <div class="guide-divider__line"></div>
+  </div>
+
+  <!-- Cierre torneo info -->
+  <div class="step-block reveal" style="padding-top:0;border-bottom:none;">
+    <div>
+      <span class="step-block__num">05</span>
+      <span class="step-block__tag">Finalización · Admin</span>
+      <h2 class="step-block__title">Cierre, premios y actualización automática</h2>
+      <p class="step-block__desc">Cuando todos los grupos han terminado, el admin cierra el torneo con un solo botón. La app calcula la clasificación final, reparte los puntos de liga configurados y actualiza el hándicap WHS de cada participante de forma automática.</p>
+      <div class="step-rules">
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Clasificación final verificada:</strong> posiciones, puntos stableford y resultado vs par de cada jugador.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Puntos de liga:</strong> se suman al ranking general de la temporada. Configura cuántos puntos va cada posición al crear el torneo.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>HCP WHS actualizado:</strong> la tarjeta del torneo computa como ronda oficial en el cálculo del índice de hándicap de cada jugador.</div>
+        </div>
+        <div class="step-rule">
+          <div class="step-rule__icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-rule__text"><strong>Bola cercana:</strong> si el torneo tenía premio a la bola más cercana, el admin asigna el ganador al cerrar.</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-block__visual">
+      <!-- Visual: stat pills -->
+      <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;">
+        <div style="background:var(--primary-dark);border-radius:16px;padding:28px 24px;color:#fff;">
+          <div style="font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;">Resultado final · Ejemplo</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(132,176,38,.1);border:1px solid rgba(132,176,38,.22);border-radius:10px;">
+              <span style="font-family:var(--serif);font-size:18px;font-weight:700;color:var(--accent);min-width:24px;">1</span>
+              <div style="flex:1;">
+                <div style="font-family:var(--body);font-size:13px;font-weight:600;color:#fff;">P. Mata</div>
+                <div style="font-family:var(--body);font-size:11px;color:rgba(255,255,255,.45);">HCP 8.0 · 18/18 hoyos</div>
+              </div>
+              <span style="font-family:var(--serif);font-size:16px;font-weight:700;color:#4fc97b;">−2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;">
+              <span style="font-family:var(--serif);font-size:18px;font-weight:700;color:rgba(255,255,255,.4);min-width:24px;">T2</span>
+              <div style="flex:1;">
+                <div style="font-family:var(--body);font-size:13px;font-weight:600;color:#fff;">F.G. Schierbeek</div>
+                <div style="font-family:var(--body);font-size:11px;color:rgba(255,255,255,.35);">HCP 14.0 · 18/18 hoyos</div>
+              </div>
+              <span style="font-family:var(--serif);font-size:16px;font-weight:700;color:#e05555;">+1</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;">
+              <span style="font-family:var(--serif);font-size:18px;font-weight:700;color:rgba(255,255,255,.4);min-width:24px;">T2</span>
+              <div style="flex:1;">
+                <div style="font-family:var(--body);font-size:13px;font-weight:600;color:#fff;">M. Mata</div>
+                <div style="font-family:var(--body);font-size:11px;color:rgba(255,255,255,.35);">HCP 11.0 · 18/18 hoyos</div>
+              </div>
+              <span style="font-family:var(--serif);font-size:16px;font-weight:700;color:#e05555;">+1</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--highlight);border:1px solid var(--accent-border);border-radius:12px;padding:16px 14px;text-align:center;">
+            <div style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--primary);">+15</div>
+            <div style="font-family:var(--sans);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-top:4px;">Puntos liga</div>
+          </div>
+          <div style="background:var(--highlight);border:1px solid var(--accent-border);border-radius:12px;padding:16px 14px;text-align:center;">
+            <div style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--primary);">8.2</div>
+            <div style="font-family:var(--sans);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-top:4px;">Nuevo HCP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="guide-cta reveal">
+    <h2>¿Tu liga ya tiene torneos?</h2>
+    <p>Crea tu liga gratis, invita a tus compañeros y organiza el primer torneo en minutos. Sin papeles, sin hojas de Excel, sin complicaciones.</p>
+    <div class="guide-cta__btns">
+      <a href="lls-precios.html" class="btn-lime">Crear mi liga gratis</a>
+      <a href="lls-crear-liga.html" class="btn-outline">Ver cómo funciona la liga</a>
+    </div>
+  </div>
+
+</div><!-- /guide-wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <div class="footer__brand-name">The Secret Golf Club</div>
+      <p>La app de golf para ligas privadas. Hándicap WHS real, torneos, rankings y estadísticas — todo en el bolsillo.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Guías</h4>
+      <ul>
+        <li><a href="lls-crear-liga.html">Crea tu liga</a></li>
+        <li><a href="lls-registra-partidas.html">Registra partidas</a></li>
+        <li><a href="lls-modos-de-juego.html">Modos de juego</a></li>
+        <li><a href="lls-torneos.html">Torneos</a></li>
+        <li><a href="lls-estadisticas.html">Estadísticas</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Producto</h4>
+      <ul>
+        <li><a href="lls-precios.html">Precios</a></li>
+        <li><a href="lls-faq.html">FAQ</a></li>
+        <li><a href="#" onclick="openApp();return false;">Iniciar sesión</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Todos los derechos reservados</div>
+    <div class="footer__social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Twitter/X"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL LOGIN -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem">
+      <div class="modal__emblem-circle">T</div>
+      <div class="modal__underline"></div>
+    </div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">The Secret Golf Club</p>
+    <div class="form__group">
+      <label class="form__label">Correo electrónico</label>
+      <input type="email" class="form__input" placeholder="tu@email.com">
+    </div>
+    <div class="form__group">
+      <label class="form__label">Contraseña</label>
+      <input type="password" class="form__input" placeholder="••••••••">
+      <a class="form__forgot">¿Olvidaste tu contraseña?</a>
+    </div>
+    <button class="form__btn">Entrar</button>
+    <div class="modal__divider">o</div>
+    <div class="modal__register">¿Sin cuenta? <a href="lls-precios.html">Crea tu liga</a></div>
+  </div>
+</div>
+
+<script>
+// Reveal on scroll
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Modal
+function openModal() { document.getElementById('modalOverlay').classList.add('active'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+document.querySelector('.nav__login')?.addEventListener('click', e => { e.preventDefault(); openModal(); });
+
+// Nav dropdown
+document.querySelectorAll('.nav__item').forEach(item => {
+  item.addEventListener('mouseenter', () => item.querySelector('.nav__dropdown')?.classList.add('open'));
+  item.addEventListener('mouseleave', () => item.querySelector('.nav__dropdown')?.classList.remove('open'));
+});
+
+// Mobile drawer
+function openDrawer() {
+  document.getElementById('navDrawer').classList.add('open');
+  document.getElementById('navBackdrop').classList.add('open');
+}
+function closeDrawer() {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navBackdrop').classList.remove('open');
+}
+</script>
+</body>
+</html>
+

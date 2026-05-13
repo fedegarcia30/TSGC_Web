@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bloque 3: Registrar una Ronda — Guía de Usuario TSGC</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.guide-breadcrumb{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 52px;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:11px;color:var(--text-muted);position:sticky;top:68px;z-index:50}
+.guide-breadcrumb a{color:var(--text-sec);transition:color .2s}.guide-breadcrumb a:hover{color:var(--primary)}.guide-breadcrumb__sep{opacity:.4}.guide-breadcrumb__current{color:var(--primary);font-weight:600}
+.guide-layout{display:grid;grid-template-columns:260px 1fr;max-width:1140px;margin:0 auto;gap:0;align-items:start}
+.guide-toc{position:sticky;top:110px;padding:28px 32px 28px 52px;border-right:1px solid var(--border)}
+.guide-toc__title{font-family:var(--sans);font-size:8.5px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.guide-toc__list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.guide-toc__item a{display:block;padding:8px 12px;border-radius:7px;font-family:var(--body);font-size:14px;color:var(--text-sec);transition:background .2s,color .2s;line-height:1.4}
+.guide-toc__item a:hover,.guide-toc__item a.active{background:var(--highlight);color:var(--primary)}.guide-toc__item a.active{font-weight:600}
+.guide-toc__blocks{margin-top:28px;border-top:1px solid var(--border);padding-top:20px}
+.guide-toc__block-link{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:7px;font-family:var(--sans);font-size:11px;color:var(--text-muted);transition:color .2s,background .2s}
+.guide-toc__block-link:hover{color:var(--text-sec);background:var(--bg-main)}.guide-toc__block-link.current{color:var(--primary);font-weight:600}
+.guide-toc__block-num{width:20px;height:20px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.guide-toc__block-link.current .guide-toc__block-num{background:var(--primary);color:#fff}
+.guide-content{padding:28px 52px 40px 48px;min-width:0}
+.guide-content__header{padding-bottom:20px;margin-bottom:28px;border-bottom:1px solid var(--border)}
+.guide-content__block-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.guide-content__block-badge::before{content:'';width:28px;height:1px;background:var(--accent)}
+.guide-content__title{font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--text-main);line-height:1.08;margin-bottom:16px}
+.guide-content__intro{font-family:var(--body);font-size:clamp(16px,1.6vw,19px);color:var(--text-sec);line-height:1.8;max-width:640px}
+.guide-section{margin-bottom:32px;scroll-margin-top:120px}
+.guide-section__num{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.guide-section__title{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);font-weight:700;color:var(--text-main);margin-bottom:12px}
+.guide-section__story{display:flex;align-items:flex-start;gap:12px;background:var(--highlight);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;font-family:var(--body);font-size:15px;font-style:italic;color:var(--text-sec);line-height:1.65}
+.guide-section__story::before{content:'"';font-family:var(--serif);font-size:32px;color:var(--accent);line-height:1;flex-shrink:0}
+.guide-section__flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:14px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.guide-section__flow-label{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:6px;flex-shrink:0}
+.guide-section__flow-step{font-family:var(--body);font-size:13px;color:var(--text-sec)}.guide-section__flow-arrow{color:var(--accent);font-size:12px}
+.guide-elements{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.guide-element{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:border-color .2s}
+.guide-element:hover{border-color:var(--accent-border)}
+.guide-element__dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0}
+.guide-element__term{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px}
+.guide-element__def{font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.65}
+.guide-element__def strong{color:var(--text-main);font-weight:600}
+.guide-callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:20px 0;font-family:var(--body);font-size:14px;line-height:1.7}
+.guide-callout--warning{background:#fffbeb;border:1px solid #fbbf24;color:#92400e}
+.guide-callout--info{background:var(--highlight);border:1px solid var(--accent-border);color:var(--primary)}
+.guide-callout__icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.guide-nav{display:flex;justify-content:space-between;gap:16px;margin-top:36px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
+.guide-nav__btn{display:flex;flex-direction:column;gap:4px;padding:18px 24px;border:1px solid var(--border);border-radius:10px;min-width:200px;flex:1;text-decoration:none;transition:border-color .3s,box-shadow .3s}
+.guide-nav__btn:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(132,176,38,.1)}
+.guide-nav__btn--prev{align-items:flex-start}.guide-nav__btn--next{align-items:flex-end}
+.guide-nav__label{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--text-muted)}
+.guide-nav__title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text-main)}
+/* Recompra table */
+.guide-table{width:100%;border-collapse:collapse;margin:16px 0}
+.guide-table th,.guide-table td{padding:12px 16px;font-family:var(--body);font-size:14px;text-align:left;border-bottom:1px solid var(--border)}
+.guide-table th{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);background:var(--bg-main)}
+.guide-table td{color:var(--text-sec);line-height:1.6}
+.guide-table td:first-child{font-weight:600;color:var(--text-main);white-space:nowrap}
+.guide-table tr:last-child td{border-bottom:none}
+/* Checklist */
+.guide-checklist{list-style:none;display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.guide-checklist li{display:flex;align-items:flex-start;gap:12px;font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.6}
+.guide-checklist li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px}
+@media(max-width:960px){.guide-layout{grid-template-columns:1fr}.guide-toc{display:none}.guide-breadcrumb{padding:12px 20px}.guide-content{padding:36px 20px 60px}}
+@media(max-width:680px){.guide-nav{flex-direction:column}.guide-nav__btn{min-width:unset}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li class="nav__item">
+      <a href="#">Guías<svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      <div class="nav__dropdown"><div class="nav__dropdown__inner">
+        <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Crea tu liga</a>
+        <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Registra partidas</a>
+        <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+        <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Comparación</a>
+        <div class="nav__dropdown__divider"></div>
+        <a href="guia-usuario.html" class="active"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Manual del jugador</a>
+      </div></div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header"><span class="nav-drawer__logo">The Secret Golf Club</span><button class="nav-drawer__close" onclick="closeDrawer()">✕</button></div>
+  <div class="nav-drawer__links">
+    <div class="nav-drawer__section-label">Manual del jugador</div>
+    <a href="guia-usuario.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/></svg>Índice general</a>
+    <a href="guia-bloque-1.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 1 · Primeros pasos</a>
+    <a href="guia-bloque-2.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 2 · Tu perfil y liga</a>
+    <a href="guia-bloque-3.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 3 · Registrar ronda</a>
+    <a href="guia-bloque-4.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 4 · Jugar con otros</a>
+    <a href="guia-bloque-5.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 5 · Estadísticas</a>
+    <a href="guia-bloque-6.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 6 · Incidencias</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta"><a href="#" onclick="openApp();return false;">Iniciar Sesión</a></div>
+</div>
+
+<div class="guide-breadcrumb">
+  <a href="guia-usuario.html">Manual del jugador</a>
+  <span class="guide-breadcrumb__sep">›</span>
+  <span class="guide-breadcrumb__current">Bloque 3 — Registrar una Ronda</span>
+</div>
+
+<div style="background:var(--surface);border-bottom:1px solid var(--border)">
+<div class="guide-layout">
+  <aside class="guide-toc">
+    <div class="guide-toc__title">En este bloque</div>
+    <ul class="guide-toc__list">
+      <li class="guide-toc__item"><a href="#s3-1" class="active">3.1 · Subir vs Entregar</a></li>
+      <li class="guide-toc__item"><a href="#s3-2">3.2 · Jugar en Directo</a></li>
+      <li class="guide-toc__item"><a href="#s3-3">3.3 · Subir Manualmente</a></li>
+      <li class="guide-toc__item"><a href="#s3-4">3.4 · Subir por Foto (OCR)</a></li>
+      <li class="guide-toc__item"><a href="#s3-5">3.5 · Sistema de Recompra</a></li>
+    </ul>
+    <div class="guide-toc__blocks">
+      <div style="font-family:var(--sans);font-size:8.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Todos los bloques</div>
+      <a href="guia-bloque-1.html" class="guide-toc__block-link"><span class="guide-toc__block-num">1</span>Primeros Pasos</a>
+      <a href="guia-bloque-2.html" class="guide-toc__block-link"><span class="guide-toc__block-num">2</span>Tu Liga y Perfil</a>
+      <a href="guia-bloque-3.html" class="guide-toc__block-link current"><span class="guide-toc__block-num">3</span>Registrar Ronda</a>
+      <a href="guia-bloque-4.html" class="guide-toc__block-link"><span class="guide-toc__block-num">4</span>Jugar con Otros</a>
+      <a href="guia-bloque-5.html" class="guide-toc__block-link"><span class="guide-toc__block-num">5</span>Entender tu Progreso</a>
+      <a href="guia-bloque-6.html" class="guide-toc__block-link"><span class="guide-toc__block-num">6</span>Incidencias</a>
+    </div>
+  </aside>
+
+  <main class="guide-content">
+    <div class="guide-content__header">
+      <div class="guide-content__block-badge">Bloque 3</div>
+      <h1 class="guide-content__title">Registrar una Ronda</h1>
+      <p class="guide-content__intro">Hay tres formas de meter una tarjeta en la app. Cada una tiene su caso ideal. Antes de explicarlas, entiende la diferencia fundamental entre <em>subir</em> y <em>entregar</em>.</p>
+    </div>
+
+    <!-- 3.1 -->
+    <section class="guide-section" id="s3-1">
+      <div class="guide-section__num">Sección 3.1 — Concepto clave</div>
+      <h2 class="guide-section__title">Subir vs. Entregar</h2>
+      <div class="guide-section__story">Como jugador, quiero entender por qué a veces meto una tarjeta pero no me suma al ranking.</div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Subir (estado = completada)</div>
+            <div class="guide-element__def">Guardar la tarjeta en tu historial. <strong>Siempre</strong> afecta a tu hándicap WHS y a tus estadísticas personales.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Entregar (entregas = 1)</div>
+            <div class="guide-element__def">Marcar la tarjeta para competición. <strong>Solo</strong> las entregadas suman puntos al ranking de la liga y ocupan uno de tus slots.</div>
+          </div>
+        </div>
+      </div>
+      <div class="guide-callout guide-callout--warning">
+        <span class="guide-callout__icon">⚠️</span>
+        <div><strong>¿Por qué puede no entregarse una tarjeta?</strong><br>
+          1. No alcanza el <em>resultado_mínimo</em> de la temporada.<br>
+          2. Ya has agotado tus slots y la nueva no mejora tu peor entregada.<br>
+          3. Slots llenos, sí es mejor, pero no tienes tokens de recompra (ver §3.5).
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.2 -->
+    <section class="guide-section" id="s3-2">
+      <div class="guide-section__num">Sección 3.2</div>
+      <h2 class="guide-section__title">Jugar en Directo (Hoyo a Hoyo)</h2>
+      <div class="guide-section__story">Como jugador, quiero registrar mi puntuación mientras juego, sin tener que acordarme al final.</div>
+      <div class="guide-section__flow">
+        <span class="guide-section__flow-label">Flujo</span>
+        <span class="guide-section__flow-step">Barra inferior → "Jugar"</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">Seleccionar campo y barras</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">Scorecard</span>
+      </div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Pantalla de Selección</div>
+            <div class="guide-element__def">Busca el club (mínimo 3 caracteres), elige el recorrido (18/ida/vuelta) y selecciona el color de barras. El HCP de juego se ajusta automáticamente.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Scorecard V2 — Entrada de golpes</div>
+            <div class="guide-element__def">Cabecera con par, SI y distancia del hoyo. <strong>Teclado táctil integrado</strong> (botones grandes 1–9) para no activar el teclado del sistema. Botones + / − por jugador para ajuste rápido desde el par sugerido.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Cálculo automático</div>
+            <div class="guide-element__def">Los puntos Stableford netos se calculan en tiempo real al introducir cada golpe. Los putts y el GIR se registran automáticamente.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Modo Vista Grande (Accesibilidad)</div>
+            <div class="guide-element__def">
+              Se activa desde el botón <strong>"Opciones"</strong> en la partida o en Ajustes. Presenta los jugadores en tarjetas grandes con botones <strong>+</strong> y <strong>−</strong> de alto contraste, ideal para usar con guantes o bajo el sol. El botón <strong>"Tarjeta"</strong> despliega una mini-scorecard con scroll horizontal centrada en el hoyo actual.
+            </div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Barra de acción inferior</div>
+            <div class="guide-element__def">
+              <strong>Modo Normal:</strong> Opciones · Vista (rota marcador) · Finalizar · Anular.<br>
+              <strong>Modo Vista Grande:</strong> Opciones · Vista · Tarjeta · Fin.<br>
+              El botón <strong>Vista</strong> rota entre Stableford, Match, Skins y Sindicato en ambos modos.
+            </div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Ronda de 9 hoyos</div>
+            <div class="guide-element__def">Si tu liga lo permite, puedes jugar solo ida o vuelta. El hándicap se calcula extrapolando a 18 hoyos.</div>
+          </div>
+        </div>
+      </div>
+      <div class="screenshots-row">
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/setup_round_selection_1776674302189.png" alt="Selección de campo y barras" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><circle cx=\'11\' cy=\'11\' r=\'8\'/><line x1=\'21\' y1=\'21\' x2=\'16.65\' y2=\'16.65\'/></svg><span>Selección de campo</span></div>'">
+        </div>
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/scorecard_v2_normal_1776674322750.png" alt="Scorecard V2 modo normal" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><line x1=\'3\' y1=\'9\' x2=\'21\' y2=\'9\'/><line x1=\'9\' y1=\'21\' x2=\'9\' y2=\'9\'/></svg><span>Scorecard modo normal</span></div>'">
+        </div>
+      </div>
+      <div class="screenshots-row">
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/scorecard_vista_grande_1776674358862.png" alt="Scorecard Vista Grande" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/></svg><span>Vista Grande</span></div>'">
+        </div>
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/mini_scorecard_horizontal_1776674367810.png" alt="Mini scorecard horizontal" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><rect x=\'2\' y=\'7\' width=\'20\' height=\'10\' rx=\'2\'/></svg><span>Mini scorecard</span></div>'">
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.3 -->
+    <section class="guide-section" id="s3-3">
+      <div class="guide-section__num">Sección 3.3</div>
+      <h2 class="guide-section__title">Subir Tarjeta Manualmente</h2>
+      <div class="guide-section__story">Como jugador, quiero registrar una partida sin haber usado la app durante el juego.</div>
+      <div class="guide-section__flow">
+        <span class="guide-section__flow-label">Flujo</span>
+        <span class="guide-section__flow-step">Barra inferior → "Subir Tarjeta"</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">"Manual"</span>
+      </div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Campos del formulario</div>
+            <div class="guide-element__def">Club y recorrido (con búsqueda) · Barras de salida · Fecha de la ronda · Puntos Stableford totales · Marca "Es torneo" (si aplica) · Tipo de ronda (18 / ida / vuelta).</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Criterio de la liga (criterio_liga)</div>
+            <div class="guide-element__def">
+              <strong>"Antes"</strong> — Debes declarar intención antes de jugar. Opciones: "Voy a jugar ahora" (hueco reservado) o "Ya jugué" (sube para hándicap, no cuenta para ranking).<br>
+              <strong>"Después"</strong> — Puedes decidir si entregar al subir la tarjeta.<br>
+              <strong>"Todas"</strong> — Cualquier tarjeta válida se entrega automáticamente.
+            </div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Validaciones automáticas</div>
+            <div class="guide-element__def">
+              <strong>Duplicados:</strong> Si ya existe una tarjeta idéntica (mismo jugador, fecha, campo, puntos) se bloquea el envío.<br>
+              <strong>Resultado mínimo:</strong> Si estás por debajo, la tarjeta se sube pero con entregas = 0.<br>
+              <strong>Recompra:</strong> Si has llenado tus slots, se dispara la lógica del §3.5.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.4 -->
+    <section class="guide-section" id="s3-4">
+      <div class="guide-section__num">Sección 3.4</div>
+      <h2 class="guide-section__title">Subir Tarjeta por Foto (OCR)</h2>
+      <div class="guide-section__story">Como jugador, quiero registrar la tarjeta sin teclear los 18 hoyos, simplemente haciendo una foto.</div>
+      <div class="guide-section__flow">
+        <span class="guide-section__flow-label">Flujo</span>
+        <span class="guide-section__flow-step">Barra inferior → "Subir Tarjeta"</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">"Foto (OCR)"</span>
+      </div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Captura y procesamiento</div>
+            <div class="guide-element__def">Usa la cámara o selecciona de galería. El backend optimiza la imagen (brillo, contraste) y extrae con <strong>IA (Gemini 2.0)</strong>: golpes por hoyo (1–18), fecha de la ronda y hándicap de juego anotado.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Formulario de Pre-confirmación</div>
+            <div class="guide-element__def">Los valores extraídos se presentan en un formulario editable. <strong>Revísalos siempre</strong> — la IA es precisa pero no infalible con letra ilegible.</div>
+          </div>
+        </div>
+      </div>
+      <div class="guide-callout guide-callout--info">
+        <span class="guide-callout__icon">📸</span>
+        <div><strong>Para una lectura óptima:</strong> Fotografía cenital (desde arriba, no en diagonal) · Buena iluminación, sin sombras duras · Tarjeta plana, sin dobleces.</div>
+      </div>
+      <div class="screenshot-wrap">
+        <img src="assets/manual_liga/manual_upload_form_1776674523210.png" alt="Formulario de subida manual" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\'/><polyline points=\'14 2 14 8 20 8\'/><line x1=\'16\' y1=\'13\' x2=\'8\' y2=\'13\'/><line x1=\'16\' y1=\'17\' x2=\'8\' y2=\'17\'/></svg><span>Formulario de subida manual</span></div>'">
+      </div>
+    </section>
+
+    <!-- 3.5 -->
+    <section class="guide-section" id="s3-5">
+      <div class="guide-section__num">Sección 3.5</div>
+      <h2 class="guide-section__title">El Sistema de Recompra</h2>
+      <div class="guide-section__story">Como jugador, quiero entender qué pasa cuando ya tengo todas mis tarjetas entregadas y subo una nueva.</div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Slots limitados</div>
+            <div class="guide-element__def">La temporada define cuántas tarjetas cuentan para el ranking (<em>numPartidos</em>, p.ej. 10). Una vez llenos los slots, cada nueva tarjeta se evalúa contra las ya entregadas.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Peor que la peor entregada</div>
+            <div class="guide-element__def">La tarjeta se sube para hándicap y estadísticas, pero no se entrega. No ocupa ningún slot.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Mejor que la peor entregada</div>
+            <div class="guide-element__def">Entra en juego la recompra. El comportamiento depende de la configuración de tu liga.</div>
+          </div>
+        </div>
+      </div>
+
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th>Modalidad</th>
+            <th>Comportamiento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Recompra automática</td>
+            <td>La sustitución es silenciosa: la peor sale, la nueva entra, el ranking se actualiza sin que tengas que hacer nada.</td>
+          </tr>
+          <tr>
+            <td>Recompra con tokens</td>
+            <td>Aparece un diálogo: "Tienes una tarjeta mejor. ¿Gastar un token de recompra?". Si aceptas, se consume un token de tu perfil.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="guide-callout guide-callout--info">
+        <span class="guide-callout__icon">ℹ️</span>
+        <div><strong>Consulta tus tokens:</strong> En tu Perfil, el contador "Recompras disponibles" muestra cuántos te quedan. <strong>Slots separados:</strong> Si tu liga tiene torneos activos, hay un mínimo de torneos exigido. Una tarjeta de torneo puede desplazar a una pachanga para cumplir la cuota.</div>
+      </div>
+      <div class="screenshots-row">
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/inicio_recheck_1776675735734.png" alt="Inicio — recompra disponible" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M12 8v4\'/><line x1=\'12\' y1=\'16\' x2=\'12.01\' y2=\'16\'/></svg><span>Recompra disponible</span></div>'">
+        </div>
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/fab_overlay_check_1776675952549.png" alt="Diálogo de confirmación recompra" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><polyline points=\'20 6 9 17 4 12\'/></svg><span>Confirmar recompra</span></div>'">
+        </div>
+      </div>
+    </section>
+
+    <nav class="guide-nav">
+      <a href="guia-bloque-2.html" class="guide-nav__btn guide-nav__btn--prev">
+        <span class="guide-nav__label">← Anterior</span>
+        <span class="guide-nav__title">Bloque 2 · Tu Liga y Perfil</span>
+      </a>
+      <a href="guia-bloque-4.html" class="guide-nav__btn guide-nav__btn--next">
+        <span class="guide-nav__label">Siguiente →</span>
+        <span class="guide-nav__title">Bloque 4 · Jugar con Otros</span>
+      </a>
+    </nav>
+  </main>
+</div>
+</div>
+
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos.</p></div>
+    <div class="footer__col"><h4>Manual</h4><ul><li><a href="guia-usuario.html">Índice general</a></li><li><a href="guia-bloque-1.html">Primeros Pasos</a></li><li><a href="guia-bloque-3.html">Registrar Ronda</a></li><li><a href="guia-bloque-5.html">Estadísticas</a></li></ul></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li></ul></div>
+  </div>
+  <div class="footer__bottom"><span class="footer__copy">© 2025 <span>The Secret Golf Club</span></span></div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2><p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Email</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center;margin-top:8px">Iniciar Sesión</a>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Email</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center;margin-top:8px">Crear mi liga gratis</a>
+    </div>
+  </div>
+</div>
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+<script>
+const sections=document.querySelectorAll('.guide-section'),tocLinks=document.querySelectorAll('.guide-toc__item a');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const l=document.querySelector(`.guide-toc__item a[href="#${e.target.id}"]`);if(l)l.classList.add('active');}});},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
+

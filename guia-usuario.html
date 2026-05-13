@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Guía de Usuario — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── GUIDE INDEX PAGE ── */
+
+.guide-intro {
+  background: var(--surface);
+  padding: 80px 52px;
+}
+.guide-intro__inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.guide-intro__text {}
+.guide-intro__text p {
+  font-family: var(--body);
+  font-size: clamp(15px,1.6vw,18px);
+  color: var(--text-sec);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.guide-intro__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.guide-intro__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--highlight);
+  border: 1px solid var(--accent-border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.guide-intro__highlight-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.guide-intro__highlight-icon svg {
+  width: 18px; height: 18px;
+  stroke: #fff; fill: none; stroke-width: 1.8;
+}
+.guide-intro__highlight-text strong {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+.guide-intro__highlight-text span {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--text-sec);
+  line-height: 1.55;
+}
+
+/* Block grid */
+.guide-blocks {
+  padding: 80px 52px;
+  background: var(--bg-main);
+}
+.guide-blocks__inner { max-width: 1080px; margin: 0 auto; }
+.guide-blocks__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+.guide-block-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+.guide-block-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(132,176,38,.12);
+  transform: translateY(-3px);
+}
+.guide-block-card__num {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: .3;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.guide-block-card__label {
+  font-family: var(--sans);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.guide-block-card__title {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.guide-block-card__desc {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--text-sec);
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 20px;
+}
+.guide-block-card__sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.guide-block-card__section-tag {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+.guide-block-card__cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  transition: color .3s;
+}
+.guide-block-card:hover .guide-block-card__cta { color: var(--accent); }
+.guide-block-card__cta svg {
+  width: 14px; height: 14px;
+  stroke: currentColor; fill: none; stroke-width: 2;
+  transition: transform .3s;
+}
+.guide-block-card:hover .guide-block-card__cta svg { transform: translateX(4px); }
+
+/* Glossary */
+.guide-glossary {
+  background: var(--surface);
+  padding: 80px 52px;
+  border-top: 1px solid var(--border);
+}
+.guide-glossary__inner { max-width: 900px; margin: 0 auto; }
+.glossary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 44px;
+}
+.glossary-table tr { border-bottom: 1px solid var(--border); }
+.glossary-table tr:last-child { border-bottom: none; }
+.glossary-table td {
+  padding: 18px 16px;
+  font-family: var(--body);
+  font-size: clamp(14px,1.4vw,16px);
+  vertical-align: top;
+}
+.glossary-table td:first-child {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--primary);
+  white-space: nowrap;
+  width: 200px;
+  padding-right: 32px;
+}
+.glossary-table td:last-child { color: var(--text-sec); line-height: 1.7; }
+.glossary-table tr:hover td { background: var(--highlight); }
+
+/* Quick tip banner */
+.guide-tip {
+  background: var(--primary);
+  padding: 48px 52px;
+  text-align: center;
+}
+.guide-tip__inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.guide-tip p {
+  font-family: var(--body);
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(255,255,255,.8);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.guide-tip strong { color: #fff; }
+
+@media (max-width: 1024px) {
+  .guide-blocks__grid { grid-template-columns: repeat(2, 1fr); }
+  .guide-intro__inner { grid-template-columns: 1fr; gap: 36px; }
+  .guide-intro, .guide-blocks, .guide-glossary { padding: 64px 36px; }
+}
+@media (max-width: 680px) {
+  .guide-blocks__grid { grid-template-columns: 1fr; }
+  .guide-intro, .guide-blocks, .guide-glossary { padding: 52px 20px; }
+  .guide-tip { padding: 40px 20px; }
+  .glossary-table td:first-child { width: 140px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+          <div class="nav__dropdown__divider"></div>
+          <a href="guia-usuario.html" class="active"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Manual del jugador</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <a href="index.html#stats" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías de funcionalidad</div>
+    <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Manual del jugador</div>
+    <a href="guia-usuario.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Índice general</a>
+    <a href="guia-bloque-1.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 1 · Primeros pasos</a>
+    <a href="guia-bloque-2.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 2 · Tu perfil y liga</a>
+    <a href="guia-bloque-3.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 3 · Registrar ronda</a>
+    <a href="guia-bloque-4.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 4 · Jugar con otros</a>
+    <a href="guia-bloque-5.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 5 · Estadísticas</a>
+    <a href="guia-bloque-6.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 6 · Incidencias</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="#" onclick="openApp();return false;">Iniciar Sesión</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero__label">Documentación oficial</div>
+  <h1 class="page-hero__title">Manual del Jugador</h1>
+  <div class="page-hero__title-line"></div>
+  <p class="page-hero__sub">Todo lo que necesitas para sacar el máximo partido a The Secret Golf Club, desde el primer login hasta el análisis avanzado de tu juego.</p>
+</div>
+
+<!-- INTRO -->
+<section class="guide-intro">
+  <div class="guide-intro__inner">
+    <div class="guide-intro__text reveal">
+      <div class="section__label">Sobre esta guía</div>
+      <h2 class="section__title">Tu recorrido completo por la plataforma</h2>
+      <p>The Secret Golf Club es una plataforma de gestión de ligas de golf por invitación. Este manual cubre todo el recorrido de un jugador de liga: desde activar tu cuenta hasta entender tus estadísticas y competir con otros.</p>
+      <p>La guía está estructurada en <strong>seis bloques</strong> que siguen el orden natural de uso. No hace falta leerla de principio a fin: úsala como referencia cuando necesites entender una función concreta.</p>
+      <p>Las funcionalidades de administración de liga y los sistemas de pool tienen sus propios manuales separados.</p>
+    </div>
+    <div class="guide-intro__highlights reveal reveal-d2">
+      <div class="guide-intro__highlight">
+        <div class="guide-intro__highlight-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="guide-intro__highlight-text">
+          <strong>Acceso por invitación</strong>
+          <span>Necesitas un código de tu admin para registrarte. Sin código no hay acceso.</span>
+        </div>
+      </div>
+      <div class="guide-intro__highlight">
+        <div class="guide-intro__highlight-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="guide-intro__highlight-text">
+          <strong>Plataforma en tiempo real</strong>
+          <span>Resultados, clasificaciones y partidas multijugador se sincronizan al instante.</span>
+        </div>
+      </div>
+      <div class="guide-intro__highlight">
+        <div class="guide-intro__highlight-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div class="guide-intro__highlight-text">
+          <strong>Handicap WHS automático</strong>
+          <span>Cada tarjeta actualiza tu índice WHS sin que tengas que hacer nada.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCKS GRID -->
+<section class="guide-blocks">
+  <div class="guide-blocks__inner">
+    <div class="section__header">
+      <div class="section__label">Índice de contenidos</div>
+      <h2 class="section__title">Seis bloques, todo cubierto</h2>
+      <p class="section__sub">Selecciona el bloque que necesitas o empieza por el principio si eres nuevo en la plataforma.</p>
+    </div>
+
+    <div class="guide-blocks__grid">
+
+      <a href="guia-bloque-1.html" class="guide-block-card reveal">
+        <div class="guide-block-card__num">01</div>
+        <div class="guide-block-card__label">Bloque 1</div>
+        <h3 class="guide-block-card__title">Primeros Pasos</h3>
+        <p class="guide-block-card__desc">Del código de invitación al primer login. Aquí empieza todo: registro, credenciales y notificaciones.</p>
+        <div class="guide-block-card__sections">
+          <span class="guide-block-card__section-tag">Código de invitación</span>
+          <span class="guide-block-card__section-tag">Login</span>
+          <span class="guide-block-card__section-tag">Notificaciones</span>
+        </div>
+        <div class="guide-block-card__cta">Leer bloque <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="guia-bloque-2.html" class="guide-block-card reveal reveal-d1">
+        <div class="guide-block-card__num">02</div>
+        <div class="guide-block-card__label">Bloque 2</div>
+        <h3 class="guide-block-card__title">Tu Liga y Perfil</h3>
+        <p class="guide-block-card__desc">Entiende tu posición en el ranking, calcula tu handicap de juego y analiza en profundidad tus estadísticas.</p>
+        <div class="guide-block-card__sections">
+          <span class="guide-block-card__section-tag">Panel principal</span>
+          <span class="guide-block-card__section-tag">Clasificación</span>
+          <span class="guide-block-card__section-tag">Mi Perfil</span>
+          <span class="guide-block-card__section-tag">HCP de juego</span>
+        </div>
+        <div class="guide-block-card__cta">Leer bloque <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="guia-bloque-3.html" class="guide-block-card reveal reveal-d2">
+        <div class="guide-block-card__num">03</div>
+        <div class="guide-block-card__label">Bloque 3</div>
+        <h3 class="guide-block-card__title">Registrar una Ronda</h3>
+        <p class="guide-block-card__desc">Los tres caminos para meter una tarjeta: en directo hoyo a hoyo, manualmente o mediante foto OCR.</p>
+        <div class="guide-block-card__sections">
+          <span class="guide-block-card__section-tag">Subir vs Entregar</span>
+          <span class="guide-block-card__section-tag">En directo</span>
+          <span class="guide-block-card__section-tag">Manual</span>
+          <span class="guide-block-card__section-tag">OCR</span>
+          <span class="guide-block-card__section-tag">Recompra</span>
+        </div>
+        <div class="guide-block-card__cta">Leer bloque <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="guia-bloque-4.html" class="guide-block-card reveal reveal-d1">
+        <div class="guide-block-card__num">04</div>
+        <div class="guide-block-card__label">Bloque 4</div>
+        <h3 class="guide-block-card__title">Jugar con Otros</h3>
+        <p class="guide-block-card__desc">Partidas multijugador en tiempo real, apuestas amistosas y eventos organizados por tu admin.</p>
+        <div class="guide-block-card__sections">
+          <span class="guide-block-card__section-tag">Multijugador</span>
+          <span class="guide-block-card__section-tag">Match Play</span>
+          <span class="guide-block-card__section-tag">Skins</span>
+          <span class="guide-block-card__section-tag">Eventos</span>
+          <span class="guide-block-card__section-tag">Live Leaderboard</span>
+        </div>
+        <div class="guide-block-card__cta">Leer bloque <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="guia-bloque-5.html" class="guide-block-card reveal reveal-d2">
+        <div class="guide-block-card__num">05</div>
+        <div class="guide-block-card__label">Bloque 5</div>
+        <h3 class="guide-block-card__title">Entender tu Progreso</h3>
+        <p class="guide-block-card__desc">Estadísticas avanzadas, comparativas head-to-head, predicciones Factor 7 y el asistente CaddieAI.</p>
+        <div class="guide-block-card__sections">
+          <span class="guide-block-card__section-tag">Estadísticas</span>
+          <span class="guide-block-card__section-tag">Head-to-Head</span>
+          <span class="guide-block-card__section-tag">Factor 7</span>
+          <span class="guide-block-card__section-tag">CaddieAI</span>
+        </div>
+        <div class="guide-block-card__cta">Leer bloque <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <a href="guia-bloque-6.html" class="guide-block-card reveal reveal-d3">
+        <div class="guide-block-card__num">06</div>
+        <div class="guide-block-card__label">Bloque 6</div>
+        <h3 class="guide-block-card__title">Incidencias y Notificaciones</h3>
+        <p class="guide-block-card__desc">Cómo reportar errores en tarjetas y qué tipo de notificaciones push recibirás de la plataforma.</p>
+        <div class="guide-block-card__sections">
+          <span class="guide-block-card__section-tag">Reportar error</span>
+          <span class="guide-block-card__section-tag">Notificaciones push</span>
+          <span class="guide-block-card__section-tag">Categorías de resultado</span>
+        </div>
+        <div class="guide-block-card__cta">Leer bloque <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIP BANNER -->
+<div class="guide-tip">
+  <div class="guide-tip__inner reveal">
+    <p><strong>¿Eres administrador de liga?</strong> Esta guía cubre las funciones del jugador estándar. Las herramientas de administración — crear temporadas, configurar eventos, editar tarjetas, gestionar jugadores — están documentadas en el Manual del Administrador.</p>
+    <a href="lls-crear-liga.html" class="btn-lime">Ver guía del administrador</a>
+  </div>
+</div>
+
+<!-- GLOSSARY -->
+<section class="guide-glossary">
+  <div class="guide-glossary__inner">
+    <div class="section__header">
+      <div class="section__label">Terminología</div>
+      <h2 class="section__title">Glosario</h2>
+      <p class="section__sub">Los términos específicos de la plataforma que encontrarás a lo largo de esta guía.</p>
+    </div>
+    <table class="glossary-table reveal">
+      <tbody>
+        <tr>
+          <td>HCP TSGC</td>
+          <td>Tu índice WHS calculado dentro de la plataforma, usando las últimas 20 rondas registradas.</td>
+        </tr>
+        <tr>
+          <td>HCP Oficial (RFEG)</td>
+          <td>Tu hándicap federado, sincronizado con la Real Federación Española de Golf.</td>
+        </tr>
+        <tr>
+          <td>HCP de Juego</td>
+          <td>Golpes que recibes en un campo y barra específicos, calculados aplicando slope y rating.</td>
+        </tr>
+        <tr>
+          <td>Slot</td>
+          <td>Hueco disponible para una tarjeta que puntúa en el ranking de la liga. Cada temporada define cuántos slots tienes (<em>numPartidos</em>).</td>
+        </tr>
+        <tr>
+          <td>Recompra</td>
+          <td>Sustitución de tu peor tarjeta entregada por una nueva mejor, cuando ya tienes todos los slots llenos.</td>
+        </tr>
+        <tr>
+          <td>Token de recompra</td>
+          <td>Crédito que te permite ejecutar una recompra en ligas donde la sustitución no es automática.</td>
+        </tr>
+        <tr>
+          <td>GIR</td>
+          <td>Green in Regulation — llegar al green en Par−2 golpes o menos.</td>
+        </tr>
+        <tr>
+          <td>Stableford</td>
+          <td>Sistema de puntuación: puntos = max(0, Par − Golpes Netos + 2).</td>
+        </tr>
+        <tr>
+          <td>Subir</td>
+          <td>Guardar la tarjeta en tu historial. Afecta a tu hándicap WHS y a tus estadísticas personales.</td>
+        </tr>
+        <tr>
+          <td>Entregar</td>
+          <td>Marcar la tarjeta para que puntúe en el ranking de la liga (<em>entregas = 1</em>).</td>
+        </tr>
+        <tr>
+          <td>Pachanga</td>
+          <td>Partida informal registrada en la liga (no es torneo oficial).</td>
+        </tr>
+        <tr>
+          <td>Torneo</td>
+          <td>Partida oficial vinculada a un evento de la liga, con cuota y condiciones específicas.</td>
+        </tr>
+        <tr>
+          <td>Quórum</td>
+          <td>Número mínimo de jugadores inscritos para que un evento sea considerado oficial.</td>
+        </tr>
+        <tr>
+          <td>Factor 7</td>
+          <td>Motor de predicción que combina siete factores (forma, campo, consistencia, HCP, presión, H2H, ritmo) para estimar resultados y enfrentamientos.</td>
+        </tr>
+        <tr>
+          <td>CaddieAI</td>
+          <td>Asistente inteligente de análisis accesible desde la comparativa. Solo lectura — no puede modificar datos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <div class="footer__brand-name">The Secret Golf Club</div>
+      <p>La plataforma para gestionar tu liga de golf con amigos. Torneos, ranking, estadísticas y handicap oficial.</p>
+    </div>
+    <div class="footer__col"><h4>Manual</h4><ul>
+      <li><a href="guia-usuario.html">Índice general</a></li>
+      <li><a href="guia-bloque-1.html">Primeros Pasos</a></li>
+      <li><a href="guia-bloque-3.html">Registrar Ronda</a></li>
+      <li><a href="guia-bloque-5.html">Estadísticas</a></li>
+    </ul></div>
+    <div class="footer__col"><h4>Producto</h4><ul>
+      <li><a href="index.html#features">Funcionalidades</a></li>
+      <li><a href="lls-precios.html">Precios</a></li>
+      <li><a href="lls-faq.html">FAQ</a></li>
+    </ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul>
+      <li><a href="#">Términos</a></li>
+      <li><a href="#">Privacidad</a></li>
+      <li><a href="#">Cookies</a></li>
+    </ul></div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Powered by TSGC Scorecard</span>
+    <div class="footer__social">
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿No tienes cuenta? <a href="#" onclick="showRegister()">Solicitar acceso</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre completo</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Licencia RFEG (opcional)</label><input type="text" class="form__input" placeholder="CM01234567"></div>
+      <div class="form__group"><label class="form__label">Nombre de tu liga</label><input type="text" class="form__input" placeholder="Liga de los Martes"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Crear mi liga gratis</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Iniciar sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+</body>
+</html>

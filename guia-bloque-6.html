@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bloque 6: Incidencias y Notificaciones — Guía de Usuario TSGC</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.guide-breadcrumb{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 52px;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:11px;color:var(--text-muted);position:sticky;top:68px;z-index:50}
+.guide-breadcrumb a{color:var(--text-sec);transition:color .2s}.guide-breadcrumb a:hover{color:var(--primary)}.guide-breadcrumb__sep{opacity:.4}.guide-breadcrumb__current{color:var(--primary);font-weight:600}
+.guide-layout{display:grid;grid-template-columns:260px 1fr;max-width:1140px;margin:0 auto;gap:0;align-items:start}
+.guide-toc{position:sticky;top:110px;padding:28px 32px 28px 52px;border-right:1px solid var(--border)}
+.guide-toc__title{font-family:var(--sans);font-size:8.5px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.guide-toc__list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.guide-toc__item a{display:block;padding:8px 12px;border-radius:7px;font-family:var(--body);font-size:14px;color:var(--text-sec);transition:background .2s,color .2s;line-height:1.4}
+.guide-toc__item a:hover,.guide-toc__item a.active{background:var(--highlight);color:var(--primary)}.guide-toc__item a.active{font-weight:600}
+.guide-toc__blocks{margin-top:28px;border-top:1px solid var(--border);padding-top:20px}
+.guide-toc__block-link{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:7px;font-family:var(--sans);font-size:11px;color:var(--text-muted);transition:color .2s,background .2s}
+.guide-toc__block-link:hover{color:var(--text-sec);background:var(--bg-main)}.guide-toc__block-link.current{color:var(--primary);font-weight:600}
+.guide-toc__block-num{width:20px;height:20px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.guide-toc__block-link.current .guide-toc__block-num{background:var(--primary);color:#fff}
+.guide-content{padding:28px 52px 40px 48px;min-width:0}
+.guide-content__header{padding-bottom:20px;margin-bottom:28px;border-bottom:1px solid var(--border)}
+.guide-content__block-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.guide-content__block-badge::before{content:'';width:28px;height:1px;background:var(--accent)}
+.guide-content__title{font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--text-main);line-height:1.08;margin-bottom:16px}
+.guide-content__intro{font-family:var(--body);font-size:clamp(16px,1.6vw,19px);color:var(--text-sec);line-height:1.8;max-width:640px}
+.guide-section{margin-bottom:32px;scroll-margin-top:120px}
+.guide-section__num{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.guide-section__title{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);font-weight:700;color:var(--text-main);margin-bottom:12px}
+.guide-section__story{display:flex;align-items:flex-start;gap:12px;background:var(--highlight);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;font-family:var(--body);font-size:15px;font-style:italic;color:var(--text-sec);line-height:1.65}
+.guide-section__story::before{content:'"';font-family:var(--serif);font-size:32px;color:var(--accent);line-height:1;flex-shrink:0}
+.guide-section__flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:14px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.guide-section__flow-label{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:6px;flex-shrink:0}
+.guide-section__flow-step{font-family:var(--body);font-size:13px;color:var(--text-sec)}.guide-section__flow-arrow{color:var(--accent);font-size:12px}
+.guide-elements{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.guide-element{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:border-color .2s}
+.guide-element:hover{border-color:var(--accent-border)}
+.guide-element__dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0}
+.guide-element__term{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px}
+.guide-element__def{font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.65}
+.guide-element__def strong{color:var(--text-main);font-weight:600}
+.guide-callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:20px 0;font-family:var(--body);font-size:14px;line-height:1.7}
+.guide-callout--info{background:var(--highlight);border:1px solid var(--accent-border);color:var(--primary)}
+.guide-callout__icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.guide-nav{display:flex;justify-content:space-between;gap:16px;margin-top:36px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
+.guide-nav__btn{display:flex;flex-direction:column;gap:4px;padding:18px 24px;border:1px solid var(--border);border-radius:10px;min-width:200px;flex:1;text-decoration:none;transition:border-color .3s,box-shadow .3s}
+.guide-nav__btn:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(132,176,38,.1)}
+.guide-nav__btn--prev{align-items:flex-start}.guide-nav__btn--next{align-items:flex-end}
+.guide-nav__label{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--text-muted)}
+.guide-nav__title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text-main)}
+.guide-table{width:100%;border-collapse:collapse;margin:16px 0}
+.guide-table th,.guide-table td{padding:12px 16px;font-family:var(--body);font-size:14px;text-align:left;border-bottom:1px solid var(--border)}
+.guide-table th{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);background:var(--bg-main)}
+.guide-table td{color:var(--text-sec);line-height:1.6}.guide-table td:first-child{font-weight:600;color:var(--text-main)}.guide-table tr:last-child td{border-bottom:none}
+/* Result badges */
+.result-badges{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.result-badge{display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:10px;border:1px solid var(--border);font-family:var(--body);font-size:14px;min-width:180px;flex:1}
+.result-badge__emoji{font-size:20px;flex-shrink:0}
+.result-badge__body strong{display:block;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--text-main);margin-bottom:2px}
+.result-badge__body span{color:var(--text-muted)}
+/* Screenshots */
+.screenshots-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.screenshots-row .screenshot-wrap{max-width:240px;flex:1;min-width:180px}
+.screenshot-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--bg-main);max-width:300px;margin:12px auto;box-shadow:var(--shadow-elevated)}
+.screenshot-wrap img{width:100%;height:auto;display:block}
+.screenshot-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:48px 24px;color:var(--text-muted);text-align:center}
+.screenshot-placeholder svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1.5}
+.screenshot-placeholder span{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+/* End CTA */
+.guide-end-cta{background:var(--primary);border-radius:14px;padding:44px 48px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.guide-end-cta__text h3{font-family:var(--serif);font-size:clamp(20px,2.5vw,26px);font-weight:700;color:#fff;margin-bottom:10px}
+.guide-end-cta__text p{font-family:var(--body);font-size:clamp(14px,1.4vw,16px);color:rgba(255,255,255,.7);line-height:1.7}
+.guide-end-cta__actions{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap}
+@media(max-width:960px){.guide-layout{grid-template-columns:1fr}.guide-toc{display:none}.guide-breadcrumb{padding:12px 20px}.guide-content{padding:36px 20px 60px}}
+@media(max-width:680px){.guide-nav{flex-direction:column}.guide-nav__btn{min-width:unset}.guide-end-cta{flex-direction:column;padding:32px 24px}.guide-end-cta__actions{width:100%}.guide-end-cta__actions a{flex:1;text-align:center}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li class="nav__item">
+      <a href="#">Guías<svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      <div class="nav__dropdown"><div class="nav__dropdown__inner">
+        <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Crea tu liga</a>
+        <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Registra partidas</a>
+        <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+        <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Comparación</a>
+        <div class="nav__dropdown__divider"></div>
+        <a href="guia-usuario.html" class="active"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Manual del jugador</a>
+      </div></div>
+    </li>
+    <li><a href="lls-precios.html">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header"><span class="nav-drawer__logo">The Secret Golf Club</span><button class="nav-drawer__close" onclick="closeDrawer()">✕</button></div>
+  <div class="nav-drawer__links">
+    <div class="nav-drawer__section-label">Manual del jugador</div>
+    <a href="guia-usuario.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/></svg>Índice general</a>
+    <a href="guia-bloque-1.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 1 · Primeros pasos</a>
+    <a href="guia-bloque-2.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 2 · Tu perfil y liga</a>
+    <a href="guia-bloque-3.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 3 · Registrar ronda</a>
+    <a href="guia-bloque-4.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 4 · Jugar con otros</a>
+    <a href="guia-bloque-5.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 5 · Estadísticas</a>
+    <a href="guia-bloque-6.html" class="nav-drawer__sublink active"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Bloque 6 · Incidencias</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta"><a href="#" onclick="openApp();return false;">Iniciar Sesión</a></div>
+</div>
+
+<div class="guide-breadcrumb">
+  <a href="guia-usuario.html">Manual del jugador</a>
+  <span class="guide-breadcrumb__sep">›</span>
+  <span class="guide-breadcrumb__current">Bloque 6 — Incidencias y Notificaciones</span>
+</div>
+
+<div style="background:var(--surface);border-bottom:1px solid var(--border)">
+<div class="guide-layout">
+  <aside class="guide-toc">
+    <div class="guide-toc__title">En este bloque</div>
+    <ul class="guide-toc__list">
+      <li class="guide-toc__item"><a href="#s6-1" class="active">6.1 · Reportar Error en Tarjeta</a></li>
+      <li class="guide-toc__item"><a href="#s6-2">6.2 · Notificaciones Push</a></li>
+    </ul>
+    <div class="guide-toc__blocks">
+      <div style="font-family:var(--sans);font-size:8.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Todos los bloques</div>
+      <a href="guia-bloque-1.html" class="guide-toc__block-link"><span class="guide-toc__block-num">1</span>Primeros Pasos</a>
+      <a href="guia-bloque-2.html" class="guide-toc__block-link"><span class="guide-toc__block-num">2</span>Tu Liga y Perfil</a>
+      <a href="guia-bloque-3.html" class="guide-toc__block-link"><span class="guide-toc__block-num">3</span>Registrar Ronda</a>
+      <a href="guia-bloque-4.html" class="guide-toc__block-link"><span class="guide-toc__block-num">4</span>Jugar con Otros</a>
+      <a href="guia-bloque-5.html" class="guide-toc__block-link"><span class="guide-toc__block-num">5</span>Entender tu Progreso</a>
+      <a href="guia-bloque-6.html" class="guide-toc__block-link current"><span class="guide-toc__block-num">6</span>Incidencias</a>
+    </div>
+  </aside>
+
+  <main class="guide-content">
+    <div class="guide-content__header">
+      <div class="guide-content__block-badge">Bloque 6</div>
+      <h1 class="guide-content__title">Incidencias y Notificaciones</h1>
+      <p class="guide-content__intro">Cómo actuar cuando encuentras un error en una tarjeta y qué notificaciones push esperar de la plataforma. Este es el último bloque del manual del jugador.</p>
+    </div>
+
+    <!-- 6.1 -->
+    <section class="guide-section" id="s6-1">
+      <div class="guide-section__num">Sección 6.1</div>
+      <h2 class="guide-section__title">Reportar un Error en una Tarjeta</h2>
+      <div class="guide-section__story">Me he dado cuenta de que una de mis tarjetas tiene un hoyo mal anotado. ¿Cómo lo arreglo?</div>
+      <div class="guide-section__flow">
+        <span class="guide-section__flow-label">Flujo</span>
+        <span class="guide-section__flow-step">Mi Perfil</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">Historial de tarjetas</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">Tap en la tarjeta errónea</span>
+        <span class="guide-section__flow-arrow">→</span>
+        <span class="guide-section__flow-step">Botón "Reportar error"</span>
+      </div>
+      <div class="guide-elements">
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Formulario de reporte</div>
+            <div class="guide-element__def">Describe el problema con el detalle que puedas (ej. "Hoyo 7 debería ser 5 golpes, no 6"). Cuanta más información, más fácil para el admin corregirlo.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Envío al admin</div>
+            <div class="guide-element__def">El admin recibe la solicitud en su buzón de auditoría. Él revisa y corrige la tarjeta si procede.</div>
+          </div>
+        </div>
+        <div class="guide-element">
+          <div class="guide-element__dot"></div>
+          <div class="guide-element__body">
+            <div class="guide-element__term">Cascada automática tras la corrección</div>
+            <div class="guide-element__def">Al corregirse, el sistema <strong>recalcula automáticamente</strong> tu hándicap WHS y tu posición en el ranking, y sincroniza con Airtable. Recibes una notificación cuando el cambio está aplicado.</div>
+          </div>
+        </div>
+      </div>
+      <div class="screenshots-row">
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/report_error_button_1776633272873.png" alt="Botón Reportar Error" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><line x1=\'12\' y1=\'8\' x2=\'12\' y2=\'12\'/><line x1=\'12\' y1=\'16\' x2=\'12.01\' y2=\'16\'/></svg><span>Botón de reporte</span></div>'">
+        </div>
+        <div class="screenshot-wrap">
+          <img src="assets/manual_liga/report_error_dialog_1776633284122.png" alt="Diálogo de Reporte" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\'/></svg><span>Formulario de reporte</span></div>'">
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.2 -->
+    <section class="guide-section" id="s6-2">
+      <div class="guide-section__num">Sección 6.2</div>
+      <h2 class="guide-section__title">Notificaciones Push que Recibes</h2>
+      <div class="guide-section__story">Como jugador, quiero saber qué tipo de avisos me va a enviar la app.</div>
+
+      <table class="guide-table">
+        <thead>
+          <tr><th>Tipo</th><th>Cuándo se envía</th><th>Destinatarios</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Resultado de partida</td>
+            <td>Cuando cualquier jugador de la liga completa una ronda</td>
+            <td>Todos los jugadores de la liga</td>
+          </tr>
+          <tr>
+            <td>Nuevo evento</td>
+            <td>Cuando el admin crea un evento nuevo</td>
+            <td>Todos los jugadores de la liga</td>
+          </tr>
+          <tr>
+            <td>Recordatorio de evento</td>
+            <td>Cuando el admin lo dispara manualmente</td>
+            <td>Solo los que NO están inscritos en ese evento</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin:28px 0 16px">Categorías de resultado</p>
+
+      <div class="result-badges">
+        <div class="result-badge">
+          <div class="result-badge__emoji">🔥</div>
+          <div class="result-badge__body"><strong>Partidazo</strong><span>18H: ≥38 pts · 9H: ≥20 pts</span></div>
+        </div>
+        <div class="result-badge">
+          <div class="result-badge__emoji">👍</div>
+          <div class="result-badge__body"><strong>Cumpliendo</strong><span>18H: 34–37 pts · 9H: 17–19 pts</span></div>
+        </div>
+        <div class="result-badge">
+          <div class="result-badge__emoji">☁️</div>
+          <div class="result-badge__body"><strong>Paseo</strong><span>18H: 30–33 pts · 9H: 15–16 pts</span></div>
+        </div>
+        <div class="result-badge">
+          <div class="result-badge__emoji">❄️</div>
+          <div class="result-badge__body"><strong>Matao</strong><span>18H: &lt;30 pts · 9H: &lt;15 pts</span></div>
+        </div>
+      </div>
+
+      <div class="guide-callout guide-callout--info">
+        <span class="guide-callout__icon">ℹ️</span>
+        <div><strong>Desactivar notificaciones:</strong> Ajustes del móvil → TSGC → Notificaciones. La app respeta tu configuración del sistema operativo en todo momento.</div>
+      </div>
+    </section>
+
+    <!-- End CTA -->
+    <div class="guide-end-cta">
+      <div class="guide-end-cta__text">
+        <h3>Has completado el manual</h3>
+        <p>Ya conoces toda la plataforma. Si quieres repasar algún bloque concreto, vuelve al índice general.</p>
+      </div>
+      <div class="guide-end-cta__actions">
+        <a href="guia-usuario.html" class="btn-lime">Ver índice del manual</a>
+        <a href="#" onclick="openApp();return false;" class="btn-outline">Ir a la app</a>
+      </div>
+    </div>
+
+    <nav class="guide-nav">
+      <a href="guia-bloque-5.html" class="guide-nav__btn guide-nav__btn--prev">
+        <span class="guide-nav__label">← Anterior</span>
+        <span class="guide-nav__title">Bloque 5 · Entender tu Progreso</span>
+      </a>
+      <a href="guia-usuario.html" class="guide-nav__btn guide-nav__btn--next">
+        <span class="guide-nav__label">Índice</span>
+        <span class="guide-nav__title">Volver al Manual</span>
+      </a>
+    </nav>
+  </main>
+</div>
+</div>
+
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos.</p></div>
+    <div class="footer__col"><h4>Manual</h4><ul><li><a href="guia-usuario.html">Índice general</a></li><li><a href="guia-bloque-1.html">Primeros Pasos</a></li><li><a href="guia-bloque-3.html">Registrar Ronda</a></li><li><a href="guia-bloque-5.html">Estadísticas</a></li></ul></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li></ul></div>
+  </div>
+  <div class="footer__bottom"><span class="footer__copy">© 2025 <span>The Secret Golf Club</span></span></div>
+</footer>
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2><p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Email</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center;margin-top:8px">Iniciar Sesión</a>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Email</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center;margin-top:8px">Crear mi liga gratis</a>
+    </div>
+  </div>
+</div>
+<!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+<script>
+const sections=document.querySelectorAll('.guide-section'),tocLinks=document.querySelectorAll('.guide-toc__item a');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const l=document.querySelector(`.guide-toc__item a[href="#${e.target.id}"]`);if(l)l.classList.add('active');}});},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
+

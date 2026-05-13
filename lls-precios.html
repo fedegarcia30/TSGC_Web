@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Precios — The Secret Golf Club</title>
+<link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── PRICING PAGE ── */
+
+.pricing__toggle { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:40px; }
+.toggle__label { font-family:var(--sans); font-size:10px; font-weight:400; letter-spacing:.26em; text-transform:uppercase; color:var(--text-muted); }
+.toggle__label.active { color:var(--accent); }
+.toggle__switch { width:48px; height:26px; background:var(--border); border:1px solid var(--border); border-radius:13px; position:relative; cursor:pointer; transition:.3s; }
+.toggle__switch.yearly { background:var(--accent-glow); border-color:var(--accent-border); }
+.toggle__knob { position:absolute; top:3px; left:3px; width:18px; height:18px; background:var(--text-muted); border-radius:50%; transition:transform .3s var(--ease); }
+.toggle__switch.yearly .toggle__knob { transform:translateX(22px); background:var(--accent); }
+.toggle__badge { font-family:var(--sans); font-size:8px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#fff; background:var(--accent); padding:4px 10px; border-radius:40px; }
+
+.pricing__grid { display:grid; grid-template-columns:1fr 1.08fr 1fr; gap:20px; max-width:1020px; margin:0 auto; align-items:start; }
+.pc { border:1px solid var(--border); border-radius:14px; background:var(--surface); padding:44px 36px; position:relative; transition:transform .3s, box-shadow .3s; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.pc:hover { transform:translateY(-5px); box-shadow:0 20px 48px rgba(0,0,0,.08); }
+.pc--featured { border-color:var(--accent); border-width:2px; box-shadow:0 8px 40px rgba(132,176,38,.14); background:var(--highlight); }
+.pc--featured::before { content:'MÁS POPULAR'; font-family:var(--sans); font-size:7.5px; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:#fff; background:var(--accent); padding:6px 18px; border-radius:0 0 var(--r) var(--r); position:absolute; top:0; left:50%; transform:translateX(-50%); }
+.pc__plan { font-family:var(--sans); font-size:9px; font-weight:500; letter-spacing:.38em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:22px; }
+.pc__price-wrap { margin-bottom:8px; min-height:72px; display:flex; align-items:flex-end; gap:4px; }
+.pc__price { font-family:var(--serif); font-size:clamp(44px,5.5vw,68px); font-weight:700; color:var(--text-main); line-height:1; }
+.pc__price sup { font-size:.36em; vertical-align:super; color:var(--accent); }
+.pc__price-details { padding-bottom:8px; }
+.pc__per { font-family:var(--sans); font-size:9.5px; font-weight:400; letter-spacing:.14em; color:var(--text-muted); display:block; }
+.pc__saving { font-family:var(--sans); font-size:8.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); display:block; margin-top:3px; opacity:0; transition:opacity .3s; }
+.pc__saving.visible { opacity:1; }
+.pc__desc { font-family:var(--body); font-size:15px; color:var(--text-sec); line-height:1.65; margin-bottom:28px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+.pc__features { list-style:none; display:flex; flex-direction:column; gap:13px; margin-bottom:34px; }
+.pc__features li { font-family:var(--body); font-size:clamp(13px,1.3vw,15px); color:var(--text-main); display:flex; align-items:flex-start; gap:10px; line-height:1.55; }
+.pc__features li::before { content:'✓'; color:var(--accent); font-family:var(--sans); font-size:11px; flex-shrink:0; margin-top:3px; font-weight:700; }
+.pc__features li.no { color:var(--text-muted); }
+.pc__features li.no::before { content:'—'; color:var(--border); }
+.pc__btn { width:100%; text-align:center; display:block; padding:15px; }
+
+#compare { background:var(--bg-main); }
+.compare-table-wrap { overflow-x:auto; }
+.compare-table { width:100%; border-collapse:collapse; min-width:640px; }
+.compare-table th, .compare-table td { padding:16px 20px; text-align:center; border-bottom:1px solid var(--border); }
+.compare-table th:first-child, .compare-table td:first-child { text-align:left; }
+.compare-table thead th { font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:#fff; background:var(--primary); border-bottom:none; }
+.compare-table thead th:first-child { background:var(--surface); color:var(--text-sec); border-right:1px solid var(--border); }
+.compare-table thead th.featured { background:var(--accent); }
+.compare-table .group-row td, .compare-table .group-row th { font-family:var(--sans); font-size:8.5px; font-weight:500; letter-spacing:.28em; text-transform:uppercase; color:var(--primary); background:var(--highlight); padding:10px 20px; border-bottom:1px solid rgba(47,82,51,.12); }
+.compare-table tbody tr:hover td { background:var(--highlight); }
+.compare-table td { font-family:var(--body); font-size:14px; color:var(--text-main); }
+.compare-table td:first-child { color:var(--text-sec); }
+.compare-table td.featured { background:rgba(132,176,38,.05); border-left:2px solid var(--accent); border-right:2px solid var(--accent); }
+.compare-table tbody tr:last-child td.featured { border-bottom:2px solid var(--accent); }
+.check { color:var(--accent); font-size:15px; font-weight:700; }
+.cross { color:var(--border); font-size:15px; }
+
+#testimonials { background:var(--highlight); }
+.testi__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.testi { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:32px 28px; display:flex; flex-direction:column; gap:20px; transition:border-color .3s, box-shadow .3s; }
+.testi:hover { border-color:rgba(47,82,51,.25); box-shadow:0 8px 28px rgba(0,0,0,.06); }
+.testi__stars { display:flex; gap:4px; }
+.testi__star { color:var(--accent); font-size:14px; }
+.testi__text { font-family:var(--serif); font-size:clamp(15px,1.5vw,18px); font-style:italic; color:var(--text-main); line-height:1.7; flex:1; }
+.testi__author { display:flex; align-items:center; gap:12px; }
+.testi__avatar { width:38px; height:38px; border-radius:50%; background:var(--primary); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:13px; font-weight:700; color:#fff; flex-shrink:0; }
+.testi__name { font-family:var(--serif); font-size:13px; font-weight:700; color:var(--text-main); }
+.testi__role { font-family:var(--sans); font-size:8px; font-weight:400; letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted); margin-top:2px; }
+
+#cta-pricing { padding:80px 52px; text-align:center; background:linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 55%, var(--primary-dark) 100%); position:relative; overflow:hidden; }
+#cta-pricing::before { content:''; position:absolute; top:-250px; left:50%; transform:translateX(-50%); width:700px; height:700px; border-radius:50%; background:radial-gradient(circle, rgba(132,176,38,.09) 0%, transparent 65%); pointer-events:none; }
+.cta-p__title { font-family:var(--serif); font-size:clamp(26px,4.5vw,56px); font-weight:700; color:#fff; margin-bottom:18px; }
+.cta-p__sub { font-family:var(--body); font-size:clamp(15px,1.7vw,20px); color:rgba(255,255,255,.7); max-width:480px; margin:0 auto 20px; line-height:1.7; }
+.cta-p__note { font-family:var(--sans); font-size:9px; font-weight:400; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.38); margin-bottom:44px; }
+.cta-p__btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+@media (max-width:1024px) {
+  .pricing__grid { grid-template-columns:1fr; max-width:480px; }
+  .pc--featured { margin:0; }
+  .testi__grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:680px) {
+  .testi__grid { grid-template-columns:1fr; }
+  .pricing__toggle { flex-wrap:wrap; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/TSGC_icon.svg" class="nav__logo-img" alt="TSGC">
+    <span class="nav__name">The Secret Golf Club</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="index.html#features">Qué es</a></li>
+    <li><a href="index.html#how">Cómo funciona</a></li>
+    <li><a href="index.html#stats">Estadísticas</a></li>
+    <li class="nav__item">
+      <a href="#">Guías
+        <svg class="nav__chevron" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav__dropdown">
+                        <div class="nav__dropdown__inner">
+          <a href="lls-crear-liga.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+          <a href="lls-formatos-competicion.html"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+          <a href="lls-registra-partidas.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+          <a href="lls-modos-de-juego.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+          <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+          <a href="lls-estadisticas.html"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+          <a href="lls-comparar.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+        <a href="lls-torneos.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Torneos</a>
+        <a href="#"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="lls-precios.html" class="active">Precios</a></li>
+    <li><a href="lls-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
+    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+  </div>
+  <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer__backdrop" id="navBackdrop" onclick="closeDrawer()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer__header">
+    <span class="nav-drawer__logo">The Secret Golf Club</span>
+    <button class="nav-drawer__close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="nav-drawer__links">
+    <a href="index.html#features" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Qué es</a>
+    <a href="index.html#how" class="nav-drawer__link"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Cómo funciona</a>
+    <a href="index.html#stats" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <div class="nav-drawer__divider"></div>
+    <div class="nav-drawer__section-label">Guías</div>
+            <a href="lls-crear-liga.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Crea tu liga</a>
+    <a href="lls-formatos-competicion.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Tipos de competición</a>
+    <a href="lls-registra-partidas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Registra partidas</a>
+    <a href="lls-modos-de-juego.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Modos de juego</a>
+    <a href="lls-torneos.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>Torneos</a>
+    <a href="lls-estadisticas.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Estadísticas</a>
+    <a href="lls-comparar.html" class="nav-drawer__sublink"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Comparación</a>
+    <div class="nav-drawer__divider"></div>
+    <a href="lls-precios.html" class="nav-drawer__link active"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
+    <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
+  </div>
+  <div class="nav-drawer__cta">
+    <a href="#" onclick="openApp();return false;">Iniciar Sesión</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero__label">En desarrollo</div>
+  <h1 class="page-hero__title">Precios</h1>
+  <div class="page-hero__title-line"></div>
+  <p class="page-hero__sub">Estamos definiendo los planes. Por ahora, la plataforma está en fase de prueba.</p>
+</div>
+
+<!-- BETA NOTICE -->
+<section id="pricing" style="background:var(--bg-main)">
+  <div style="max-width:640px;margin:0 auto;text-align:center;padding:80px 24px 100px;">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Fase de prueba
+    </div>
+    <h2 style="font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--text-main);margin-bottom:20px;line-height:1.2;">La estructura de precios<br>está en camino.</h2>
+    <p style="font-family:var(--body);font-size:clamp(15px,1.6vw,18px);color:var(--text-sec);line-height:1.7;margin-bottom:56px;">Mientras tanto, estamos en fase de prueba con las primeras ligas. Las condiciones son sencillas:</p>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:56px;text-align:left;">
+      <div style="display:flex;align-items:flex-start;gap:16px;background:var(--highlight);border:1px solid var(--accent-border);border-radius:12px;padding:24px;">
+        <div style="flex-shrink:0;width:40px;height:40px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <p style="font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:4px;">Crear una liga, gratis</p>
+          <p style="font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.6;">El administrador puede crear y gestionar su liga sin coste durante la fase de prueba.</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <div style="flex-shrink:0;width:40px;height:40px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <p style="font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text-main);margin-bottom:4px;"><strong style="color:var(--accent)">10 €</strong> por jugador y temporada</p>
+          <p style="font-family:var(--body);font-size:14px;color:var(--text-sec);line-height:1.6;">Cada jugador contribuye 10 € por temporada para cubrir los costes de la plataforma mientras perfeccionamos el producto.</p>
+        </div>
+      </div>
+    </div>
+    <a href="#" onclick="openApp();return false;" class="btn-lime">Crear mi liga ahora</a>
+  </div>
+
+  <div class="pricing__grid" style="display:none">
+
+    <div class="pc reveal reveal-d1">
+      <span class="pc__plan">Starter</span>
+      <div class="pc__price-wrap">
+        <div class="pc__price"><sup>€</sup><span class="price-val">0</span></div>
+        <div class="pc__price-details">
+          <span class="pc__per">/mes · gratis</span>
+          <span class="pc__saving" id="save-starter"></span>
+        </div>
+      </div>
+      <p class="pc__desc">Para probar la plataforma con tu grupo antes de comprometerte.</p>
+      <ul class="pc__features">
+        <li>1 liga activa</li>
+        <li>Hasta 8 jugadores</li>
+        <li>Ranking y tarjeta digital</li>
+        <li>Torneos ilimitados</li>
+        <li>Estadísticas básicas</li>
+        <li class="no">Comparativas entre jugadores</li>
+        <li class="no">Historial de temporadas</li>
+        <li class="no">Exportación de datos</li>
+        <li class="no">Soporte prioritario</li>
+      </ul>
+      <a href="#" onclick="openApp();return false;" class="btn-outline pc__btn">Empezar gratis</a>
+    </div>
+
+    <div class="pc pc--featured reveal reveal-d2">
+      <span class="pc__plan">Pro</span>
+      <div class="pc__price-wrap">
+        <div class="pc__price"><sup>€</sup><span class="price-val" data-monthly="9" data-yearly="7">9</span></div>
+        <div class="pc__price-details">
+          <span class="pc__per" id="per-pro">/mes · por liga</span>
+          <span class="pc__saving" id="save-pro"></span>
+        </div>
+      </div>
+      <p class="pc__desc">Para grupos que se lo toman en serio. Todo lo que necesita una liga de verdad.</p>
+      <ul class="pc__features">
+        <li>Ligas ilimitadas</li>
+        <li>Jugadores ilimitados</li>
+        <li>Ranking y tarjeta digital</li>
+        <li>Torneos con todos los formatos</li>
+        <li>Estadísticas avanzadas por hoyo</li>
+        <li>Comparativas entre jugadores</li>
+        <li>Historial completo de temporadas</li>
+        <li>Exportación de datos</li>
+        <li>Soporte prioritario</li>
+      </ul>
+      <a href="#" onclick="openApp();return false;" class="btn-lime pc__btn">Empezar Pro</a>
+    </div>
+
+    <div class="pc reveal reveal-d3">
+      <span class="pc__plan">Club</span>
+      <div class="pc__price-wrap">
+        <div class="pc__price" style="font-size:clamp(32px,3.5vw,48px);line-height:1.2">Custom</div>
+      </div>
+      <p class="pc__desc">Para clubs y federaciones que gestionan múltiples ligas desde un panel centralizado.</p>
+      <ul class="pc__features">
+        <li>Panel multi-liga centralizado</li>
+        <li>Branding personalizado</li>
+        <li>API para integración propia</li>
+        <li>Exportación completa de datos</li>
+        <li>Soporte dedicado con SLA</li>
+        <li>Onboarding personalizado</li>
+        <li>Facturación centralizada</li>
+      </ul>
+      <a href="/cdn-cgi/l/email-protection#036b6c6f62436f626f6a6462706660716677622d6670" class="btn-outline pc__btn">Contactar</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARE TABLE (hidden until pricing is defined) -->
+<section id="compare" style="display:none">
+  <div class="section__header reveal">
+    <div class="section__label">Comparativa</div>
+    <h2 class="section__title">¿Qué incluye cada plan?</h2>
+  </div>
+  <div class="compare-table-wrap reveal">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:38%">Funcionalidad</th>
+          <th>Starter</th>
+          <th class="featured">Pro</th>
+          <th>Club</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="group-row"><td colspan="4">Liga y jugadores</td></tr>
+        <tr><td>Ligas activas</td><td>1</td><td class="featured">Ilimitadas</td><td>Ilimitadas</td></tr>
+        <tr><td>Jugadores por liga</td><td>Hasta 8</td><td class="featured">Ilimitados</td><td>Ilimitados</td></tr>
+        <tr><td>Invitaciones por enlace</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Verificación RFEG</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="group-row"><td colspan="4">Torneos y juego</td></tr>
+        <tr><td>Torneos por liga</td><td>Ilimitados</td><td class="featured">Ilimitados</td><td>Ilimitados</td></tr>
+        <tr><td>Formatos: Stableford, Stroke</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Formatos: Skins, Match Play</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Tarjeta digital (scorecard)</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Multiplicador de puntos por torneo</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="group-row"><td colspan="4">Estadísticas</td></tr>
+        <tr><td>Ranking general</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Estadísticas básicas</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Análisis avanzado por hoyo</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Comparativas entre jugadores</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Historial de temporadas</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Exportación de datos</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="group-row"><td colspan="4">Soporte y plataforma</td></tr>
+        <tr><td>App iOS y Android</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Soporte por email</td><td><span class="check">✓</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Soporte prioritario</td><td><span class="cross">—</span></td><td class="featured"><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Branding personalizado</td><td><span class="cross">—</span></td><td class="featured"><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>API + integración</td><td><span class="cross">—</span></td><td class="featured"><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (hidden until pricing is defined) -->
+<section id="testimonials" style="display:none">
+  <div class="section__header reveal">
+    <div class="section__label">Lo que dicen</div>
+    <h2 class="section__title">Ligas reales, jugadores reales</h2>
+  </div>
+  <div class="testi__grid">
+    <div class="testi reveal reveal-d1">
+      <div class="testi__stars"><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span></div>
+      <p class="testi__text">"En dos temporadas llevamos más de 80 rondas registradas. El ranking automático ha cambiado cómo competimos. Ahora todo el mundo mira la app antes de cada jornada."</p>
+      <div class="testi__author"><div class="testi__avatar">JM</div><div><div class="testi__name">Javier M.</div><div class="testi__role">Administrador · Liga de los Martes</div></div></div>
+    </div>
+    <div class="testi reveal reveal-d2">
+      <div class="testi__stars"><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span></div>
+      <p class="testi__text">"Lo que más valoro son las estadísticas. Ver que mi handicap de liga ha bajado 2 puntos en 3 meses y poder compararlo con mis rivales... te enganchas."</p>
+      <div class="testi__author"><div class="testi__avatar">CR</div><div><div class="testi__name">Carlos R.</div><div class="testi__role">Jugador · Liga Fin de Semana · Sevilla</div></div></div>
+    </div>
+    <div class="testi reveal reveal-d3">
+      <div class="testi__stars"><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span><span class="testi__star">★</span></div>
+      <p class="testi__text">"Creamos el torneo de Navidad en 5 minutos, con 16 jugadores y formato Skins. Al día siguiente todos tenían sus resultados en el móvil. Sin Excel, sin WhatsApps."</p>
+      <div class="testi__author"><div class="testi__avatar">AL</div><div><div class="testi__name">Ana L.</div><div class="testi__role">Administradora · Club Golf Somosaguas</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA (hidden until pricing is defined) -->
+<section id="cta-pricing" style="display:none">
+  <h2 class="cta-p__title reveal">Empieza hoy, gratis.</h2>
+  <p class="cta-p__sub reveal">Tu primera liga sin coste. Sin tarjeta de crédito. Sin fecha límite.</p>
+  <p class="cta-p__note reveal">Puedes pasarte a Pro en cualquier momento. Todos tus datos se conservan.</p>
+  <div class="cta-p__btns reveal reveal-d2">
+    <a href="#" onclick="openApp();return false;" class="btn-lime">Crear mi liga gratis</a>
+    <a href="lls-faq.html" class="btn-outline">Ver preguntas frecuentes</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos. Torneos, ranking, estadísticas y handicap oficial.</p></div>
+    <div class="footer__col"><h4>Producto</h4><ul><li><a href="index.html#features">Funcionalidades</a></li><li><a href="index.html#how">Cómo funciona</a></li><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
+    <div class="footer__col"><h4>Contacto</h4><ul><li><a href="/cdn-cgi/l/email-protection#284047444968444944414f495b4d4b5a4d5c49064d5b"><span class="__cf_email__" data-cfemail="264e494a47664a474a4f414755434554435247084355">[email&#160;protected]</span></a></li><li><a href="#">Instagram</a></li></ul></div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Powered by TSGC Scorecard</span>
+    <div class="footer__social">
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div class="modal__emblem"><div class="modal__emblem-circle">T</div><div class="modal__underline"></div></div>
+    <h2 class="modal__title">Bienvenido</h2>
+    <p class="modal__sub">Inicia sesión para continuar</p>
+    <div id="loginForm">
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Contraseña</label><input type="password" class="form__input" placeholder="••••••••" autocomplete="current-password"></div>
+      <span class="form__forgot">¿Olvidaste tu contraseña?</span>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Iniciar Sesión</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿No tienes cuenta? <a href="#" onclick="showRegister()">Solicitar acceso</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form__group"><label class="form__label">Nombre completo</label><input type="text" class="form__input" placeholder="Juan Martínez"></div>
+      <div class="form__group"><label class="form__label">Correo electrónico</label><input type="email" class="form__input" placeholder="tu@email.com"></div>
+      <div class="form__group"><label class="form__label">Licencia RFEG (opcional)</label><input type="text" class="form__input" placeholder="CM01234567"></div>
+      <div class="form__group"><label class="form__label">Nombre de tu liga</label><input type="text" class="form__input" placeholder="Liga de los Martes"></div>
+      <a href="#" onclick="openApp();return false;" class="form__btn" style="display:block;text-align:center">Crear mi liga gratis</a>
+      <div class="modal__divider">o</div>
+      <p class="modal__register">¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Iniciar sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><!-- Floating mobile CTA -->
+<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Contactar
+</a>
+<script src="shared.js"></script>
+<script>
+let isYearly = false;
+function toggleBilling() {
+  isYearly = !isYearly;
+  const sw = document.getElementById('toggleSwitch');
+  const ml = document.getElementById('monthlyLabel');
+  const yl = document.getElementById('yearlyLabel');
+  sw.classList.toggle('yearly', isYearly);
+  ml.classList.toggle('active', !isYearly);
+  yl.classList.toggle('active', isYearly);
+
+  const proVal = document.querySelector('.price-val[data-monthly]');
+  if (proVal) {
+    proVal.textContent = isYearly ? proVal.dataset.yearly : proVal.dataset.monthly;
+  }
+  const perPro = document.getElementById('per-pro');
+  if (perPro) pe

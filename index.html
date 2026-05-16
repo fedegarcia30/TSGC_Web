@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Secret Golf Club — Golf competitivo entre amigos</title>
+<meta name="description" content="Convierte tu grupo de golf en una liga privada: rankings, torneos, pools, skins, tarjeta digital, handicap, estadísticas y competición entre amigos.">
+<link rel="canonical" href="https://thesecretgolfclub.com/">
+<meta property="og:title" content="The Secret Golf Club — Tu liga privada de golf">
+<meta property="og:description" content="La app para organizar ligas privadas de golf con rankings, torneos, pools, skins, estadísticas y tarjeta digital.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://thesecretgolfclub.com/assets/hero-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="assets/TSGC_icon.svg">
 
 <!-- Google tag (gtag.js) -->
@@ -21,6 +28,10 @@
 <link rel="stylesheet" href="shared.css">
 <style>
 /* ── PAGE-SPECIFIC ── */
+.sr-only {
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
 
 /* HERO — dark cinematic, forest green overlay */
 .hero {
@@ -77,6 +88,7 @@
   display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:center;
   opacity:0; transform:translateY(12px); animation:revealUp 1s var(--ease) 3.7s forwards;
 }
+.hero__ctas .btn-outline { color:#fff; }
 .hero__stats {
   position:absolute; bottom:0; left:0; right:0; z-index:6;
   display:flex; justify-content:center;
@@ -91,6 +103,30 @@
 .hero__scroll { position:absolute; bottom:92px; right:48px; z-index:6; display:flex; flex-direction:column; align-items:center; gap:10px; opacity:0; animation:fadeIn 1s ease 4.9s forwards; }
 .hero__scroll span { font-family:var(--sans); font-size:7.5px; letter-spacing:.4em; text-transform:uppercase; color:rgba(132,176,38,.55); writing-mode:vertical-lr; }
 .scroll__line { width:1px; height:50px; background:linear-gradient(to bottom, var(--accent), transparent); animation:scrollPulse 2.2s ease-in-out 5.3s infinite; transform-origin:top; }
+
+/* AUDIENCE — who this is for */
+#audience { background:var(--surface); padding-top:64px; padding-bottom:72px; }
+.audience__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.audience-card {
+  border:1px solid var(--border); border-radius:12px; background:var(--surface);
+  padding:28px 24px; min-height:210px; display:flex; flex-direction:column; gap:14px;
+  transition:border-color .3s, transform .25s, box-shadow .3s;
+}
+.audience-card:hover { border-color:var(--accent-border); transform:translateY(-4px); box-shadow:0 12px 32px rgba(47,82,51,.08); }
+.audience-card__kicker { font-family:var(--sans); font-size:8px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); }
+.audience-card__title { font-family:var(--serif); font-size:clamp(18px,1.8vw,23px); color:var(--text-main); line-height:1.2; }
+.audience-card__body { font-family:var(--body); font-size:14px; line-height:1.7; color:var(--text-sec); }
+
+/* TRUST STRIP */
+.proof-strip {
+  background:var(--highlight); border-top:1px solid var(--accent-border); border-bottom:1px solid var(--accent-border);
+  padding:28px 52px;
+}
+.proof-strip__inner { max-width:1060px; margin:0 auto; display:grid; grid-template-columns:1.15fr repeat(3,1fr); gap:20px; align-items:center; }
+.proof-strip__lead { font-family:var(--serif); font-size:clamp(18px,2vw,26px); color:var(--primary); line-height:1.25; }
+.proof-pill { display:flex; flex-direction:column; gap:5px; border-left:1px solid rgba(47,82,51,.16); padding-left:18px; }
+.proof-pill__top { font-family:var(--sans); font-size:8px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); }
+.proof-pill__bottom { font-family:var(--body); font-size:14px; color:var(--text-sec); line-height:1.45; }
 
 /* FEATURES — light */
 #features { background:var(--bg-main); }
@@ -179,6 +215,8 @@
 .bar-mid   { background:rgba(132,176,38,.5); }
 .compare-row__val { font-family:var(--serif); font-size:14px; font-weight:700; color:var(--accent); width:36px; text-align:right; flex-shrink:0; }
 .stats__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.stats__example-note { font-family:var(--sans); font-size:9px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin:-38px 0 22px; display:flex; align-items:center; justify-content:center; gap:14px; text-align:center; }
+.stats__example-note::before, .stats__example-note::after { content:''; width:34px; height:1px; background:var(--accent); }
 .stat-big { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:36px 28px; text-align:center; transition:border-color .3s, box-shadow .3s; }
 .stat-big:hover { border-color:rgba(47,82,51,.25); box-shadow:0 4px 16px rgba(47,82,51,.08); }
 .stat-big__number { font-family:var(--serif); font-size:clamp(28px,3.5vw,48px); font-weight:700; color:var(--primary); margin-bottom:8px; display:block; }
@@ -234,6 +272,20 @@
 .note__title { font-family:var(--serif); font-size:14px; font-weight:700; color:var(--text-main); margin-bottom:3px; }
 .note__body  { font-family:var(--body); font-size:13px; color:var(--text-sec); line-height:1.6; }
 
+/* POSITIONING — comparison */
+#positioning { background:var(--bg-main); }
+.positioning__layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:56px; align-items:center; }
+.positioning__matrix { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.positioning-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px;
+  min-height:180px;
+}
+.positioning-card--featured { background:var(--primary); border-color:var(--primary); color:#fff; }
+.positioning-card__label { font-family:var(--sans); font-size:8px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.positioning-card__title { font-family:var(--serif); font-size:clamp(18px,1.8vw,24px); line-height:1.18; margin-bottom:10px; color:inherit; }
+.positioning-card__body { font-family:var(--body); font-size:14px; line-height:1.7; color:var(--text-sec); }
+.positioning-card--featured .positioning-card__body { color:rgba(255,255,255,.68); }
+
 /* QUOTE — primary green accent band */
 #quote { background:var(--primary); text-align:center; padding:64px 52px; position:relative; overflow:hidden; }
 #quote::before { content:'"'; font-family:var(--serif); font-size:340px; font-weight:700; color:rgba(255,255,255,.04); position:absolute; top:-80px; left:50%; transform:translateX(-50%); line-height:1; pointer-events:none; }
@@ -251,6 +303,10 @@
 
 /* Responsive page-specific */
 @media (max-width:1024px) {
+  .audience__grid { grid-template-columns:1fr 1fr; }
+  .proof-strip__inner { grid-template-columns:1fr; }
+  .proof-pill { border-left:none; border-top:1px solid rgba(47,82,51,.16); padding-left:0; padding-top:14px; }
+  .positioning__layout { grid-template-columns:1fr; }
   .features__grid { grid-template-columns:1fr 1fr; }
   #ai > div > div[style*="grid"] { grid-template-columns:1fr !important; gap:48px !important; }
   .how__layout { grid-template-columns:1fr; }
@@ -292,7 +348,11 @@
   .hero__stats .stat { flex:0 0 50%; max-width:50%; padding:16px 16px; }
   .stat__number { font-size:clamp(15px,4vw,20px); }
   .hero__ctas { flex-direction:column; width:100%; max-width:300px; }
+  .hero__ctas .btn-outline { width:100%; text-align:center; }
   .btn-lime { width:100%; text-align:center; }
+  .audience__grid { grid-template-columns:1fr; }
+  .proof-strip { padding:24px 22px; }
+  .positioning__matrix { grid-template-columns:1fr; }
   #secondary-games { padding:44px 20px !important; }
   .secondary-header-grid { grid-template-columns:1fr !important; gap:36px !important; }
   .stats__grid { grid-template-columns:1fr 1fr; }
@@ -513,7 +573,7 @@
   </ul>
   <div class="nav__right">
     <div class="nav__lang"><a href="#" class="active">ES</a><span style="opacity:.3">·</span><a href="#">EN</a></div>
-    <a href="#" onclick="openApp();return false;" class="nav__login">Iniciar Sesión</a>
+    <a href="#" onclick="openContactModal();return false;" class="nav__login">Crear liga</a>
   </div>
   <button class="nav__hamburger" onclick="openDrawer()" aria-label="Menú">
     <span></span><span></span><span></span>
@@ -546,8 +606,8 @@
     <a href="lls-precios.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Precios</a>
     <a href="lls-faq.html" class="nav-drawer__link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
   </div>
-  <div class="nav-drawer__cta">
-    <a href="#" onclick="openApp();return false;">Iniciar Sesión</a>
+    <div class="nav-drawer__cta">
+    <a href="#" onclick="openContactModal();return false;">Crear liga</a>
   </div>
 </div>
 
@@ -564,15 +624,15 @@
   <div class="hero__content">
     <div class="hero__eyebrow">
       <span class="eyebrow__line"></span>
-      <span class="eyebrow__text">Gestión de ligas &nbsp;·&nbsp; Torneos propios &nbsp;·&nbsp; Estadísticas reales</span>
+      <span class="eyebrow__text">Ligas privadas &nbsp;·&nbsp; Pools &nbsp;·&nbsp; Torneos entre amigos</span>
       <span class="eyebrow__line"></span>
     </div>
-    <h1 class="hero__title" id="mainTitle" aria-label="Tus partidas merecen un ranking."></h1>
+    <h1 class="hero__title" id="mainTitle" aria-label="Convierte tu grupo de golf en una liga privada."><span class="sr-only">Convierte tu grupo de golf en una liga privada.</span></h1>
     <div class="hero__title-line"></div>
-    <h2 class="hero__subtitle">Tus partidas merecen un ranking.</h2>
-    <p class="hero__tagline">Compite siempre, mira tu ranking en tiempo real, compárate con los demás y demuestra quién es el mejor.<br></p>
+    <h2 class="hero__subtitle">Rankings, torneos, pools, skins y tarjetas digitales. Sin Excel. Sin WhatsApp. Sin discusiones.</h2>
+    <p class="hero__tagline">The Secret Golf Club convierte la partida de los domingos, la pool del club o el grupo de amigos competitivo en una temporada completa: reglas claras, clasificación viva y memoria de todo lo que pasa en el campo.</p>
     <div class="hero__ctas">
-      <a href="#" onclick="openContactModal();return false;" class="btn-lime">Crear mi liga gratis</a>
+      <a href="#" onclick="openContactModal();return false;" class="btn-lime">Crear mi liga</a>
     </div>
     <div class="hero__stores">
       <span class="hero__stores-label">o descarga la app</span>
@@ -599,12 +659,43 @@
     </div>
   </div>
   <div class="hero__stats">
-    <div class="stat"><span class="stat__number">Ligas</span><span class="stat__label">normas personalizables</span></div>
-    <div class="stat"><span class="stat__number">Pools</span><span class="stat__label">elige tu modalidad</span></div>
-    <div class="stat"><span class="stat__number">Scorecard</span><span class="stat__label">opcional</span></div>
-    <div class="stat"><span class="stat__number">Eventos</span><span class="stat__label">Crea tus torneos</span></div>
+    <div class="stat"><span class="stat__number">Liga</span><span class="stat__label">ranking de temporada</span></div>
+    <div class="stat"><span class="stat__number">Pool</span><span class="stat__label">premios y bote claro</span></div>
+    <div class="stat"><span class="stat__number">Skins</span><span class="stat__label">apuestas por hoyo</span></div>
+    <div class="stat"><span class="stat__number">WHS</span><span class="stat__label">handicap actualizado</span></div>
   </div>
   <div class="hero__scroll"><span>Descubre</span><div class="scroll__line"></div></div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <div class="section__header reveal">
+    <div class="section__label">Para quién</div>
+    <h2 class="section__title">Hecho para grupos que ya compiten, aunque todavía lo lleven en Excel.</h2>
+    <p class="section__sub">TSGC no intenta ser un software genérico de club. Está pensado para la liga privada, la pool recurrente y el grupo que quiere jugar todo el año con reglas propias.</p>
+  </div>
+  <div class="audience__grid">
+    <div class="audience-card reveal reveal-d1">
+      <span class="audience-card__kicker">Amigos</span>
+      <h3 class="audience-card__title">La partida de siempre, convertida en temporada.</h3>
+      <p class="audience-card__body">Ranking vivo, tarjetas entregadas, histórico de resultados y menos discusiones sobre quién apuntó qué.</p>
+    </div>
+    <div class="audience-card reveal reveal-d2">
+      <span class="audience-card__kicker">Pools</span>
+      <h3 class="audience-card__title">Botes, premios y puntos sin hojas paralelas.</h3>
+      <p class="audience-card__body">Configura cuotas, reparto económico, eventos y clasificación con trazabilidad para todos.</p>
+    </div>
+    <div class="audience-card reveal reveal-d3">
+      <span class="audience-card__kicker">Sociedades</span>
+      <h3 class="audience-card__title">Una app para la liga social del club.</h3>
+      <p class="audience-card__body">Ideal para grupos recurrentes que juegan en uno o varios campos y quieren una experiencia más seria.</p>
+    </div>
+    <div class="audience-card reveal reveal-d4">
+      <span class="audience-card__kicker">Organizadores</span>
+      <h3 class="audience-card__title">Menos administración. Más competición.</h3>
+      <p class="audience-card__body">Invitaciones, torneos, ranking, formatos y seguimiento desde el móvil, sin perseguir mensajes.</p>
+    </div>
+  </div>
 </section>
 
 <!-- FEATURES -->
@@ -662,22 +753,15 @@
       <span class="fc__num">07</span>
       <div class="fc__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
       <h3 class="fc__title">Juegos secundarios</h3>
-      <p class="fc__body">Mientras juegas tu ronda de liga, activa una competición paralela con los del grupo: <strong>Match Play</strong> (1v1), <strong>Fourball</strong> (2v2 mejor bola) o <strong>Sindicato</strong> (formato español por puntos). Cada uno ve su tarjeta y el marcador del juego secundario a la vez.</p>
-      <div class="fc__tags"><span class="tag">Match Play</span><span class="tag">Fourball</span><span class="tag">Sindicato</span></div>
-    </div>
-    <div class="fc reveal reveal-d3">
-      <span class="fc__num">08</span>
-      <div class="fc__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-      <h3 class="fc__title">Skins</h3>
-      <p class="fc__body">Elige el importe por hoyo y apuesta con tus amigos. El que gana el hoyo se lleva el skin — si hay empate, el bote se acumula. La app lleva la cuenta exacta al céntimo en todo momento.</p>
-      <div class="fc__tags"><span class="tag">Por hoyo</span><span class="tag">Bote acumulado</span><span class="tag">Combinable</span></div>
+      <p class="fc__body">Mientras juegas tu ronda de liga, activa una competición paralela con los del grupo: <strong>Match Play</strong> (1v1), <strong>Fourball</strong> (2v2 mejor bola), <strong>Sindicato</strong> (formato español por puntos) o <strong>Skins</strong> por hoyo. Cada uno ve su tarjeta y el marcador del juego secundario a la vez.</p>
+      <div class="fc__tags"><span class="tag">Match Play</span><span class="tag">Fourball</span><span class="tag">Sindicato</span><span class="tag">Skins</span></div>
     </div>
     <div class="fc reveal reveal-d1" style="border-color:var(--accent);background:var(--highlight);">
-      <span class="fc__num" style="color:var(--accent)">09</span>
+      <span class="fc__num" style="color:var(--accent)">08</span>
       <div class="fc__icon" style="color:var(--accent)"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <h3 class="fc__title">Asistente IA <span style="font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--accent);padding:3px 9px;border-radius:20px;vertical-align:middle;margin-left:6px;">PRO</span></h3>
-      <p class="fc__body">Conversa con tu liga. Pregunta por el ranking, el historial de cualquier jugador, sus mejores rondas o su evolución de handicap — y obtén respuestas al instante en lenguaje natural.</p>
-      <div class="fc__tags"><span class="tag">Chat IA</span><span class="tag">Liga</span><span class="tag">Jugadores</span><span class="tag">Solo PRO</span></div>
+      <h3 class="fc__title">Asistente IA</h3>
+      <p class="fc__body">Conversa con tu liga en lenguaje natural. Pregunta por rankings, historial, mejores rondas o evolución de handicap, y resuelve dudas sobre reglas, formatos, torneos o cómo hacer algo dentro de la app.</p>
+      <div class="fc__tags"><span class="tag">Chat IA</span><span class="tag">Ayuda</span><span class="tag">Reglas</span><span class="tag">Jugadores</span></div>
     </div>
   </div>
 </section>
@@ -726,6 +810,25 @@
   </div>
 </section>
 
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-strip__inner">
+    <div class="proof-strip__lead">Una liga privada con la sensación de tener vuestro propio tour.</div>
+    <div class="proof-pill">
+      <span class="proof-pill__top">10 minutos</span>
+      <span class="proof-pill__bottom">para crear la liga, invitar jugadores y empezar a registrar resultados.</span>
+    </div>
+    <div class="proof-pill">
+      <span class="proof-pill__top">Todo visible</span>
+      <span class="proof-pill__bottom">ranking, handicap, tarjetas, torneos y premios en la misma experiencia.</span>
+    </div>
+    <div class="proof-pill">
+      <span class="proof-pill__top">Grupo privado</span>
+      <span class="proof-pill__bottom">solo participan tus jugadores, con vuestras reglas y vuestros formatos.</span>
+    </div>
+  </div>
+</div>
+
 <!-- HOW IT WORKS -->
 <section id="how">
   <div class="how__layout">
@@ -754,12 +857,13 @@
     <div class="reveal">
       <div class="section__label" style="justify-content:flex-start">Estadísticas</div>
       <h2 class="section__title" style="text-align:left">Conoce tu juego mejor que nadie</h2>
-      <p class="section__sub" style="text-align:left;margin:0">Cada ronda genera datos. Analiza tu evolución, descubre tus puntos fuertes y compara tu rendimiento directamente con tus rivales.</p>
+      <p class="section__sub" style="text-align:left;margin:0">Cada ronda genera datos. Al entrar en el detalle de un jugador, puedes ver indicadores como evolución, puntos fuertes y comparación directa con tus rivales.</p>
     </div>
     <div class="app-screen-wrap reveal reveal-d2">
       <img src="assets/Compare.png" alt="Comparativa entre jugadores" class="app-screen" loading="lazy">
     </div>
   </div>
+  <div class="stats__example-note reveal">Ejemplo de detalle de jugador</div>
   <div class="stats__grid reveal">
     <div class="stat-big"><span class="stat-big__number">36</span><span class="stat-big__label">Mejor ronda</span><span class="stat-big__sub">Hoyo 7 · La Moraleja</span></div>
     <div class="stat-big"><span class="stat-big__number">−1.2</span><span class="stat-big__label">Mejora HCP en liga</span><span class="stat-big__sub">Últimas 8 jornadas</span></div>
@@ -888,19 +992,53 @@
   </div>
 </section>
 
+<!-- POSITIONING -->
+<section id="positioning">
+  <div class="positioning__layout">
+    <div class="reveal">
+      <div class="section__label" style="justify-content:flex-start">Por qué TSGC</div>
+      <h2 class="section__title" style="text-align:left">No es otro gestor de torneos. Es la memoria competitiva de vuestro grupo.</h2>
+      <p class="section__sub" style="text-align:left;margin:0 0 28px">Golf Genius y otras plataformas resuelven el torneo formal. TSGC resuelve lo que pasa semana tras semana entre amigos: clasificación, pique, pools, skins, hándicap, historial y orgullo.</p>
+      <a href="#" onclick="openContactModal();return false;" class="btn-lime">Montar mi liga</a>
+    </div>
+    <div class="positioning__matrix reveal reveal-d2">
+      <div class="positioning-card">
+        <div class="positioning-card__label">Excel</div>
+        <h3 class="positioning-card__title">Flexible, pero frágil.</h3>
+        <p class="positioning-card__body">Depende de una persona, se rompe con facilidad y nadie lo consulta con gusto desde el móvil.</p>
+      </div>
+      <div class="positioning-card">
+        <div class="positioning-card__label">WhatsApp</div>
+        <h3 class="positioning-card__title">Sirve para avisar, no para gestionar.</h3>
+        <p class="positioning-card__body">Los resultados se pierden, las normas se repiten y las dudas vuelven cada jornada.</p>
+      </div>
+      <div class="positioning-card">
+        <div class="positioning-card__label">Software de club</div>
+        <h3 class="positioning-card__title">Potente, pero demasiado institucional.</h3>
+        <p class="positioning-card__body">Pensado para torneos oficiales, no para la cultura interna de un grupo privado.</p>
+      </div>
+      <div class="positioning-card positioning-card--featured">
+        <div class="positioning-card__label">TSGC</div>
+        <h3 class="positioning-card__title">Privado, social y competitivo.</h3>
+        <p class="positioning-card__body">Una liga viva en el bolsillo de cada jugador, con reglas propias y toda la temporada ordenada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- QUOTE -->
 <section id="quote">
-  <p class="quote__text reveal">"La primera temporada fue un caos de Excel, WhatsApps y discusiones sobre quién había anotado qué. Ahora lo hacemos todo aquí y solo discutimos en el campo."</p>
-  <span class="quote__author reveal reveal-d1">Fundador de Liga · Club de Golf Somosaguas · Madrid</span>
+  <p class="quote__text reveal">"La liga no empieza cuando alguien abre un Excel el lunes. Empieza en el tee del 1, con todos sabiendo qué se juega y dónde está el ranking."</p>
+  <span class="quote__author reveal reveal-d1">The Secret Golf Club</span>
 </section>
 
 <!-- CTA FINAL -->
 <section id="cta">
   <div class="cta__label reveal">Tu próxima liga</div>
-  <h2 class="cta__title reveal">¿A qué esperas para empezar?</h2>
-  <p class="cta__sub reveal">Tu primera liga es gratis. En 10 minutos, tus amigos ya pueden ver el ranking.</p>
+  <h2 class="cta__title reveal">Dale a tu grupo una liga de verdad.</h2>
+  <p class="cta__sub reveal">Cuéntanos cuántos sois y cómo jugáis. Te ayudamos a montar la primera liga con vuestras reglas.</p>
   <div class="cta__btns reveal reveal-d2">
-    <a href="#" onclick="openContactModal();return false;" class="btn-lime">Crear mi liga ahora</a>
+    <a href="#" onclick="openContactModal();return false;" class="btn-lime">Crear mi liga</a>
     <a href="lls-faq.html" class="btn-outline">Ver preguntas frecuentes</a>
   </div>
   <div class="cta__stores reveal reveal-d3">
@@ -931,13 +1069,13 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer__grid">
-    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La plataforma para gestionar tu liga de golf con amigos. Torneos, ranking, estadísticas y handicap oficial.</p></div>
+    <div class="footer__brand"><div class="footer__brand-name">The Secret Golf Club</div><p>La app para organizar ligas privadas de golf con rankings, torneos, pools, skins, estadísticas y tarjeta digital.</p></div>
     <div class="footer__col"><h4>Producto</h4><ul><li><a href="#features">Funcionalidades</a></li><li><a href="#how">Cómo funciona</a></li><li><a href="#stats">Estadísticas</a></li><li><a href="lls-precios.html">Precios</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
     <div class="footer__col"><h4>Legal</h4><ul><li><a href="#">Términos de uso</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
-    <div class="footer__col"><h4>Contacto</h4><ul><li><a href="/cdn-cgi/l/email-protection#f39b9c9f92b39f929f9a949280969081968792dd9680"><span class="__cf_email__" data-cfemail="dab2b5b6bb9ab6bbb6b3bdbba9bfb9a8bfaebbf4bfa9">[email&#160;protected]</span></a></li><li><a href="#">Instagram</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
+    <div class="footer__col"><h4>Contacto</h4><ul><li><a href="mailto:info@thesecretgolfclub.com">info@thesecretgolfclub.com</a></li><li><a href="lls-faq.html">FAQ</a></li></ul></div>
   </div>
   <div class="footer__bottom">
-    <span class="footer__copy">© 2025 <span>The Secret Golf Club</span> · Powered by TSGC Scorecard</span>
+    <span class="footer__copy">© 2026 <span>The Secret Golf Club</span> · Private golf leagues</span>
     <div class="footer__social">
       <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
       <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
@@ -978,7 +1116,7 @@
     <button class="contact-modal__close" onclick="closeContactModal()">✕</button>
     <div class="contact-modal__emblem">⛳</div>
     <h2 class="contact-modal__title">Crea tu liga</h2>
-    <p class="contact-modal__sub">Déjame tu teléfono y te llamo para configurarlo todo. Suele tardar menos de 10 minutos.</p>
+    <p class="contact-modal__sub">Déjame tu teléfono y cuéntame cómo jugáis. Te ayudo a montar vuestra liga, pool o torneo con las reglas del grupo.</p>
 
     <div id="contactFormBody">
       <div class="form__group">
@@ -987,7 +1125,7 @@
       </div>
       <div class="form__group">
         <label class="form__label">¿Qué buscas? (opcional)</label>
-        <textarea id="contactMessage" class="form__input" placeholder="Somos 12 amigos, jugamos los domingos en Madrid..."></textarea>
+        <textarea id="contactMessage" class="form__input" placeholder="Somos 12 amigos, jugamos los domingos en Madrid y queremos ranking, skins y torneos..."></textarea>
       </div>
       <button id="contactSendBtn" class="contact-btn-email" onclick="sendContactEmail()">Enviar por email</button>
       <div id="contactError" style="display:none;font-family:var(--body);font-size:13px;color:#e53e3e;text-align:center;margin-top:8px;">
@@ -1002,7 +1140,7 @@
     </div>
 
     <div class="contact-modal__or">o</div>
-    <a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="contact-btn-wa">
+    <a href="https://wa.me/34619979882?text=Hola%2C%20quiero%20informacion%20sobre%20The%20Secret%20Golf%20Club%20para%20montar%20una%20liga." target="_blank" rel="noopener" class="contact-btn-wa">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Contactar por WhatsApp
     </a>
@@ -1010,7 +1148,7 @@
 </div>
 
 <!-- Floating mobile CTA -->
-<a href="https://wa.me/34619979882" target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
+<a href="https://wa.me/34619979882?text=Hola%2C%20quiero%20informacion%20sobre%20The%20Secret%20Golf%20Club%20para%20montar%20una%20liga." target="_blank" rel="noopener" class="cta-fab" aria-label="Contactar por WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   Contactar
 </a>
@@ -1020,7 +1158,7 @@
 <script>
 /* Hero title — fijo */
 const titleEl = document.getElementById('mainTitle');
-const LINES = ["Tu liga.", "Tus reglas.", "Tu juego."];
+const LINES = ["Tu grupo.", "Tu liga.", "Tus reglas."];
 let d = 1.3;
 LINES.forEach((line, li) => {
   const div = document.createElement('div');
@@ -1040,10 +1178,10 @@ LINES.forEach((line, li) => {
 
 /* Hero subtitle — carrusel */
 const SUBTITLES = [
-  "Tus partidas merecen un ranking.",
-  "La plataforma para gestionar tu liga de golf con amigos.",
+  "Convierte tus partidas en una temporada con ranking.",
+  "Pools, skins, torneos y tarjeta digital en una sola app.",
   "El hándicap al día, el ranking en tiempo real y la memoria de toda la temporada.",
-  "Para que las cuentas sean siempre claras.",
+  "Para que las reglas, los puntos y los premios sean siempre claros.",
 ];
 const subtitleEl = document.querySelector('.hero__subtitle');
 let subIndex = 0;
@@ -1077,13 +1215,32 @@ document.querySelectorAll('.tm__fmt').forEach(function(btn) {
 });
 
 /* Contact modal */
-var FORMSPREE_ID = 'mykbrzyl'; // ← reemplazar con el ID de formspree.io
+var FORMSPREE_ID = 'mykbrzyl';
+var CONTACT_EMAIL = 'info@thesecretgolfclub.com';
+
+function buildContactMailto(phone, message) {
+  var subject = 'Nueva solicitud de liga - TSGC';
+  var body = [
+    'Hola, quiero montar una liga en The Secret Golf Club.',
+    '',
+    'Telefono: ' + phone,
+    '',
+    'Mensaje:',
+    message || '(sin mensaje)'
+  ].join('\n');
+  return 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+}
 
 function openContactModal() {
+  var btn = document.getElementById('contactSendBtn');
   document.getElementById('contactOverlay').classList.add('active');
   document.getElementById('contactPhone').style.borderColor = '';
   document.getElementById('contactPhone').value = '';
   document.getElementById('contactMessage').value = '';
+  if (btn) {
+    btn.textContent = 'Enviar por email';
+    btn.disabled = false;
+  }
   showContactForm();
   document.body.style.overflow = 'hidden';
 }
@@ -1117,6 +1274,13 @@ async function sendContactEmail() {
   btn.disabled = true;
 
   try {
+    if (window.location.protocol === 'file:') {
+      window.location.href = buildContactMailto(phone, message);
+      document.getElementById('contactFormBody').style.display = 'none';
+      document.getElementById('contactSuccess').style.display = 'block';
+      return;
+    }
+
     var res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -1134,8 +1298,10 @@ async function sendContactEmail() {
       throw new Error('error');
     }
   } catch(e) {
+    window.location.href = buildContactMailto(phone, message);
     document.getElementById('contactError').style.display = 'block';
-    btn.textContent = 'Enviar';
+    document.getElementById('contactError').textContent = 'No se pudo enviar automáticamente. Hemos abierto un email para que puedas enviarlo manualmente.';
+    btn.textContent = 'Abrir email';
     btn.disabled = false;
   }
 }

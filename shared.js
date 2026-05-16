@@ -59,6 +59,33 @@ function toggleFaq(el) {
 /* ── Open app / store (platform-aware) ── */
 const TSGC_APP_STORE = 'https://apps.apple.com/es/app/the-secret-golf-club/id6737745285';
 const TSGC_PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.gmail.fedegarcia30.TSGC&pcampaignid=update';
+const TSGC_CONTACT_EMAIL = 'info@thesecretgolfclub.com';
+const TSGC_WHATSAPP_NUMBER = '34619979882';
+const TSGC_WHATSAPP_MESSAGE = 'Hola, quiero informacion sobre The Secret Golf Club para montar una liga.';
+
+function buildWhatsAppUrl(message) {
+  return 'https://wa.me/' + TSGC_WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message || TSGC_WHATSAPP_MESSAGE);
+}
+
+function normalizeContactLinks() {
+  document.querySelectorAll('a[href="https://wa.me/' + TSGC_WHATSAPP_NUMBER + '"]').forEach(link => {
+    link.href = buildWhatsAppUrl();
+  });
+
+  document.querySelectorAll('.footer__social').forEach(social => {
+    var links = social.querySelectorAll('a[href="#"]');
+    if (links[0]) {
+      links[0].href = 'mailto:' + TSGC_CONTACT_EMAIL;
+      links[0].setAttribute('aria-label', 'Email');
+    }
+    if (links[1]) {
+      links[1].href = buildWhatsAppUrl();
+      links[1].target = '_blank';
+      links[1].rel = 'noopener';
+      links[1].setAttribute('aria-label', 'WhatsApp');
+    }
+  });
+}
 
 function detectPlatform() {
   const ua = navigator.userAgent || navigator.vendor || '';
@@ -113,3 +140,4 @@ function createAppPrompt() {
   return overlay;
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAppPrompt(); });
+document.addEventListener('DOMContentLoaded', normalizeContactLinks);
